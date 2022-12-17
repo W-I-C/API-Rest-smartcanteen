@@ -1,11 +1,10 @@
-import express, {Request, Response} from "express";
+import express from "express";
+import { SeeProfileController } from "../controllers/both/profile/seeProfileController";
 
-import { SeeProfileController } from "../controllers/profile/seeProfileController";
 const bothRouter = express.Router();
 
 const seeProfileController = new SeeProfileController();
 
-bothRouter.get("/:userId/profile", seeProfileController.handle);
+bothRouter.get("/:uid/profile", seeProfileController.handle);
 
-
-export {bothRouter};
+export { bothRouter };
