@@ -1,4 +1,4 @@
-const pg = require('pg');
+import pg from 'pg';
 
 const createClient = () => {
   const user = process.env.DB_USERNAME;
@@ -12,11 +12,11 @@ const createClient = () => {
     host: host,
     database: database,
     password: password,
-    port: port
+    port: Number(port)
   });
   client.connect();
 
   return client;
 }
 
-module.exports = createClient;
+export {createClient};

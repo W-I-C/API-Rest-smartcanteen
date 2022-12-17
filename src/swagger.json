@@ -1,14 +1,41 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "title": "Documentação da API SmartCanteen",
-      "description": "Documentação da api de suporte à aplicação SmartCanteen",
-      "contact": { "name": "Teste", "email": "teste@teste.com" },
-      "version": "1.0.0"
-    },
-    "servers": [
-      { "url": "http://localhost:3000/api/v1", "description": "API de teste" }
-    ],
-    "paths": {
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Documentação da API SmartCanteen",
+    "description": "Documentação da api de suporte à aplicação SmartCanteen",
+    "contact": { "name": "Teste", "email": "teste@teste.com" },
+    "version": "1.0.0"
+  },
+  "servers": [
+    { "url": "http://localhost:3000/api/v1", "description": "API de teste" }
+  ],
+  "paths": {
+    "/{uid}/profile": {
+      "get": {
+        "summary": "View my profile",
+        "description": "This route allows a user of the application to view his profile",
+        "tags": ["Profile"],
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "description": "user Id",
+            "required": true,
+            "schema": { "properties": { "uid": { "type": "string" } } }
+          }
+        ],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } }
+              }
+            }
+          }
+        }
+      }
     }
+  }
 }
