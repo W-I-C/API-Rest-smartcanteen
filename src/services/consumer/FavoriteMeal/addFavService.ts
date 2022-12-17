@@ -1,5 +1,5 @@
 require('dotenv').config();
-const createClient = require('../../config/db');
+import { createClient } from "../../../config/db";
 export class AddFavService {
  
     async execute( favoriteMealId:string) {
