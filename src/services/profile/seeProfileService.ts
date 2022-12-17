@@ -1,4 +1,4 @@
-
+const pg = require('pg');
 require('dotenv').config();
 const createClient = require('../../config/db');
 
