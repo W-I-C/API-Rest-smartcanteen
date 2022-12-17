@@ -1,4 +1,46 @@
 {
+
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Documentação da API SmartCanteen",
+      "description": "Documentação da api de suporte à aplicação SmartCanteen",
+      "contact": { "name": "Teste", "email": "teste@teste.com" },
+      "version": "1.0.0"
+    },
+    "servers": [
+      { "url": "http://localhost:3000/api/v1", "description": "API de teste" }
+    ],
+    "paths": {
+
+      "/consumers/{favoriteMealId}":{
+        "post":{
+          "summary":"Add meal to favorites",
+          "description": "Adds a new favorite dish to the consumer",
+          "tags":["Favorite Meal"],
+          "parameters": [
+            {
+              "name": "favoriteMealId",
+              "in": "path",
+              "description": "Meal id",
+              "required": true,
+              "schema": { "properties": { "favoriteMealID": { "type": "string" } } }
+            }
+          ],
+      
+          "responses": {
+            "500": { "description": "ERROR" },
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": { "properties": { "msg": { "type": "string" } } },
+                  "examples": {
+                    "Add meal to favorites": {
+                      "value": { "msg": "Refeição adicionada aos favoritos" }
+                    }
+                  }
+                }
+
   "openapi": "3.0.0",
   "info": {
     "title": "Documentação da API SmartCanteen",
@@ -31,11 +73,18 @@
             "content": {
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } }
+
               }
             }
           }
         }
+
+    }
+    }
+  }
+
       }
     }
   }
 }
+
