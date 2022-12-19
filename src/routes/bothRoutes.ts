@@ -13,7 +13,7 @@ const loginController = new LoginController();
 const newSessionToken = new NewSessionTokenController();
 const logoutController = new LogoutController();
 
-bothRouter.get("/:uid/profile", validateToken, validateRefreshToken, seeProfileController.handle);
+bothRouter.get("/profile", validateToken, validateRefreshToken, seeProfileController.handle);
 bothRouter.post("/login", loginController.handle);
 bothRouter.get("/newSessionToken", newSessionToken.handle);
 bothRouter.get("/logout", validateToken, validateRefreshToken, logoutController.handle);
