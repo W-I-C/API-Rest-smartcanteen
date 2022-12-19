@@ -134,20 +134,11 @@
         }
       }
     },
-    "/{uid}/profile": {
+    "/profile": {
       "get": {
         "summary": "View my profile",
         "description": "This route allows a user of the application to view his profile",
         "tags": ["Profile"],
-        "parameters": [
-          {
-            "name": "uid",
-            "in": "path",
-            "description": "user Id",
-            "required": true,
-            "schema": { "properties": { "uid": { "type": "string" } } }
-          }
-        ],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {

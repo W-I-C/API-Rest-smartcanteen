@@ -3,7 +3,7 @@ import { SeeProfileService } from "../../../services/both/profile/seeProfileServ
 
 export class SeeProfileController {
   async handle(request: Request, response: Response) {
-    const uId = request.params.uid;
+    const uId = response.locals.uid;
 
     try {
       if (uId === undefined) {
