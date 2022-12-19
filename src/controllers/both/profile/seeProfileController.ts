@@ -3,15 +3,15 @@ import { SeeProfileService } from "../../../services/both/profile/seeProfileServ
 
 export class SeeProfileController {
   async handle(request: Request, response: Response) {
-    const uid = request.params.uid;
-    console.log("123");
+    const uId = response.locals.uid;
+
     try {
-      if (uid === undefined) {
+      if (uId === undefined) {
         throw new Error("Invalid request");
       }
 
       const seeProfileService = new SeeProfileService();
-      const resp = await seeProfileService.execute(uid);
+      const resp = await seeProfileService.execute(uId);
 
       response.status(resp.status).json(resp.data);
     } catch (e) {

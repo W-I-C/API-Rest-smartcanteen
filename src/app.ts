@@ -10,13 +10,13 @@ dotenv.config();
 
 const app = express();
 
-//app.use(cors({ credentials: true, origin: true }));
+app.use(cors({ credentials: true, origin: true }));
 app.use(express.json());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
-app.use("/api/v1/both", bothRouter);
+app.use("/api/v1", bothRouter);
 app.use("/api/v1/employee", employeeRouter);
 
 

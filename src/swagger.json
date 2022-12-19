@@ -1,183 +1,156 @@
 {
-
-    "openapi": "3.0.0",
-    "info": {
-      "title": "Documentação da API SmartCanteen",
-      "description": "Documentação da api de suporte à aplicação SmartCanteen",
-      "contact": { "name": "Teste", "email": "teste@teste.com" },
-      "version": "1.0.0"
-    },
-    "servers": [
-      { "url": "http://localhost:3000/api/v1", "description": "API de teste" }
-    ],
-    "paths": {
-
-      "/favoriteMeal/{favoriteMealId}":{
-        "post":{
-          "summary":"Add meal to favorites",
-          "description": "Adds a new favorite dish to the consumer",
-          "tags":["Favorite Meal"],
-          "parameters": [
-            {
-              "name": "favoriteMealId",
-              "in": "path",
-              "description": "Meal id",
-              "required": true,
-              "schema": { "properties": { "favoriteMealID": { "type": "string" } } }
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Documentação da API SmartCanteen",
+    "description": "Documentação da api de suporte à aplicação SmartCanteen",
+    "contact": { "name": "Teste", "email": "teste@teste.com" },
+    "version": "1.0.0"
+  },
+  "servers": [
+    { "url": "http://localhost:3000/api/v1", "description": "API de teste" }
+  ],
+  "paths": {
+    "/consumers/{favoriteMealId}": {
+      "post": {
+        "summary": "Add meal to favorites",
+        "description": "Adds a new favorite dish to the consumer",
+        "tags": ["Favorite Meal"],
+        "parameters": [
+          {
+            "name": "favoriteMealId",
+            "in": "path",
+            "description": "Meal id",
+            "required": true,
+            "schema": {
+              "properties": { "favoriteMealID": { "type": "string" } }
             }
-        
-          ],
-      
-          "responses": {
-            "500": { "description": "ERROR" },
-            "200": {
-              "description": "OK",
-              "content": {
-                "application/json": {
-                  "schema": { "properties": { "msg": { "type": "string" } } },
-                  "examples": {
-                    "Add meal to favorites": {
-                      "value": { "msg": "Refeição adicionada aos favoritos" }
-                    }
+          }
+        ],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Add meal to favorites": {
+                    "value": { "msg": "Refeição adicionada aos favoritos" }
                   }
                 }
               }
             }
           }
         }
-      },
-                "/consumers/{mealId}":{
-                  "post":{
-                    "summary":"Add meal to cart",
-                    "description": "Add a meal to cart ",
-                    "tags":["Favorite Meal"],
-                    "parameters": [
-                      {
-                        "name": "mealId",
-                        "in": "path",
-                        "description": "Meal id",
-                        "required": true,
-                        "schema": { "properties": { "mealId": { "type": "string" } } }
-                      }
-                    ],
-                    "responses": {
-                      "500": { "description": "ERROR" },
-                      "200": {
-                        "description": "OK",
-                        "content": {
-                          "application/json": {
-                            "schema": { "properties": { "msg": { "type": "string" } } },
-                            "examples": {
-                              "Add meal to favorites": {
-                                "value": { "msg": "Refeição adicionada ao carrinho" }
-                              }
-                            }
-                          }      
-                        }
-                      }
-                    }
-                  }
-                },
-                "/employee/meal/{barId}":{
-                  "post":{
-                    "summary":"Create meal",
-                    "description": "create meal",
-                    "tags":["Meal"],
-                    "parameters": [
-                      {
-                        "name": "barId",
-                        "in": "path",
-                        "description": "bar id",
-                        "required": true,
-                        "schema": { "properties": { "barId": { "type": "string" } } }
-                      }
-                      
-                
-                    ],
-                    "requestBody": {
-                      "content": {
-                        "application/json": {
-                          "schema": {
-                            "properties": {
-                              "name": { "type": "string" },
-                              "preparationTime": { "type": "number" },
-                              "description": { "type": "string" },
-                              "canTakeAway": { "type": "number" },
-                              "price": { "type": "number" }
-                        
-                            }
-                          },
-                          "examples": {
-                            "criar refeição": {
-                              "value": {
-                                "name": "Francesinha",
-                                "preparationTime": 30,
-                                "description": "Francesinha com molho e batata",
-                                "canTakeaway": 1,
-                                "price": 6
-                             
-                              }
-                            }
-                          }
-                        }
-                      }
-                    
-
-                    },
-                    "responses": {
-                      "500": { "description": "ERROR" },
-                      "200": {
-                        "description": "OK",
-                        "content": {
-                          "application/json": {
-                            "schema": { "properties": { "msg": { "type": "string" } } },
-                            "examples": {
-                              "Create meal": {
-                                "value": { "msg": "Meal created" }
-
-
-                              }
-                            }
-                          }      
-                        }
-                      }
-                    }
-                  }
-                },
-
-
-              "/{uid}/profile": {
-                "get": {
-                  "summary": "View my profile",
-                  "description": "This route allows a user of the application to view his profile",
-                  "tags": ["Profile"],
-                  "parameters": [
-                    {
-                      "name": "uid",
-                      "in": "path",
-                      "description": "user Id",
-                      "required": true,
-                      "schema": { "properties": { "uid": { "type": "string" } } }
-                    }
-                  ],
-                  "responses": {
-                    "500": { "description": "ERROR" },
-                    "200": {
-                      "description": "OK",
-                      "content": {
-                        "application/json": {
-                          "schema": { "properties": { "msg": { "type": "string" } } }
-
-                        }
-                      }
-                    }
+      }
+    },
+    "/consumers/{mealId}": {
+      "post": {
+        "summary": "Add meal to cart",
+        "description": "Add a meal to cart ",
+        "tags": ["Favorite Meal"],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "Meal id",
+            "required": true,
+            "schema": { "properties": { "mealId": { "type": "string" } } }
+          }
+        ],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Add meal to favorites": {
+                    "value": { "msg": "Refeição adicionada ao carrinho" }
                   }
                 }
               }
-
-
- }
+            }
+          }
+        }
+      }
+    },
+    "/employee/meal/{barId}": {
+      "post": {
+        "summary": "Create meal",
+        "description": "create meal",
+        "tags": ["Meal"],
+        "parameters": [
+          {
+            "name": "barId",
+            "in": "path",
+            "description": "bar id",
+            "required": true,
+            "schema": { "properties": { "barId": { "type": "string" } } }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": { "type": "string" },
+                  "preparationTime": { "type": "number" },
+                  "description": { "type": "string" },
+                  "canTakeAway": { "type": "number" },
+                  "price": { "type": "number" }
+                }
+              },
+              "examples": {
+                "criar refeição": {
+                  "value": {
+                    "name": "Francesinha",
+                    "preparationTime": 30,
+                    "description": "Francesinha com molho e batata",
+                    "canTakeaway": 1,
+                    "price": 6
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Create meal": {
+                    "value": { "msg": "Refeição creada" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile": {
+      "get": {
+        "summary": "View my profile",
+        "description": "This route allows a user of the application to view his profile",
+        "tags": ["Profile"],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
-        
-
-
