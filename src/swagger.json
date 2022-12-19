@@ -10,22 +10,22 @@
     { "url": "http://localhost:3000/api/v1", "description": "API de teste" }
   ],
   "paths": {
-    "/consumers/{favoriteMealId}":{
-      "post":{
-        "summary":"Add meal to favorites",
+    "/consumers/{favoriteMealId}": {
+      "post": {
+        "summary": "Add meal to favorites",
         "description": "Adds a new favorite dish to the consumer",
-        "tags":["Favorite Meal"],
+        "tags": ["Favorite Meal"],
         "parameters": [
           {
             "name": "favoriteMealId",
             "in": "path",
             "description": "Meal id",
             "required": true,
-            "schema": { "properties": { "favoriteMealID": { "type": "string" } } }
+            "schema": {
+              "properties": { "favoriteMealID": { "type": "string" } }
+            }
           }
-      
         ],
-    
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -44,11 +44,11 @@
         }
       }
     },
-    "/consumers/{mealId}":{
-      "post":{
-        "summary":"Add meal to cart",
+    "/consumers/{mealId}": {
+      "post": {
+        "summary": "Add meal to cart",
         "description": "Add a meal to cart ",
-        "tags":["Favorite Meal"],
+        "tags": ["Favorite Meal"],
         "parameters": [
           {
             "name": "mealId",
@@ -70,17 +70,17 @@
                     "value": { "msg": "Refeição adicionada ao carrinho" }
                   }
                 }
-              }      
+              }
             }
           }
         }
       }
     },
-    "/employee/meal/{barId}":{
-      "post":{
-        "summary":"Create meal",
+    "/employee/meal/{barId}": {
+      "post": {
+        "summary": "Create meal",
         "description": "create meal",
-        "tags":["Meal"],
+        "tags": ["Meal"],
         "parameters": [
           {
             "name": "barId",
@@ -100,7 +100,6 @@
                   "description": { "type": "string" },
                   "canTakeAway": { "type": "number" },
                   "price": { "type": "number" }
-            
                 }
               },
               "examples": {
@@ -111,7 +110,6 @@
                     "description": "Francesinha com molho e batata",
                     "canTakeaway": 1,
                     "price": 6
-                  
                   }
                 }
               }
@@ -130,7 +128,7 @@
                     "value": { "msg": "Refeição creada" }
                   }
                 }
-              }      
+              }
             }
           }
         }
@@ -157,7 +155,6 @@
             "content": {
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } }
-
               }
             }
           }
@@ -166,6 +163,3 @@
     }
   }
 }
-        
-
-

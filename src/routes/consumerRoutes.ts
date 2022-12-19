@@ -17,7 +17,7 @@ const addMealCartController= new AddMealCartController();
 
 
 //adicionar aos favoritos refeição
-consumerRoute.post("/:favoriteMealId", addFavController.handle);
+consumerRoute.post("/:userId/favoriteMeals/:favoriteMealId", addFavController.handle);
 consumerRoute.delete("/:userId/favoriteMeals/:favoriteMealId", removeFavController.handle);
 consumerRoute.get("/:userId/favoriteMeals", seeFavController.handle);
 consumerRoute.post("/:mealId", addMealCartController.handle);
