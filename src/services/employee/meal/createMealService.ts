@@ -25,12 +25,14 @@ export class CreateMealService {
     }:ICreateMealService) {
 
         const createMeal= createClient();
+        const selectmeal = createClient();
         const query= await createMeal.query('INSERT INTO Meals (name, preparationTime,description,canTakeaway,price,barId) VALUES ($1,$2,$3,$4,$5,$6)', [name,preparationTime,description,canTakeaway,price,barId])
         
+        const meals= await selectmeal.query('SELECT * from Meals')
 
 
 
-        return { data: {query}, status: 200 }
+        return { data: {meals}, status: 200 }
    
     }
 }

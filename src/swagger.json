@@ -12,7 +12,7 @@
     ],
     "paths": {
 
-      "/consumers/{favoriteMealId}":{
+      "/favoriteMeal/{favoriteMealId}":{
         "post":{
           "summary":"Add meal to favorites",
           "description": "Adds a new favorite dish to the consumer",
@@ -133,7 +133,7 @@
                             "schema": { "properties": { "msg": { "type": "string" } } },
                             "examples": {
                               "Create meal": {
-                                "value": { "msg": "Refeição creada" }
+                                "value": { "msg": "Meal created" }
 
 
                               }
