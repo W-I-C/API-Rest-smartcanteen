@@ -58,7 +58,6 @@
             "schema": { "properties": { "mealId": { "type": "string" } } }
           }
         ],
-    
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -69,8 +68,66 @@
                 "examples": {
                   "Add meal to favorites": {
                     "value": { "msg": "Refeição adicionada ao carrinho" }
-
-
+                  }
+                }
+              }      
+            }
+          }
+        }
+      }
+    },
+    "/employee/meal/{barId}":{
+      "post":{
+        "summary":"Create meal",
+        "description": "create meal",
+        "tags":["Meal"],
+        "parameters": [
+          {
+            "name": "barId",
+            "in": "path",
+            "description": "bar id",
+            "required": true,
+            "schema": { "properties": { "barId": { "type": "string" } } }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": { "type": "string" },
+                  "preparationTime": { "type": "number" },
+                  "description": { "type": "string" },
+                  "canTakeAway": { "type": "number" },
+                  "price": { "type": "number" }
+            
+                }
+              },
+              "examples": {
+                "criar refeição": {
+                  "value": {
+                    "name": "Francesinha",
+                    "preparationTime": 30,
+                    "description": "Francesinha com molho e batata",
+                    "canTakeaway": 1,
+                    "price": 6
+                  
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Create meal": {
+                    "value": { "msg": "Refeição creada" }
                   }
                 }
               }      
