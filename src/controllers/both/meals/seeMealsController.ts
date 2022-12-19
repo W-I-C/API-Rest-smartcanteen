@@ -1,17 +1,19 @@
 import { Request, Response } from "express";
-import { SeeFavService } from "../../../services/consumer/favoriteMeal/seeFavService";
+import { SeeMealsService } from "../../../services/both/meals/seeMealsService";
 
-export class SeeFavController {
+
+export class SeeMealsController {
     async handle(request: Request, response: Response) {
-        const uId = request.params.uid;
+        const barId = request.params.barId;
+       
 
         try {
-            if(uId === undefined) {
+            if(barId === undefined) {
                 throw new Error("Invalid request");
             }
 
-            const seeFavService = new SeeFavService();
-            const resp = await seeFavService.execute(uId);
+            const seeMealsService = new SeeMealsService();
+            const resp = await seeMealsService.execute(barId);
 
             response.status(resp.status).json(resp.data);
         } catch(e) {

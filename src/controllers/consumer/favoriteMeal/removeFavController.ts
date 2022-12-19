@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { RemoveFavService } from "../../../services/consumer/FavoriteMeal/removeFavService";
+import { RemoveFavService } from "../../../services/consumer/favoriteMeal/removeFavService";
 
 export class RemoveFavController {
     async handle(request: Request, response: Response) {

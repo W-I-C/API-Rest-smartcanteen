@@ -10,19 +10,28 @@
     { "url": "http://localhost:3000/api/v1", "description": "API de teste" }
   ],
   "paths": {
-    "/consumers/{favoriteMealId}": {
+    "/consumer/favoriteMeal/{mealId}/{uId}": {
       "post": {
         "summary": "Add meal to favorites",
         "description": "Adds a new favorite dish to the consumer",
         "tags": ["Favorite Meal"],
         "parameters": [
           {
-            "name": "favoriteMealId",
+            "name": "mealId",
             "in": "path",
             "description": "Meal id",
             "required": true,
             "schema": {
-              "properties": { "favoriteMealID": { "type": "string" } }
+              "properties": { "mealId": { "type": "string" } }
+            }
+          },
+          {
+            "name": "uId",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "schema": {
+              "properties": { "uId": { "type": "string" } }
             }
           }
         ],
@@ -68,6 +77,38 @@
                 "examples": {
                   "Add meal to favorites": {
                     "value": { "msg": "Refeição adicionada ao carrinho" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/meals/{barId}": {
+      "get": {
+        "summary": "get meal from a bar",
+        "description": "get a meal from a bar ",
+        "tags": ["Meal"],
+        "parameters": [
+          {
+            "name": "barId",
+            "in": "path",
+            "description": "bar id",
+            "required": true,
+            "schema": { "properties": { "barId": { "type": "string" } } }
+          }
+        ],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "See meals": {
+                    "value": { "msg": "refeições de bar" }
                   }
                 }
               }

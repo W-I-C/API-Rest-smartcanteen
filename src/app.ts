@@ -4,6 +4,7 @@ import swaggerDocs from "./swagger.json"
 import dotenv from "dotenv";
 import { bothRouter } from "./routes/bothRoutes";
 import { employeeRouter } from './routes/employeeRoutes';
+import { consumerRouter } from './routes/consumerRoutes';
 import cors from "cors";
 
 dotenv.config();
@@ -16,8 +17,9 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
-app.use("/api/v1", bothRouter);
+app.use("/api/v1/both", bothRouter);
 app.use("/api/v1/employee", employeeRouter);
+app.use("/api/v1/consumer", consumerRouter);
 
 
 
