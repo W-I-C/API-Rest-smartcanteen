@@ -5,9 +5,7 @@ export async function validateRefreshToken(request: Request, response: Response,
 
   // header > Bearer token > split(" ") > ["Bearer", "token"] > "token"
   const uid = response.locals.uid
-  console.log(uid)
   const token = await getRefreshToken(uid)
-  console.log(token)
   try {
     // verify if token is from us and if is expired
     const verified = verify(token, process.env.JWT_REFRESH_TOKEN_KEY)
