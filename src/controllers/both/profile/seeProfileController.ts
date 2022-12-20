@@ -1,7 +1,20 @@
+/**
+ * @module seeProfileController
+ */
 import { Request, Response } from "express";
 import { SeeProfileService } from "../../../services/both/profile/seeProfileService";
 
+/**
+ * Class responsible for receiving and calling the methods of the service that allows the user to see the data from his profile
+ */
 export class SeeProfileController {
+  /**
+   * Allows to obtain all the user's data, redirected afterwards to the associated service
+   *
+   * {@link seeProfileService}
+   * @param request request receive.
+   * @param response response.
+   */
   async handle(request: Request, response: Response) {
     const uId = response.locals.uid;
 
