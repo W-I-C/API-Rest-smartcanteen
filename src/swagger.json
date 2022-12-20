@@ -10,7 +10,7 @@
     { "url": "http://localhost:3000/api/v1", "description": "API de teste" }
   ],
   "paths": {
-    "/consumer/favoriteMeal/{mealId}/{uId}": {
+    "/consumer/favoriteMeal/{mealId}": {
       "post": {
         "summary": "Add meal to favorites",
         "description": "Adds a new favorite dish to the consumer",
@@ -23,15 +23,6 @@
             "required": true,
             "schema": {
               "properties": { "mealId": { "type": "string" } }
-            }
-          },
-          {
-            "name": "uId",
-            "in": "path",
-            "description": "user id",
-            "required": true,
-            "schema": {
-              "properties": { "uId": { "type": "string" } }
             }
           }
         ],
