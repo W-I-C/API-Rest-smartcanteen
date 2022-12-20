@@ -22,6 +22,9 @@ bothRouter.post("/login", loginController.handle);
 bothRouter.get("/newSessionToken", newSessionToken.handle);
 bothRouter.get("/logout", validateToken, validateRefreshToken, logoutController.handle);
 
-bothRouter.get("/meals/:barId", seeMealsController.handle);
+
+
+// ver as refeições num bar
+bothRouter.get("/meals/:barId",validateToken,validateRefreshToken, seeMealsController.handle);
 
 export { bothRouter };

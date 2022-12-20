@@ -5,12 +5,16 @@ import { createClient } from "../../../config/db";
 export class SeeMealsService {
  
     //esta mal
-    async execute( barId:string) {
+    async execute( barId:string,uId:string) {
 
         
-        const fav =createClient();
-
-        const query= await fav.query('SELECT * from Meals WHERE barId=($1)'[barId])
+        const seeMeals =createClient();
+        
+        
+        const query= await seeMeals.query('SELECT * from Meals WHERE barId=($1)',[barId])
+        
+        
+      
 
         return { data: {query}, status: 200 }
    

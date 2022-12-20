@@ -3,7 +3,7 @@ import { AddFavService } from "../../../services/consumer/favoriteMeal/addFavSer
 
 export class AddFavController {
     async handle(request: Request, response: Response) {
-        const uId = request.params.uId;
+        const uId = response.locals.uId;
         const mealId=request.params.mealId;
 
         try {
