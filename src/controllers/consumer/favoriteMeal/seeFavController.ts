@@ -2,7 +2,7 @@
  * @module seeFavController
  */
 import { Request, Response } from "express";
-import { SeeFavService } from "../../../services/consumer/FavoriteMeal/seeFavService";
+import { SeeFavService } from "../../../services/consumer/favoriteMeal/seeFavService";
 
 /**
  * Class responsible for receiving and calling the service methods that allow the user to see all the meals he has already added to favorites
