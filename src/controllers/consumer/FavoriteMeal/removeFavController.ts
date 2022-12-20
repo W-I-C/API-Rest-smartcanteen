@@ -1,9 +1,22 @@
+/**
+ * @module removeFavController
+ */
 import { Request, Response } from "express";
 import { RemoveFavService } from "../../../services/consumer/FavoriteMeal/removeFavService";
 
+/**
+ * Class responsible for receiving and calling the service methods that allow the user to remove a meal from favorites
+ */
 export class RemoveFavController {
+    /**
+   * Allows you to remove a meal from the favorites, redirected afterwards to the associated service
+   *
+   * {@link seeProfileService}
+   * @param request request receive.
+   * @param response response.
+   */
     async handle(request: Request, response: Response) {
-        const uId = request.params.userId;
+        const uId = response.locals.uid;
         const favMealId = request.params.favoriteMealId;
 
         try {

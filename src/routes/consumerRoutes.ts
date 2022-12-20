@@ -1,6 +1,7 @@
 import express from "express";
-const consumerRoute = express.Router();
-
+const consumerRouter = express.Router();
+import { validateToken } from "../middlewares/validateToken";
+import { validateRefreshToken } from "../middlewares/validateRefreshToken";
 
 
 import { AddFavController } from "../controllers/consumer/FavoriteMeal/addFavController";
@@ -17,7 +18,10 @@ const addMealCartController= new AddMealCartController();
 
 
 //adicionar aos favoritos refeição
-consumerRoute.post("/:userId/favoriteMeals/:favoriteMealId", addFavController.handle);
-consumerRoute.delete("/:userId/favoriteMeals/:favoriteMealId", removeFavController.handle);
-consumerRoute.get("/:userId/favoriteMeals", seeFavController.handle);
-consumerRoute.post("/:mealId", addMealCartController.handle);
+consumerRouter.post("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, addFavController.handle);
+consumerRouter.delete("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, removeFavController.handle);
+consumerRouter.get("/favoriteMeals", validateToken, validateRefreshToken, seeFavController.handle);
+consumerRouter.post("/:mealId", addMealCartController.handle);
+
+
+export { consumerRouter }
