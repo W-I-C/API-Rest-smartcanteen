@@ -1,30 +1,30 @@
 import express from "express";
 const consumerRouter = express.Router();
-
-
-
-import { AddFavController } from "../controllers/consumer/favoriteMeal/addFavController";
-//import { RemoveFavController } from "../controllers/consumer/FavoriteMeal/removeFavController";
-//import { SeeFavController } from "../controllers/consumer/FavoriteMeal/seeFavController";
-import { AddMealCartController } from "../controllers/consumer/cart/addMealCartController";
 import { validateToken } from "../middlewares/validateToken";
 import { validateRefreshToken } from "../middlewares/validateRefreshToken";
 
 
+import { AddFavController } from "../controllers/consumer/favoriteMeal/addFavController";
+import { AddMealCartController } from "../controllers/consumer/cart/addMealCartController";
+
+import { SeeFavController } from "../controllers/consumer/favoriteMeal/seeFavController";
+import { RemoveFavController } from "../controllers/consumer/favoriteMeal/removeFavController";
+
+
 
 const addFavController = new AddFavController();
-//const removeFavController = new RemoveFavController();
-//const seeFavController = new SeeFavController();
+const removeFavController = new RemoveFavController();
+const seeFavController = new SeeFavController();
 const addMealCartController= new AddMealCartController();
 
 
 
 
 //adicionar aos favoritos refeição
-consumerRouter.post("/favoriteMeal/:mealId", validateToken,validateRefreshToken, addFavController.handle);
-//consumerRoute.delete("/:userId/favoriteMeals/:favoriteMealId", removeFavController.handle);
-//consumerRoute.get("/:userId/favoriteMeals", seeFavController.handle);
+consumerRouter.post("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, addFavController.handle);
+consumerRouter.delete("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, removeFavController.handle);
+consumerRouter.get("/favoriteMeals", validateToken, validateRefreshToken, seeFavController.handle);
 consumerRouter.post("/:mealId", addMealCartController.handle);
 
 
-export{consumerRouter}
+export { consumerRouter }
