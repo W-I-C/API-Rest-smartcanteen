@@ -22,5 +22,5 @@ export async function createRefreshToken(uid: string) {
   // TODO: Encriptar Refresh token
   const refreshTokenDBClient = createClient();
   // TODO: Verificar se dá erro no insert
-  const insertRefreshTokenQuery = await refreshTokenDBClient.query(`UPDATE users SET "refreshToken" = $1 WHERE uid = $2`, [token, uid])
+  const insertRefreshTokenQuery = await refreshTokenDBClient.query(`UPDATE users SET "refreshtoken" = $1 WHERE uid = $2`, [token, uid])
 }

@@ -11,6 +11,7 @@ import { SeeOneFavController } from "../controllers/consumer/favoriteMeal/seeOne
 import { RemoveFavController } from "../controllers/consumer/favoriteMeal/removeFavController";
 import { SeeMealsCartController } from "../controllers/consumer/cart/seeMealCartController";
 import { SeeMealsController } from "../controllers/both/meals/seeMealsController";
+import { RemoveMealsCartController } from "../controllers/consumer/cart/removeMealsCartController";
 
 
 
@@ -20,7 +21,7 @@ const seeFavController = new SeeFavController();
 const seeOneFavController = new SeeOneFavController();
 const addMealCartController= new AddMealCartController();
 const seeMealsCartController=new SeeMealsCartController();
-
+const removeMealsCartController= new RemoveMealsCartController();
 
 //adicionar aos favoritos refeição
 consumerRouter.post("/favoriteMeals/:mealId", validateToken, validateRefreshToken, addFavController.handle);
@@ -29,6 +30,8 @@ consumerRouter.get("/favoriteMeals", validateToken, validateRefreshToken, seeFav
 consumerRouter.get("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, seeOneFavController.handle);
 consumerRouter.post("/:mealId", addMealCartController.handle);
 consumerRouter.get("/cart/meals",validateToken, validateRefreshToken,seeMealsCartController.handle);
+
+consumerRouter.delete("/meals/:cartMealId",validateToken, validateRefreshToken,removeMealsCartController.handle);
 
 
 export { consumerRouter }

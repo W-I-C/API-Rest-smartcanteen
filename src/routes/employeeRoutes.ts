@@ -12,6 +12,8 @@ const editMealController = new EditMealController();
 const removeMealController = new RemoveMealController();
 
 employeeRouter.post("/meal/:barId", validateToken, validateRefreshToken, createMealController.handle);
+
+
 employeeRouter.put("/meal/:mealId", validateToken, validateRefreshToken, editMealController.handle);
 employeeRouter.delete("/meal/:mealId", validateToken, validateRefreshToken, removeMealController.handle);
 
