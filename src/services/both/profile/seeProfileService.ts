@@ -17,8 +17,8 @@ export class SeeProfileService {
 
         // TODO: fazer JOIN para ir à outra tabela buscar o bar preferido e o url da imagem de perfil
         const query = await seeProfileDBClient.query(`SELECT users.name, campus.name AS campusName 
-                                            FROM users JOIN campus ON users.preferredCampus = campus.campusid 
-                                            WHERE users.uid = $1`, [uId])
+                                                        FROM users JOIN campus ON users.preferredCampus = campus.campusid 
+                                                        WHERE users.uid = $1`, [uId])
         
         const data = query["rows"][0]
 
