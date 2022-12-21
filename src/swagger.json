@@ -208,19 +208,29 @@
               "examples": {
                 "criar refeição": {
                   "value": {
-                    "name": "cachorro",
+                    "name": "bife com batata",
                     "preparationTime": 30,
-                    "description": "Francesinha com molho e batata",
-                    "canTakeaway": 1,
-                    "price": 6,
-                    "mealId":"",
-                    "ingname":"ovo",
-                    "ingdosage":"porção",
-                    "isremoveonly":1,
-                    "canbeincremented":1,
-                    "canbedecremented":1,
-                    "incrementedlimir":2,
-                    "decrementedlimit":1
+                    "description": "prego",
+                    "canTakeaway": true,
+                    "price": 0.02,
+                    "allowedChanges":[{		
+                      "ingname": "queijo",
+                      "ingdosage": "porção",
+                      "isremoveonly": true,
+                      "canbeincremented": true,
+                      "canbedecremented": true,
+                      "incrementedlimir": 2,
+                      "decrementedlimit": 1
+                    },
+                    {		
+                      "ingname": "fiambre",
+                      "ingdosage": "porção",
+                      "isremoveonly": true,
+                      "canbeincremented": true,
+                      "canbedecremented": true,
+                      "incrementedlimir": 2,
+                      "decrementedlimit": 1
+                    }]
                   }
                 }
               }
