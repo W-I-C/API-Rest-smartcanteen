@@ -197,6 +197,30 @@
         }
       }
     },
+    "/cart/meals": {
+      "get": {
+        "summary": "get meal from cart",
+        "description": "get a meal from cart ",
+        "tags": ["Meal"],
+        
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "See meals": {
+                    "value": { "msg": "Ver refeições " }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/employee/meal/{barId}": {
       "post": {
         "summary": "Create meal",
