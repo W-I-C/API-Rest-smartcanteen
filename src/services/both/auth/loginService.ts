@@ -3,7 +3,6 @@ import { createRefreshToken, createSessionToken } from "../../../helpers/jwtHelp
 
 export class LoginService {
   async execute(email: string, password: string) {
-
     // obter dados do user
     const loginDBClient = createClient();
     const query = await loginDBClient.query(`SELECT uid,userrole.name FROM users 
@@ -14,7 +13,6 @@ export class LoginService {
     // dados a carregar no token
     const role = query['rows'][0]['name']
     const uid = query['rows'][0]['uid']
-
 
     const sessionToken = createSessionToken(uid, role)
 

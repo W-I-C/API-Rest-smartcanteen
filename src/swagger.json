@@ -100,7 +100,7 @@
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
-                  "See meals": {
+                  "See one favorite meal": {
                     "value": { "msg": "Successfully obtained favorite meal" }
                   }
                 }
@@ -123,7 +123,7 @@
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
-                  "Remove meal from favorites": {
+                  "Get all favorites meals": {
                     "value": { "msg": "Successfully obtained all the favorite meals" }
                   }
                 }
@@ -435,6 +435,29 @@
                 "examples": {
                   "Create meal": {
                     "value": { "msg": "Successfully edited meal" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consumer/tickets": {
+      "get": {
+        "summary": "Get all orders",
+        "description": "Get all the orders of the authenticated user",
+        "tags": ["Favorite Meal"],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Get all orders": {
+                    "value": { "msg": "Successfully obtained all orders" }
                   }
                 }
               }
