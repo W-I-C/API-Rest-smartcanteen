@@ -19,7 +19,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use("/api/v1", bothRouter);
 app.use("/api/v1/consumer", consumerRouter);
 app.use("/api/v1/employee", employeeRouter);
-app.use("/api/v1/consumer", consumerRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
