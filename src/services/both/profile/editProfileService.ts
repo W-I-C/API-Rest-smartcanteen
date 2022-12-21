@@ -5,6 +5,10 @@ require('dotenv').config();
 import { createClient } from "../../../config/db";
 import { checkCampusExists } from "../../../validations/both/profile/editProfileValidation";
 
+/**
+ * @param uId authenticated user id
+ * @param preferredCampus user's preferred campus
+ */
 export interface IEditProfileService {
     uId: string;
     preferredCampus: string
@@ -16,7 +20,6 @@ export interface IEditProfileService {
 export class EditProfileService {
     /**
      * Method that allows editing the authenticated user's profile data
-     * @param uId authenticated user id
      */
     async execute({uId, preferredCampus}:IEditProfileService){
         const editProfileDBClient = createClient();
