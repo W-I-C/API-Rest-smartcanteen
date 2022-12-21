@@ -108,6 +108,45 @@
         }
       }
     },
+    "/meals/{cartMealId}": {
+      "delete": {
+        "summary": "delete from cart",
+        "description": "delete from cart ",
+        "tags": ["Meal cart"],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "meal id",
+            "required": true,
+            "schema": { "properties": { "barId": { "type": "string" } } }
+          },
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "cart id",
+            "required": true,
+            "schema": { "properties": { "barId": { "type": "string" } } }
+          }
+        ],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "See meals": {
+                    "value": { "msg": "Eliminar refeição do carrinho" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/cart/meals": {
       "get": {
         "summary": "get meal from cart",
