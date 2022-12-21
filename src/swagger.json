@@ -447,7 +447,7 @@
       "get": {
         "summary": "Get all orders",
         "description": "Get all the orders of the authenticated user",
-        "tags": ["Favorite Meal"],
+        "tags": ["Tickets"],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -458,6 +458,29 @@
                 "examples": {
                   "Get all orders": {
                     "value": { "msg": "Successfully obtained all orders" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee/tickets": {
+      "get": {
+        "summary": "Get all orders of the bar",
+        "description": "Get all the orders of the bar where the authenticated user works",
+        "tags": ["Tickets"],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Get all orders": {
+                    "value": { "msg": "Successfully obtained all orders from the bar" }
                   }
                 }
               }
