@@ -4,16 +4,19 @@ import { validateToken } from "../middlewares/validateToken";
 import { validateRefreshToken } from "../middlewares/validateRefreshToken";
 
 
-import { AddFavController } from "../controllers/consumer/FavoriteMeal/addFavController";
-import { RemoveFavController } from "../controllers/consumer/FavoriteMeal/removeFavController";
-import { SeeFavController } from "../controllers/consumer/FavoriteMeal/seeFavController";
+import { AddFavController } from "../controllers/consumer/favoriteMeal/addFavController";
 import { AddMealCartController } from "../controllers/consumer/cart/addMealCartController";
+
+import { SeeFavController } from "../controllers/consumer/favoriteMeal/seeFavController";
+import { RemoveFavController } from "../controllers/consumer/favoriteMeal/removeFavController";
+
 
 
 const addFavController = new AddFavController();
 const removeFavController = new RemoveFavController();
 const seeFavController = new SeeFavController();
 const addMealCartController= new AddMealCartController();
+
 
 
 

@@ -2,7 +2,7 @@
  * @module removeFavController
  */
 import { Request, Response } from "express";
-import { RemoveFavService } from "../../../services/consumer/FavoriteMeal/removeFavService";
+import { RemoveFavService } from "../../../services/consumer/favoriteMeal/removeFavService";
 
 /**
  * Class responsible for receiving and calling the service methods that allow the user to remove a meal from favorites

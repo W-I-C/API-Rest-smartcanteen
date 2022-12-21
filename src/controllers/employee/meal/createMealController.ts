@@ -7,9 +7,9 @@ import { CreateMealService } from "../../../services/employee/meal/createMealSer
 export class CreateMealController {
     async handle(request: Request, response: Response) {
         const barId= request.params.barId;
-        
+        const uId=response.locals.uid;
         let { name, preparationTime, description, canTakeaway, price} = request.body;
-        console.log({name,preparationTime,description,canTakeaway,price});
+        
 
        
         try {
@@ -22,11 +22,14 @@ export class CreateMealController {
               price === undefined
               
             ) {
-              throw new Error("Pedido inválido");
+              throw new Error("Some parameter is incorrect");
             }
 
             const createMealService = new CreateMealService();
+
+          
             const resp = await createMealService.execute({
+               uId,
                 barId,
                 name,
                 preparationTime,
