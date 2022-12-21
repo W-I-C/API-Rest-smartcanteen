@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Documentação da API SmartCanteen",
-    "description": "Documentação da api de suporte à aplicação SmartCanteen",
+    "title": "API SmartCanteen documentation",
+    "description": "SmartCanteen application support api documentation",
     "contact": { "name": "Teste", "email": "teste@teste.com" },
     "version": "1.0.0"
   },
@@ -10,7 +10,7 @@
     { "url": "http://localhost:3000/api/v1", "description": "API de teste" }
   ],
   "paths": {
-    "/consumer/favoriteMeal/{mealId}": {
+    "/consumer/favoriteMeals/{mealId}": {
       "post": {
         "summary": "Add meal to favorites",
         "description": "Adds a new favorite dish to the consumer",
@@ -36,6 +36,95 @@
                 "examples": {
                   "Add meal to favorites": {
                     "value": { "msg": "Refeição adicionada aos favoritos" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consumer/favoriteMeals/{favMealId}": {
+      "delete": {
+        "summary": "Remove a meal from favorites",
+        "description": "Remove a specific meal from the favorites of the authenticated user",
+        "tags": ["Favorite Meal"],
+        "parameters": [
+          {
+            "name": "favMealId",
+            "in": "path",
+            "description": "Favorite Meal id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Remove meal from favorites": {
+                    "value": { "msg": "Meal removed from favorites with success" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get one favorite meal",
+        "description": "Get a specific meal from the favorites of the authenticated user",
+        "tags": ["Favorite Meal"],
+        "parameters": [
+          {
+            "name": "favMealId",
+            "in": "path",
+            "description": "Favorite Meal id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "See meals": {
+                    "value": { "msg": "Successfully obtained favorite meal" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consumer/favoriteMeals": {
+      "get": {
+        "summary": "Get all the favorite meals",
+        "description": "Get all the favorite meals of the authenticated user",
+        "tags": ["Favorite Meal"],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Remove meal from favorites": {
+                    "value": { "msg": "Successfully obtained all the favorite meals" }
                   }
                 }
               }
@@ -78,8 +167,8 @@
     },
     "/meals/{barId}": {
       "get": {
-        "summary": "get meal from a bar",
-        "description": "get a meal from a bar ",
+        "summary": "Get meal from a bar",
+        "description": "Get a meal from a bar ",
         "tags": ["Meal"],
         "parameters": [
           {
@@ -181,6 +270,116 @@
               }
             }
           }
+        }
+      },
+      "put": {
+        "summary": "Edit profile",
+        "description": "Edit the profile of the authenticated user",
+        "tags": ["Profile"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Profile"
+              },
+              "examples": {
+                "Edit Meal": {
+                  "value": {
+                    "preferredCampus": "1bb9eb90-3a9c-4cb9-8e41-3354f99e3d6f"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Create meal": {
+                    "value": { "msg": "Successfully edited profile" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee/meal/{mealId}": {
+      "put": {
+        "summary": "Edit meal",
+        "description": "edit meal",
+        "tags": ["Meal"],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "bar id",
+            "required": true,
+            "schema": { "properties": { "mealId": { "type": "string" } } }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Meal"
+              },
+              "examples": {
+                "Edit Meal": {
+                  "value": {
+                    "name": "Francesinha",
+                    "preparationTime": 30,
+                    "description": "Francesinha com molho e batata",
+                    "canTakeaway": 1,
+                    "price": 6
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Create meal": {
+                    "value": { "msg": "Successfully edited meal" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Meal": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "preparationTime": { "type": "string" },
+          "description": { "type": "number" },
+          "canTakeAway": { "type": "number" },
+          "dataInicio": { "type": "string" },
+          "price": { "type": "number" }
+        }
+      },
+      "Profile": {
+        "type": "object",
+        "properties": {
+          "preferredCampus": { "type": "string" }
         }
       }
     }

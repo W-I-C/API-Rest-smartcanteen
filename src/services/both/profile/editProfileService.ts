@@ -3,15 +3,19 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-import { checkCampusExists } from "../../../validations/both/profile/editProfileValidation";
+import { EditProfileValidator } from "../../../validations/both/profile/editProfileValidation";
 
 /**
  * @param uId authenticated user id
  * @param preferredCampus user's preferred campus
+ * @param preferredBar user's preferred bar
+ * @param imgurl url of the user profile image
  */
 export interface IEditProfileService {
     uId: string,
     preferredCampus: string
+    preferredBar: string,
+    imgurl: string
 }
 
 /**
@@ -21,15 +25,16 @@ export class EditProfileService {
     /**
      * Method that allows editing the authenticated user's profile data
      */
-    async execute({uId, preferredCampus}:IEditProfileService){
+    async execute({uId, preferredCampus, preferredBar, imgurl}:IEditProfileService){
         const editProfileDBClient = createClient();
 
-        // TODO: validação para bar (imagem url faz sentido?)
-        if(await checkCampusExists(preferredCampus)) {
-            // TODO: falta o bar e o url da imagem de perfil
+        const editProfileVallidator = new EditProfileValidator();
+        const resp = await editProfileVallidator.validate(preferredCampus, preferredBar);
+
+        if(resp) {
             const query = await editProfileDBClient.query(`UPDATE users
-            SET preferredcampus = $1   
-            WHERE users.uid = $2`, [preferredCampus, uId])
+            SET preferredcampus = $1, preferredBar = $2, imgurl = $3   
+            WHERE users.uid = $4`, [preferredCampus, preferredBar, imgurl, uId])
 
             const data = query["rows"][0]
 
