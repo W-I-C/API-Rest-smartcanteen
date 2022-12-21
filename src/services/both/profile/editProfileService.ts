@@ -10,7 +10,7 @@ import { checkCampusExists } from "../../../validations/both/profile/editProfile
  * @param preferredCampus user's preferred campus
  */
 export interface IEditProfileService {
-    uId: string;
+    uId: string,
     preferredCampus: string
 }
 

@@ -5,6 +5,7 @@ require('dotenv').config();
 import { createClient } from "../../../config/db";
 
 /**
+ * @param uId authenticated user id
  * @param mealId id of the meal to be changed
  * @param barId id of the bar with which the meal will be associated
  * @param name meal name
@@ -14,6 +15,7 @@ import { createClient } from "../../../config/db";
  * @param price price of the meal
  */
 export interface IEditMealService {
+    uId: string,
     mealId: string,
     name: string,
     preparationTime: number,
@@ -30,6 +32,7 @@ export class EditMealService {
      * Method that allows you to edit the data of a meal
      */
     async execute({
+        uId,
         mealId,
         name,
         preparationTime,

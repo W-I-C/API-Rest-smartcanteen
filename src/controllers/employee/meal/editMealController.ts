@@ -16,12 +16,14 @@ export class EditMealController {
      * @param request request receive.
      * @param response response.
      */
+    const uId = response.locals.uid
     const mealId = request.params.mealId;
 
     let { name, preparationTime, description, canTakeaway, price } = request.body;
 
     try {
       if (
+        uId === undefined ||
         mealId === undefined ||
         name === undefined ||
         preparationTime === undefined ||
@@ -34,6 +36,7 @@ export class EditMealController {
 
       const editMealService = new EditMealService();
       const resp = await editMealService.execute({
+        uId,
         mealId,
         name,
         preparationTime,

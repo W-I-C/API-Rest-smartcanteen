@@ -10,7 +10,7 @@ const createMealController = new CreateMealController();
 const editMealController = new EditMealController();
 
 employeeRouter.post("/meal/:barId", validateToken, validateRefreshToken, createMealController.handle);
-employeeRouter.put("/meal/:mealId", validateToken, editMealController.handle);
+employeeRouter.put("/meal/:mealId", validateToken, validateRefreshToken, editMealController.handle);
 
 
 
