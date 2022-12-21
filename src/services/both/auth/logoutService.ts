@@ -6,7 +6,7 @@ export class LogoutService {
 
     // obter dados do user
     const loginDBClient = createClient();
-    const query = await loginDBClient.query(`UPDATE users SET "refreshToken"='' WHERE uid = $1
+    const query = await loginDBClient.query(`UPDATE users SET "refreshtoken"='' WHERE uid = $1
                                               `, [uid])
     // TODO: Adicionar o token de sessão à black list
   }

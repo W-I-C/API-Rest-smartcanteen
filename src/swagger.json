@@ -194,17 +194,33 @@
                   "preparationTime": { "type": "number" },
                   "description": { "type": "string" },
                   "canTakeAway": { "type": "number" },
-                  "price": { "type": "number" }
+                  "price": { "type": "number" },
+                  "ingname":{"type":"string"},
+                  "ingdosage":{"type":"string"},
+                  "isremoveonly":{"type":"number"},
+                  "canbeincremented":{"type":"number"},
+                  "canbedecremented":{"type":"number"},
+                  "incrementlimit":{"type":"number"},
+                  "decrementlimit":{"type":"number"}
+
                 }
               },
               "examples": {
                 "criar refeição": {
                   "value": {
-                    "name": "Francesinha",
+                    "name": "cachorro",
                     "preparationTime": 30,
                     "description": "Francesinha com molho e batata",
                     "canTakeaway": 1,
-                    "price": 6
+                    "price": 6,
+                    "mealId":"",
+                    "ingname":"ovo",
+                    "ingdosage":"porção",
+                    "isremoveonly":1,
+                    "canbeincremented":1,
+                    "canbedecremented":1,
+                    "incrementedlimir":2,
+                    "decrementedlimit":1
                   }
                 }
               }
