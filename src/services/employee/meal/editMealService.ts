@@ -41,6 +41,8 @@ export class EditMealService {
         price
     }:IEditMealService) {
         // TODO: validação para ver se o barid da meal é o mesmo que o do funcionário
+        // TODO: array de alterações da refeição
+        // TODO: verificar se o tipo de cada variável está correto - qual o tipo do canTakeAway e do price?
         const editMealDBClient= createClient();
         const query= await editMealDBClient.query(`UPDATE meals
                                                     SET name = $1, preparationTime = $2, description = $3, canTakeAway = $4, price = $5

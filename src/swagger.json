@@ -309,7 +309,9 @@
               "examples": {
                 "Edit Meal": {
                   "value": {
-                    "preferredCampus": "1bb9eb90-3a9c-4cb9-8e41-3354f99e3d6f"
+                    "preferredCampus": "13be23c1-2e9b-43fc-acaa-839c6b3573bc",
+                    "preferredBar": "0d9c0499-f2f8-44d5-9b49-a0529266433a",
+                    "imgUrl": "teste"
                   }
                 }
               }
@@ -403,7 +405,9 @@
       "Profile": {
         "type": "object",
         "properties": {
-          "preferredCampus": { "type": "string" }
+          "preferredCampus": { "type": "string" },
+          "preferredBar": { "type": "string" },
+          "imgUrl": { "type": "string" }
         }
       }
     }

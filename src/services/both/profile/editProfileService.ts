@@ -15,7 +15,7 @@ export interface IEditProfileService {
     uId: string,
     preferredCampus: string
     preferredBar: string,
-    imgurl: string
+    imgUrl: string
 }
 
 /**
@@ -25,7 +25,7 @@ export class EditProfileService {
     /**
      * Method that allows editing the authenticated user's profile data
      */
-    async execute({uId, preferredCampus, preferredBar, imgurl}:IEditProfileService){
+    async execute({uId, preferredCampus, preferredBar, imgUrl}:IEditProfileService){
         const editProfileDBClient = createClient();
 
         const editProfileVallidator = new EditProfileValidator();
@@ -34,7 +34,7 @@ export class EditProfileService {
         if(resp) {
             const query = await editProfileDBClient.query(`UPDATE users
             SET preferredcampus = $1, preferredBar = $2, imgurl = $3   
-            WHERE users.uid = $4`, [preferredCampus, preferredBar, imgurl, uId])
+            WHERE users.uid = $4`, [preferredCampus, preferredBar, imgUrl, uId])
 
             const data = query["rows"][0]
 
