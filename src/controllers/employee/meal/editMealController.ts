@@ -10,7 +10,7 @@ import { EditMealService } from "../../../services/employee/meal/editMealService
 export class EditMealController {
   async handle(request: Request, response: Response) {
     /**
-     * Allows to obtain all the user's data, redirected afterwards to the associated service
+     * Allows to edit a meal, redirected afterwards to the associated service
      *
      * {@link editMealService}
      * @param request request receive.

@@ -11,7 +11,7 @@ export class RemoveFavController {
     /**
    * Allows you to remove a meal from the favorites, redirected afterwards to the associated service
    *
-   * {@link seeProfileService}
+   * {@link removeFavService}
    * @param request request receive.
    * @param response response.
    */
