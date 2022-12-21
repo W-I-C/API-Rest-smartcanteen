@@ -7,6 +7,8 @@ import { validateToken } from "../middlewares/validateToken";
 import { validateRefreshToken } from "../middlewares/validateRefreshToken";
 import { LogoutController } from "../controllers/both/auth/logoutController";
 import { SeeMealsController } from "../controllers/both/meals/seeMealsController";
+import { SeeMealsDetailController } from "../controllers/both/meals/seeMealsDetailContoller";
+
 
 
 
@@ -18,6 +20,7 @@ const loginController = new LoginController();
 const newSessionToken = new NewSessionTokenController();
 const logoutController = new LogoutController();
 const seeMealsController = new SeeMealsController();
+const seeMealsDetailController=new SeeMealsDetailController();
 
 bothRouter.get("/profile", validateToken, validateRefreshToken, seeProfileController.handle);
 bothRouter.put("/profile", validateToken, validateRefreshToken, editProfileController.handle);
@@ -25,6 +28,8 @@ bothRouter.post("/login", loginController.handle);
 bothRouter.get("/newSessionToken", newSessionToken.handle);
 bothRouter.get("/logout", validateToken, validateRefreshToken, logoutController.handle);
 
+
+bothRouter.get("/meals",validateToken, validateRefreshToken,seeMealsDetailController .handle);
 
 
 // ver as refeições num bar
