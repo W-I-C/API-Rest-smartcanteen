@@ -8,10 +8,13 @@ export class CreateMealController {
     async handle(request: Request, response: Response) {
         const barId= request.params.barId;
         const uId=response.locals.uid;
-        let { name, preparationTime, description, canTakeaway, price} = request.body;
-        
-
-       
+        let { name,
+            preparationTime, 
+            description,
+            canTakeaway, 
+            price,
+            allowedChanges} = request.body;
+               
         try {
             if (              
               barId=== undefined||
@@ -19,7 +22,8 @@ export class CreateMealController {
               preparationTime === undefined ||
               description === undefined ||
               canTakeaway === undefined ||
-              price === undefined
+              price === undefined||
+              allowedChanges===undefined
               
             ) {
               throw new Error("Some parameter is incorrect");
@@ -29,13 +33,14 @@ export class CreateMealController {
 
           
             const resp = await createMealService.execute({
-               uId,
+                uId,
                 barId,
                 name,
                 preparationTime,
                 description,
                 canTakeaway,
-                price
+                price,
+                allowedChanges
              });
  
             response.status(resp.status).json(resp.data);

@@ -108,6 +108,45 @@
         }
       }
     },
+    "/meals/{cartMealId}": {
+      "delete": {
+        "summary": "delete from cart",
+        "description": "delete from cart ",
+        "tags": ["Meal cart"],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "meal id",
+            "required": true,
+            "schema": { "properties": { "barId": { "type": "string" } } }
+          },
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "cart id",
+            "required": true,
+            "schema": { "properties": { "barId": { "type": "string" } } }
+          }
+        ],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "See meals": {
+                    "value": { "msg": "Eliminar refeição do carrinho" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/cart/meals": {
       "get": {
         "summary": "get meal from cart",
@@ -155,17 +194,33 @@
                   "preparationTime": { "type": "number" },
                   "description": { "type": "string" },
                   "canTakeAway": { "type": "number" },
-                  "price": { "type": "number" }
+                  "price": { "type": "number" },
+                  "ingname":{"type":"string"},
+                  "ingdosage":{"type":"string"},
+                  "isremoveonly":{"type":"number"},
+                  "canbeincremented":{"type":"number"},
+                  "canbedecremented":{"type":"number"},
+                  "incrementlimit":{"type":"number"},
+                  "decrementlimit":{"type":"number"}
+
                 }
               },
               "examples": {
                 "criar refeição": {
                   "value": {
-                    "name": "Francesinha",
+                    "name": "cachorro",
                     "preparationTime": 30,
                     "description": "Francesinha com molho e batata",
                     "canTakeaway": 1,
-                    "price": 6
+                    "price": 6,
+                    "mealId":"",
+                    "ingname":"ovo",
+                    "ingdosage":"porção",
+                    "isremoveonly":1,
+                    "canbeincremented":1,
+                    "canbedecremented":1,
+                    "incrementedlimir":2,
+                    "decrementedlimit":1
                   }
                 }
               }
