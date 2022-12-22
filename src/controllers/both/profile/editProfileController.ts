@@ -17,15 +17,15 @@ export class EditProfileController {
    */
   async handle(request: Request, response: Response) {
     const uId = response.locals.uid;
-    let { preferredCampus } = request.body
-
+    let { preferredCampus, preferredBar, imgUrl } = request.body
+    
     try {
-      if (uId === undefined || preferredCampus === undefined) {
+      if (uId === undefined || preferredCampus === undefined || preferredBar === undefined || imgUrl === undefined) {
         throw new Error("Invalid request");
       }
-
+      
       const editProfileService = new EditProfileService();
-      const resp = await editProfileService.execute({uId, preferredCampus});
+      const resp = await editProfileService.execute({uId, preferredCampus, preferredBar, imgUrl});
 
       response.status(resp.status).json(resp.data);
     } catch (e) {
