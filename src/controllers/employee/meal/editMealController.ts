@@ -19,7 +19,7 @@ export class EditMealController {
     const uId = response.locals.uid
     const mealId = request.params.mealId;
 
-    let { name, preparationTime, description, canTakeaway, price } = request.body;
+    let { name, preparationTime, description, canTakeaway, price, allowedChanges } = request.body;
 
     try {
       if (
@@ -29,9 +29,10 @@ export class EditMealController {
         preparationTime === undefined ||
         description === undefined ||
         canTakeaway === undefined ||
-        price === undefined
+        price === undefined ||
+        allowedChanges === undefined
       ) {
-        throw new Error("Pedido inválido");
+        throw new Error("Invalid request");
       }
 
       const editMealService = new EditMealService();
@@ -43,9 +44,10 @@ export class EditMealController {
         description,
         canTakeaway,
         price,
+        allowedChanges
       });
 
-      response.status(resp.status).json(resp.data);
+      response.status(resp.status).json(resp.msg);
     } catch (e) {
       response.status(500).json(e.message);
     }

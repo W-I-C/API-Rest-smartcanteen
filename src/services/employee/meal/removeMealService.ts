@@ -3,10 +3,12 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
+import { getMealBar } from "../../../validations/employee/meal/editMealValidation";
+import { checkMealExists, getEmployeeBar } from "../../../validations/employee/meal/removeMealValidation";
 
 /**
  * @param uId authenticated user id
- * @param mealId id of the meal to be changed
+ * @param mealId id of the meal to be removed
  */
 export interface IRemoveMealService {
     uId: string,
@@ -24,13 +26,30 @@ export class RemoveMealService {
         uId,
         mealId
     }:IRemoveMealService) {
-        // TODO: falta o barid do user para ser possível remover
-        // TODO: ao apagar temos também que remover as alterações daquelas refeições
-        const removeMealDBClient= createClient();
-        const query= await removeMealDBClient.query(`UPDATE meals
-                                                    SET name = $1, preparationTime = $2, description = $3, canTakeAway = $4, price = $5
-                                                    WHERE mealid = $6`, [uId, mealId])
+        console.log("123")
+        const mealIdExists = await checkMealExists(mealId)
+        console.log(!mealIdExists)
+        if(!mealIdExists){
+            throw new Error('Meal does not exists')
+        }
         
-        return { data: {query}, status: 200 }
+        const userBarId = await getEmployeeBar(uId);
+        const mealBarId = await getMealBar(mealId);
+
+        console.log(userBarId)
+        console.log(mealBarId)
+
+        if(userBarId != mealBarId) {
+            throw new Error('Bars are not the same')
+        }
+
+        const removeMealDBClient= createClient();
+        await removeMealDBClient.query(`DELETE FROM allowedchanges
+                                        WHERE mealid = $1`, [mealId])
+
+        await removeMealDBClient.query(`DELETE FROM meals
+                                        WHERE mealid = $1`, [mealId])
+        
+        return { msg: "Meal successfully removed", status: 200 }
     }
 }
