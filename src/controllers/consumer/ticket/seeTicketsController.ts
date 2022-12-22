@@ -3,7 +3,7 @@
  * @module seeTicketsController
  */
 import { Request, Response } from "express";
-import { SeeTicketsService } from "../../../services/consumer/Ticket/seeTicketsService";
+import { SeeTicketsService } from "../../../services/consumer/ticket/seeTicketsService";
 
 /**
  * Class responsible for receiving and calling the service methods that allows you to see the available exchanges

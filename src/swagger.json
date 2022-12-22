@@ -527,11 +527,22 @@
         }
       }
     },
-    "/consumer/tickets/available": {
-      "get": {
-        "summary": "Get all tickets available",
-        "description": "Get all the orders of the tickets",
+    "/consumer/tickets/{ticketId}": {
+      "delete": {
+        "summary": "Remove a order",
+        "description": "Remove a specific order from the authenticated user",
         "tags": ["Tickets"],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "Ticket id",
+            "required": true,
+            "schema": {
+              "properties": { "ticketId": { "type": "string" } }
+            }
+          }
+        ],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -540,8 +551,8 @@
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
-                  "Get all orders": {
-                    "value": { "msg": "Successfully obtained all orders" }
+                  "Remove a order": {
+                    "value": { "msg": "Order removed successfully" }
                   }
                 }
               }

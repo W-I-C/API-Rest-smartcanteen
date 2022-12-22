@@ -2,7 +2,7 @@
  * @module seeTicketsHistoryController
  */
 import { Request, Response } from "express";
-import { SeeTicketsHistoryService } from "../../../services/consumer/Ticket/seeTicketsHistoryService";
+import { SeeTicketsHistoryService } from "../../../services/consumer/ticket/seeTicketsHistoryService";
 
 /**
  * Class responsible for receiving and calling the service methods that allows you to see the history of consumer exchanges
