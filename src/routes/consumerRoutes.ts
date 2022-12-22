@@ -14,8 +14,6 @@ import { RemoveMealsCartController } from "../controllers/consumer/cart/removeMe
 import { SeeTicketsHistoryController } from "../controllers/consumer/ticket/seeTicketsHistoryController";
 import { RemoveTicketController } from "../controllers/consumer/ticket/removeTicketController";
 
-
-
 const addFavController = new AddFavController();
 const removeFavController = new RemoveFavController();
 const seeFavController = new SeeFavController();
@@ -31,7 +29,7 @@ consumerRouter.post("/favoriteMeals/:mealId", validateToken, validateRefreshToke
 consumerRouter.delete("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, removeFavController.handle);
 consumerRouter.get("/favoriteMeals", validateToken, validateRefreshToken, seeFavController.handle);
 consumerRouter.get("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, seeOneFavController.handle);
-consumerRouter.post("/:mealId", addMealCartController.handle);
+consumerRouter.post("consumer/cart/:mealId", validateToken, validateRefreshToken,addMealCartController.handle);
 consumerRouter.get("/cart/meals",validateToken, validateRefreshToken, seeMealsCartController.handle);
 consumerRouter.delete("/meals/:cartMealId",validateToken, validateRefreshToken, removeMealsCartController.handle);
 consumerRouter.get("/tickets",validateToken, validateRefreshToken, seeTicketsHistoryController.handle);
