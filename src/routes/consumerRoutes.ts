@@ -12,6 +12,7 @@ import { RemoveFavController } from "../controllers/consumer/favoriteMeal/remove
 import { SeeMealsCartController } from "../controllers/consumer/cart/seeMealCartController";
 import { RemoveMealsCartController } from "../controllers/consumer/cart/removeMealsCartController";
 import {SeeTicketsHistoryController} from "../controllers/consumer/Ticket/seeTicketsHistoryController"
+import { SeeTicketsController } from "../controllers/consumer/Ticket/seeTicketsController";
 
 
 
@@ -24,6 +25,7 @@ const addMealCartController= new AddMealCartController();
 const seeMealsCartController=new SeeMealsCartController();
 const removeMealsCartController= new RemoveMealsCartController();
 const seeTicketsHistoryController= new SeeTicketsHistoryController();
+const seeTicketsController= new SeeTicketsController();
 
 //adicionar aos favoritos refeição
 consumerRouter.post("/favoriteMeals/:mealId", validateToken, validateRefreshToken, addFavController.handle);
@@ -39,6 +41,7 @@ consumerRouter.get("/cart/meals",validateToken, validateRefreshToken, seeMealsCa
 consumerRouter.delete("/meals/:cartMealId",validateToken, validateRefreshToken, removeMealsCartController.handle);
 
 consumerRouter.get("/tickets",validateToken, validateRefreshToken, seeTicketsHistoryController.handle);
+consumerRouter.get("/tickets/available",validateToken, validateRefreshToken, seeTicketsController.handle);
 
 
 export { consumerRouter }

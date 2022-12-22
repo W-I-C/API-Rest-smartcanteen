@@ -1,13 +1,21 @@
+
+/**
+ * @module seeMealCartService
+ */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
 
-
+/**
+ * Class responsible for the service that serves to see a meal at cart
+ */
 export class SeeMealsCartService {
  
-    
-    async execute(uId:string) {
-
+    /**
+     * Method that allows you to see a meal at cart
+     */
         
+    async execute(uId:string) {
+  
         const verifyUser=createClient();
         
         

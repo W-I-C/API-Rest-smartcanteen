@@ -527,7 +527,29 @@
         }
       }
     },
-
+    "/consumer/tickets/available": {
+      "get": {
+        "summary": "Get all tickets available",
+        "description": "Get all the orders of the tickets",
+        "tags": ["Tickets"],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Get all orders": {
+                    "value": { "msg": "Successfully obtained all orders" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/employee/tickets": {
       "get": {
         "summary": "Get all orders of the bar",
