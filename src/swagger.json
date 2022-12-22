@@ -356,7 +356,7 @@
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
                   "Create meal": {
-                    "value": { "msg": "Refeição creada" }
+                    "value": { "msg": "Refeição criada" }
                   }
                 }
               }
@@ -412,7 +412,7 @@
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
-                  "Create meal": {
+                  "Edit profile": {
                     "value": { "msg": "Successfully edited profile" }
                   }
                 }
@@ -466,6 +466,36 @@
                 "examples": {
                   "Create meal": {
                     "value": { "msg": "Successfully edited meal" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Remove a meal",
+        "description": "Remove a meal from a bar",
+        "tags": ["Meal cart"],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "meal id",
+            "required": true,
+            "schema": { "properties": { "mealId": { "type": "string" } } }
+          }
+        ],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "See meals": {
+                    "value": { "msg": "Meal successfully removed" }
                   }
                 }
               }
@@ -527,10 +557,9 @@
         "type": "object",
         "properties": {
           "name": { "type": "string" },
-          "preparationTime": { "type": "string" },
-          "description": { "type": "number" },
+          "preparationTime": { "type": "number" },
+          "description": { "type": "string" },
           "canTakeAway": { "type": "number" },
-          "dataInicio": { "type": "string" },
           "price": { "type": "number" }
         }
       },
