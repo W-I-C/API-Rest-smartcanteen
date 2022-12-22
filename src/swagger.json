@@ -133,7 +133,8 @@
         }
       }
     },
-    "/consumers/{mealId}": {
+
+    "/consumers/cart/{mealId}": {
       "post": {
         "summary": "Add meal to cart",
         "description": "Add a meal to cart ",
@@ -146,7 +147,27 @@
             "required": true,
             "schema": { "properties": { "mealId": { "type": "string" } } }
           }
-        ],
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "amount": { "type": "number" }
+                  }
+                },
+                "examples": {
+                  "Adicionar refeição ao cart": {
+                    "value": {
+        
+                      "amount": 4
+                    }
+                  }
+                }
+              }
+            }
+          },
+
         "responses": {
           "500": { "description": "ERROR" },
           "200": {

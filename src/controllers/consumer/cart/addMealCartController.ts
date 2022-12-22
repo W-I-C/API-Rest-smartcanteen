@@ -4,15 +4,20 @@ import { AddMealCartService } from "../../../services/consumer/cart/addMealCartS
 
 export class AddMealCartController {
     async handle(request: Request, response: Response) {
-        const favoriteMealId = request.params.id;
-
+        const uId=response.locals.uid;
+        const mealId = request.params.mealId;
+        
+        let { amount } = request.body;
+        
         try {
-            if(favoriteMealId === undefined) {
+            if(uId === undefined||
+                mealId=== undefined||
+                amount===undefined) {
                 throw new Error("Invalid request");
             }
 
             const addMealCartService = new AddMealCartService();
-            const resp = await addMealCartService.execute(favoriteMealId);
+            const resp = await addMealCartService.execute(mealId,uId,amount);
 
             response.status(resp.status).json(resp.data);
         } catch(e) {
