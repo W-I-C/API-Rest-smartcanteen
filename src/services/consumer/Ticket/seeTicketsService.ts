@@ -1,7 +1,12 @@
+/**
+ * @module seeTicketsService
+ */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
 
-
+/**
+ * Class responsible for the service that allows you to see the available exchanges
+ */
 export class SeeTicketsService {
  
     async execute() {

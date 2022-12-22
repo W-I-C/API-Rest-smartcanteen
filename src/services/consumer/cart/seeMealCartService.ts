@@ -1,6 +1,6 @@
 
 /**
- * @module seeMealCartService
+ * @module seeMealsCartService
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";

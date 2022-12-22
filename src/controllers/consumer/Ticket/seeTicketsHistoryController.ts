@@ -1,12 +1,22 @@
+/**
+ * @module seeTicketsHistoryController
+ */
 import { Request, Response } from "express";
 import { SeeTicketsHistoryService } from "../../../services/consumer/Ticket/seeTicketsHistoryService";
 
-
-
-
+/**
+ * Class responsible for receiving and calling the service methods that allows you to see the history of consumer exchanges
+ */
 
 export class SeeTicketsHistoryController {
     async handle(request: Request, response: Response) {
+         /**
+     * Allows to get a meal that the authenticated user has already added to favorites, redirected afterwards to the associated service
+     *
+     * {@link seeTicketsHistoryService}
+     * 
+     * @param response response.
+     */
         const uId=response.locals.uid;
   
         

@@ -1,10 +1,20 @@
-
-
-//ver o codigo bem como se faz
+/**
+ * @module createMealController
+ */
 import { Request, Response } from "express";
 import { CreateMealService } from "../../../services/employee/meal/createMealService";
 
+/**
+ * Class responsible for receiving and calling the service methods that allow the employee to create a meal in a bar
+ */
 export class CreateMealController {
+      /**
+     * Allows to get a meal that the authenticated user has already added to favorites, redirected afterwards to the associated service
+     *
+     * {@link createmealService}
+     * @param request request receive.
+     * @param response response.
+     */
     async handle(request: Request, response: Response) {
         const barId= request.params.barId;
         const uId=response.locals.uid;

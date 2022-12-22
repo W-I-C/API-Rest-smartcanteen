@@ -1,5 +1,5 @@
 /**
- * @module seeMealCartController
+ * @module seeMealsCartController
  */
 import { Request, Response } from "express";
 import { SeeMealsCartService } from "../../../services/consumer/cart/seeMealCartService";
@@ -13,7 +13,7 @@ export class SeeMealsCartController {
          /**
      * Allows to remove a meal, redirected afterwards to the associated service
      *
-     * {@link seeeMealCartService}
+     * {@link seeeMealsCartService}
      * @param response response.
      */
         const uId=response.locals.uid;

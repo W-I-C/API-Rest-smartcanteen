@@ -1,7 +1,13 @@
+/**
+ * @module seeMealsController
+ */
+
 import { Request, Response } from "express";
 import { SeeMealsService } from "../../../services/both/meals/seeMealsService";
 
-
+/**
+ * Class responsible for receiving and calling the methods of the service that allows both see meals from bar
+ */
 export class SeeMealsController {
     async handle(request: Request, response: Response) {
         const barId = request.params.barId;

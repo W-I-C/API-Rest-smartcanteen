@@ -1,9 +1,18 @@
+/**
+ * @module seeTicketsHistoryService
+ */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
 
+/**
+ * Class responsible for the service that allows to see the history of consumer exchanges
+ */
 
 export class SeeTicketsHistoryService {
- 
+  /**
+     * Method that allows to see the history of consumer exchanges
+     * @param uId authenticated user id
+     */
     async execute(uId:string) {
 
 
