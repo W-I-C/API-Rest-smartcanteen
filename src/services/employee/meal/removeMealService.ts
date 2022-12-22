@@ -26,18 +26,15 @@ export class RemoveMealService {
         uId,
         mealId
     }:IRemoveMealService) {
-        console.log("123")
+
         const mealIdExists = await checkMealExists(mealId)
-        console.log(!mealIdExists)
+
         if(!mealIdExists){
             throw new Error('Meal does not exists')
         }
         
         const userBarId = await getEmployeeBar(uId);
         const mealBarId = await getMealBar(mealId);
-
-        console.log(userBarId)
-        console.log(mealBarId)
 
         if(userBarId != mealBarId) {
             throw new Error('Bars are not the same')

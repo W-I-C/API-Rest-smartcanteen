@@ -1,4 +1,3 @@
-// TODO: ir buscar os tickets pelo bar do funcionário - validação para saber o bar do funcionário
 /**
  * @module seeUndeliveredTicketsService
  */

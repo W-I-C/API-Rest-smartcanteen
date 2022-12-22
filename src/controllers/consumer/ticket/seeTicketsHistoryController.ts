@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { SeeTicketsHistoryService } from "../../../services/consumer/Ticket/seeTicketsHistoryService";
+import { SeeTicketsHistoryService } from "../../../services/consumer/ticket/seeTicketsHistoryService";
 
 
 
