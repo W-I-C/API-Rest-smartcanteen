@@ -33,7 +33,7 @@ export class RemoveMealController {
         mealId,
       });
 
-      response.status(resp.status).json(resp.data);
+      response.status(resp.status).json(resp.msg);
     } catch (e) {
       response.status(500).json(e.message);
     }
