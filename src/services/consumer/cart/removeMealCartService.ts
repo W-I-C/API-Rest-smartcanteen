@@ -1,9 +1,19 @@
+
+/**
+ * @module removeMealsCartService
+ */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
 
-
+/**
+ * class responsible for removing a meal from the cart
+ */
 export class RemoveMealsCartService {
- 
+  /**
+     * Method that allows you to get the details of a meal that the authenticated user has added to favorites
+     * @param uId authenticated user id
+     * @param cartMealId id of the meal associated with the cart
+     */
     async execute( cartMealId:string,uId:string) {
 
         

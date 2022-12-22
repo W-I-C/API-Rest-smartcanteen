@@ -1,22 +1,24 @@
+
 /**
- * @module seeTicketsHistoryController
+ * @module seeTicketsController
  */
 import { Request, Response } from "express";
-import { SeeTicketsHistoryService } from "../../../services/consumer/ticket/seeTicketsHistoryService";
+import { SeeTicketsService } from "../../../services/consumer/ticket/seeTicketsService";
 
 /**
- * Class responsible for receiving and calling the service methods that allows you to see the history of consumer exchanges
+ * Class responsible for receiving and calling the service methods that allows you to see the available exchanges
  */
 
-export class SeeTicketsHistoryController {
-    async handle(request: Request, response: Response) {
-         /**
+export class SeeTicketsController {
+
+     /**
      * Allows to get a meal that the authenticated user has already added to favorites, redirected afterwards to the associated service
      *
-     * {@link seeTicketsHistoryService}
+     * {@link seeTicketsService}
      * 
      * @param response response.
      */
+    async handle(request: Request, response: Response) {
         const uId=response.locals.uid;
   
         
@@ -27,8 +29,8 @@ export class SeeTicketsHistoryController {
                 throw new Error("Invalid request");
             }
 
-            const seeTicketsHistoryService = new SeeTicketsHistoryService();
-            const resp = await seeTicketsHistoryService.execute(uId);
+            const seeTicketsService = new SeeTicketsService();
+            const resp = await seeTicketsService.execute();
 
             response.status(resp.status).json(resp.data);
         } catch(e) {

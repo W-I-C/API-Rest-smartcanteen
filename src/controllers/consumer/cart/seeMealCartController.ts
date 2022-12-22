@@ -1,11 +1,21 @@
+/**
+ * @module seeMealsCartController
+ */
 import { Request, Response } from "express";
 import { SeeMealsCartService } from "../../../services/consumer/cart/seeMealCartService";
 
 
-
+/**
+ * Class responsible for receiving and calling the methods of the service that allows the consumer to see a meal at cart
+ */
 export class SeeMealsCartController {
     async handle(request: Request, response: Response) {
-        
+         /**
+     * Allows to remove a meal, redirected afterwards to the associated service
+     *
+     * {@link seeeMealsCartService}
+     * @param response response.
+     */
         const uId=response.locals.uid;
         
         try {
