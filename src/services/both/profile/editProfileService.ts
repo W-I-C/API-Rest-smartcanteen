@@ -3,7 +3,7 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-import { EditProfileValidator } from "../../../validations/both/profile/editProfileValidation";
+import { EditProfileValidator, getCampusBar } from "../../../validations/both/profile/editProfileValidation";
 
 /**
  * @param uId authenticated user id
@@ -31,10 +31,12 @@ export class EditProfileService {
         const editProfileVallidator = new EditProfileValidator();
         const resp = await editProfileVallidator.validate(preferredCampus, preferredBar);
 
-        if(resp) {
+        const campusBar = await getCampusBar(preferredBar)
+
+        if(resp && campusBar == preferredCampus) {
             const query = await editProfileDBClient.query(`UPDATE users
-            SET preferredcampus = $1, preferredBar = $2, imgurl = $3   
-            WHERE users.uid = $4`, [preferredCampus, preferredBar, imgUrl, uId])
+                                                        SET preferredcampus = $1, preferredBar = $2, imgurl = $3   
+                                                        WHERE users.uid = $4`, [preferredCampus, preferredBar, imgUrl, uId])
 
             const data = query["rows"][0]
 
