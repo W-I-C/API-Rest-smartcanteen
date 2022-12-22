@@ -527,6 +527,7 @@
         }
       }
     },
+
     "/employee/tickets": {
       "get": {
         "summary": "Get all orders of the bar",
