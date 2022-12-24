@@ -5,22 +5,18 @@ import { Request, Response } from "express";
 import { SeeTicketsHistoryService } from "../../../services/consumer/ticket/seeTicketsHistoryService";
 
 /**
- * Class responsible for receiving and calling the service methods that allows you to see the history of consumer exchanges
+ * Class responsible for receiving and calling the service methods that allow the user to see all the orders the authenticated user has already placed
  */
-
 export class SeeTicketsHistoryController {
-    async handle(request: Request, response: Response) {
-         /**
-     * Allows to get a meal that the authenticated user has already added to favorites, redirected afterwards to the associated service
+    /**
+     * Allows to get all orders that the authenticated user has placed, redirected afterwards to the associated service
      *
-     * {@link seeTicketsHistoryService}
-     * 
+     * {@link seeTicketsHitoryService}
+     * @param request request receive.
      * @param response response.
      */
-        const uId=response.locals.uid;
-  
-        
-     
+    async handle(request: Request, response: Response) {
+        const uId = response.locals.uid;
         
         try {
             if(uId === undefined) {

@@ -445,11 +445,38 @@
               "examples": {
                 "Edit Meal": {
                   "value": {
-                    "name": "Francesinha",
+                    "name": "bife com batatas",
                     "preparationTime": 30,
-                    "description": "Francesinha com molho e batata",
-                    "canTakeaway": 1,
-                    "price": 6
+                    "description": "prego",
+                    "canTakeaway": true,
+                    "price": 0.02,
+                    "allowedChanges":[{		
+                      "ingname": "atum",
+                      "ingdosage": "porção",
+                      "isremoveonly": true,
+                      "canbeincremented": true,
+                      "canbedecremented": true,
+                      "incrementedlimir": 2,
+                      "decrementedlimit": 1
+                    },
+                    {		
+                      "ingname": "fiambre",
+                      "ingdosage": "porção",
+                      "isremoveonly": true,
+                      "canbeincremented": true,
+                      "canbedecremented": true,
+                      "incrementedlimit": 2,
+                      "decrementedlimit": 1
+                    },
+                    {		
+                    "ingname": "ovo",
+                    "ingdosage": "porção",
+                    "isremoveonly": true,
+                    "canbeincremented": true,
+                    "canbedecremented": true,
+                    "incrementedlimit": 2,
+                    "decrementedlimit": 1
+                    }]
                   }
                 }
               }
@@ -473,7 +500,7 @@
           }
         }
       },
-      "get": {
+      "delete": {
         "summary": "Remove a meal",
         "description": "Remove a meal from a bar",
         "tags": ["Meal cart"],
@@ -593,8 +620,28 @@
           "name": { "type": "string" },
           "preparationTime": { "type": "number" },
           "description": { "type": "string" },
-          "canTakeAway": { "type": "number" },
-          "price": { "type": "number" }
+          "canTakeAway": { "type": "boolean" },
+          "price": { "type": "number" },
+          "allowedChanges": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/components/schemas/AllowedChanges"
+            }
+          }
+
+        }
+      },
+      "AllowedChanges": {
+        "type": "object",
+        "properties": {
+          "ingname": { "type": "string" },
+          "ingdosage": { "type": "string" },
+          "isremoveonly": { "type": "boolean" },
+          "canbeincremented": { "type": "boolean" },
+          "canbedecremented": { "type": "boolean" },
+          "incrementedlimit ": { "type": "number" },
+          "decrementedlimit": { "type": "number" }
         }
       },
       "Profile": {
