@@ -11,8 +11,9 @@ import { SeeOneFavController } from "../controllers/consumer/favoriteMeal/seeOne
 import { RemoveFavController } from "../controllers/consumer/favoriteMeal/removeFavController";
 import { SeeMealsCartController } from "../controllers/consumer/cart/seeMealCartController";
 import { RemoveMealsCartController } from "../controllers/consumer/cart/removeMealsCartController";
-import { SeeTicketsHistoryController } from "../controllers/consumer/ticket/seeTicketsHistoryController";
+import { SeeTradesHistoryController } from "../controllers/consumer/trades/seeTradesHistoryController";
 import { RemoveTicketController } from "../controllers/consumer/ticket/removeTicketController";
+import { SeeTicketsHistoryController } from "../controllers/consumer/ticket/seeTicketsHistoryController";
 
 const addFavController = new AddFavController();
 const removeFavController = new RemoveFavController();
@@ -21,8 +22,9 @@ const seeOneFavController = new SeeOneFavController();
 const addMealCartController= new AddMealCartController();
 const seeMealsCartController=new SeeMealsCartController();
 const removeMealsCartController= new RemoveMealsCartController();
-const seeTicketsHistoryController= new SeeTicketsHistoryController();
+const seeTradesHistoryController= new SeeTradesHistoryController();
 const removeTicketController= new RemoveTicketController();
+const seeTicketsHistoryController= new SeeTicketsHistoryController();
 
 //adicionar aos favoritos refeição
 consumerRouter.post("/favoriteMeals/:mealId", validateToken, validateRefreshToken, addFavController.handle);
@@ -32,8 +34,10 @@ consumerRouter.get("/favoriteMeals/:favoriteMealId", validateToken, validateRefr
 consumerRouter.post("consumer/cart/:mealId", validateToken, validateRefreshToken,addMealCartController.handle);
 consumerRouter.get("/cart/meals",validateToken, validateRefreshToken, seeMealsCartController.handle);
 consumerRouter.delete("/meals/:cartMealId",validateToken, validateRefreshToken, removeMealsCartController.handle);
-consumerRouter.get("/tickets",validateToken, validateRefreshToken, seeTicketsHistoryController.handle);
+consumerRouter.get("/trades",validateToken, validateRefreshToken, seeTradesHistoryController.handle);
 consumerRouter.delete("/tickets/:ticketId",validateToken, validateRefreshToken, removeTicketController.handle);
+consumerRouter.delete("/tickets/:ticketId",validateToken, validateRefreshToken, removeTicketController.handle);
+consumerRouter.get("/tickets",validateToken, validateRefreshToken, seeTicketsHistoryController.handle);
 
 
 export { consumerRouter }

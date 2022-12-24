@@ -63,8 +63,8 @@ export class EditMealService {
         price,
         allowedChanges
     }:IEditMealService) {
-
         const mealIdExists = await checkMealExists(mealId)
+
         if(!mealIdExists){
             throw new Error('Meal does not exists')
         }
@@ -84,16 +84,20 @@ export class EditMealService {
         }
 
         const editMealDBClient= createClient();
-        const queryUpdate = await editMealDBClient.query(`UPDATE meals
-                                                    SET name = $1, preparationTime = $2, description = $3, canTakeAway = $4, price = $5
-                                                    WHERE mealid = $6`, [mealId, name, preparationTime, description, canTakeaway, price])
+        await editMealDBClient.query(`UPDATE meals
+                                    SET name = $1, preparationTime = $2, description = $3, canTakeAway = $4, price = $5
+                                    WHERE mealid = $6`, [name, preparationTime, description, canTakeaway, price, mealId])
+        
+        await editMealDBClient.query(`DELETE FROM allowedchanges 
+                                    WHERE mealid = $1`, [mealId])
 
-        const removechanges = await editMealDBClient.query(`DELETE FROM allowedchanges 
-                                                        WHERE mealid`, [mealId])
-
+        // TODO: incrementedlimit e decrementedlimit não está a ter nenhum valor mesmo passado por body
         allowedChanges.forEach( async (currentvalue:IMealAllowedChange,index,array)=>{
-            const allowchanges= await editMealDBClient.query(`INSERT INTO allowedchanges (mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit) 
-                                                            VALUES($1,$2,$3,$4,$5,$6,$7,$8)`, [mealId, currentvalue.ingname, currentvalue.ingdosage, currentvalue.isremoveonly, currentvalue.canbedecremented, currentvalue.canbedecremented, currentvalue.incrementlimit, currentvalue.decrementlimit])
+            console.log(currentvalue)
+            console.log(currentvalue.incrementlimit)
+            console.log(currentvalue.decrementlimit)
+            await editMealDBClient.query(`INSERT INTO allowedchanges (mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit) 
+                                        VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`, [mealId, currentvalue.ingname, currentvalue.ingdosage, currentvalue.isremoveonly, currentvalue.canbedecremented, currentvalue.canbedecremented, currentvalue.incrementlimit, currentvalue.decrementlimit])
         })
 
         return { msg: "Meal edited successfully" , status: 200 }
