@@ -610,6 +610,58 @@
           }
         }
       }
+    },
+    "/consumer/trades/{ticketId}": {
+      "put": {
+        "summary": "Accept trade",
+        "description": "A user can accept or decline an exchange proposal made by another user",
+        "tags": ["Trades"],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "Ticket id",
+            "required": true,
+            "schema": {
+              "properties": { "ticketId": { "type": "string" } }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "receptorDecision": { "type": "number" }
+                }
+              },
+              "examples": {
+                "Accept Trade": {
+                  "value": {
+                    "receptorDecision": 1
+                  }
+                }
+              }
+            }
+          }
+        },  
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Accept Trade": {
+                    "value": { "msg": "Trade accepted/rejected successfully" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
