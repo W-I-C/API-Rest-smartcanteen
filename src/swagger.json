@@ -611,6 +611,29 @@
         }
       }
     },
+    "/consumer/trade/available": {
+      "get": {
+        "summary": "Get all trades available",
+        "description": "Get all the trades available",
+        "tags": ["Trades"],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Get all orders": {
+                    "value": { "msg": "Successfully obtained all available trades" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/consumer/trades/{ticketId}": {
       "put": {
         "summary": "Accept trade",
