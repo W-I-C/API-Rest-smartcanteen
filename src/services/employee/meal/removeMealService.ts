@@ -3,17 +3,9 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
+import { IRemoveMealService } from "../../../models/IRemoveMealService";
 import { getMealBar } from "../../../validations/employee/meal/editMealValidation";
 import { checkMealExists, getEmployeeBar } from "../../../validations/employee/meal/removeMealValidation";
-
-/**
- * @param uId authenticated user id
- * @param mealId id of the meal to be removed
- */
-export interface IRemoveMealService {
-    uId: string,
-    mealId: string
-}
 
 /**
  * Class responsible for the service that serves to remove a meal

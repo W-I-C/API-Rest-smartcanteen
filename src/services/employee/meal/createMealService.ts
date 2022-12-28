@@ -3,27 +3,8 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-
-
-export interface ICreateMealService {
-    uId:string,
-    barId: string;
-    name: string;
-    preparationTime: number,
-    description:string,
-    canTakeaway:boolean, 
-    price:number,
-    allowedChanges:Array<IMealAllowedChange> 
-}
-export interface IMealAllowedChange{
-    ingname:string
-    ingdosage:string
-    isremoveonly:boolean
-    canbeincremented:boolean
-    canbedecremented:boolean
-    incrementlimit:number
-    decrementlimit:number
-}
+import { IMeal } from "../../../models/IMeal";
+import { IMealAllowedChange } from "../../../models/IMealAllowedChanges";
 
 /**
  * Class responsible for the service that serves to create meals in bar
@@ -32,21 +13,6 @@ export interface IMealAllowedChange{
 export class CreateMealService {
    /**
      * Method that allows you to get the details of a meal that the employee from bar can create
-     * @param uId authenticated user id
-     * @param barId bar where the meal will be inserted
-     * @param name meal name
-     * @param preparationTime meal preparation time
-     * @param description meal description
-     * @param canTakeaway information whether or not the meal can be taken away
-     * @param price price of meal
-     * @param allowchanges array that contains parameters from another table
-     * @param ingname name of the ingredient that can be added to the meal
-     * @param ingdosage dose that can be added to the meal
-     * @param isremoveonly whether it is possible to remove the ingredient
-     * @param canbeincremented more ingredient can be added
-     * @param canbedecremented can remove more of the ingredient
-     * @param incrementlimit limit that can be increased in the ingredient
-     * @param decrementlimit limit that can be decremented in the ingredient
      */
     async execute({
         uId,
@@ -57,9 +23,7 @@ export class CreateMealService {
         canTakeaway,
         price,
         allowedChanges
-
-
-    }:ICreateMealService) {
+    }:IMeal) {
 
         
         const createMeal= createClient();
