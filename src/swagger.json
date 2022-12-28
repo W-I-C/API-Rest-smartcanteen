@@ -611,6 +611,29 @@
         }
       }
     },
+    "employee/detail/ticket/{ticketId}": {
+      "get": {
+        "summary": "Get details meal of an order",
+        "description": "Get details od an order",
+        "tags": ["Tickets"],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Get all orders": {
+                    "value": { "msg": "Successfully obtained all details meal from an ticket" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/consumer/trade/available": {
       "get": {
         "summary": "Get all trades available",
