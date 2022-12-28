@@ -3,20 +3,8 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
+import { IEditProfileService } from "../../../models/IProfile";
 import { EditProfileValidator, getCampusBar } from "../../../validations/both/profile/editProfileValidation";
-
-/**
- * @param uId authenticated user id
- * @param preferredCampus user's preferred campus
- * @param preferredBar user's preferred bar
- * @param imgurl url of the user profile image
- */
-export interface IEditProfileService {
-    uId: string,
-    preferredCampus: string
-    preferredBar: string,
-    imgUrl: string
-}
 
 /**
  * Class responsible for the service that serves to edit the profile of the authenticated user
