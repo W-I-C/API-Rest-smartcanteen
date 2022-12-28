@@ -3,16 +3,7 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-
-/**
- * @param uId authenticated user id
- * @param mealId id of the meal to be removed
- */
-export interface IAddFavService {
-   
-   mealId:string,
-   uId:string
-}
+import { IAddFavService } from "../../../models/IAddFavService";
 
 /**
  * Class responsible for the service that serves to add a meal to favoritemeal
@@ -23,7 +14,6 @@ export class AddFavService {
      */
    
     async execute( {
-        
         mealId,
         uId
     }:IAddFavService) {

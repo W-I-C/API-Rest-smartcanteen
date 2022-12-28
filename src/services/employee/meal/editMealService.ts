@@ -3,48 +3,9 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
+import { IMeal } from "../../../models/IMeal";
+import { IMealAllowedChange } from "../../../models/IMealAllowedChanges";
 import { checkMealExists, checkMealExistsBar, getEmployeeBar, getMealBar } from "../../../validations/employee/meal/editMealValidation";
-
-/**
- * @param uId authenticated user id
- * @param mealId id of the meal to be changed
- * @param barId id of the bar with which the meal will be associated
- * @param name meal name
- * @param preparationTime the time it takes to prepare the meal
- * @param description description of the meal
- * @param canTakeaway indicates whether the meal can be consumed outside the bar or not
- * @param price price of the meal
- * @param allowedChanges array that contains all the possible changes that can be applied to a meal
- */
-export interface IEditMealService {
-    uId: string,
-    mealId: string,
-    name: string,
-    preparationTime: number,
-    description: string,
-    canTakeaway: boolean, 
-    price: number,
-    allowedChanges: Array<IMealAllowedChange>
-}
-
-/**
- * @param ingname name of the ingredient
- * @param ingdosage ingredient dosage
- * @param isremoveonly indicates whether it is only possible to remove the ingredient
- * @param canbeincremented indicates whether the ingredient can be increased
- * @param canbedecremented indicates whether the ingredient can be decremented
- * @param incrementlimit possible increment limit
- * @param decrementlimit possible decrementation limit
- */
-export interface IMealAllowedChange{
-    ingname:string
-    ingdosage:string
-    isremoveonly:boolean
-    canbeincremented:boolean
-    canbedecremented:boolean
-    incrementlimit:number
-    decrementlimit:number
-}
 
 /**
  * Class responsible for the service that serves to edit the data of a meal
@@ -62,7 +23,7 @@ export class EditMealService {
         canTakeaway,
         price,
         allowedChanges
-    }:IEditMealService) {
+    }:IMeal) {
         const mealIdExists = await checkMealExists(mealId)
 
         if(!mealIdExists){
