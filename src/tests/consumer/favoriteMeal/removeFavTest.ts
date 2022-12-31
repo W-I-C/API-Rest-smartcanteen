@@ -13,7 +13,7 @@ const favMealId = 'ae10809a-0533-4d19-b763-f01a44986703'
 // this variable will store the token that results from the correct login
 let token=''
 
-describe("Test get one favorite meal of the user", () => {
+describe("Test remove one favorite meal of the user", () => {
 
     beforeEach((done) => {
       chai
@@ -34,7 +34,7 @@ describe("Test get one favorite meal of the user", () => {
       it('Should return invalid token error', () => {
         return chai
         .request(server)
-        .get(baseUrl+'/favoriteMeals/'+favMealId)
+        .delete(baseUrl+'/favoriteMeals/'+favMealId)
         .then(res => {
           res.should.have.status(401)
           chai.expect(res.body).to.have.property("Error")
@@ -46,7 +46,7 @@ describe("Test get one favorite meal of the user", () => {
       it('Should return invalid token error', () => {
         return chai
         .request(server)
-        .get(baseUrl+'/favoriteMeals/'+favMealId)
+        .delete(baseUrl+'/favoriteMeals/'+favMealId)
         .set("Authorization", invalidToken)
         .then(res => {
           res.should.have.status(401)
@@ -55,31 +55,31 @@ describe("Test get one favorite meal of the user", () => {
       })
     })
 
-    // TODO: user a ver uma refeição que não lhe pertence dá status 200 e devia dar 404
-
-    describe('- Get One Fav Meal Right', () => {
-        it('Should return a favorite meal of the user', () => {
+    // TODO: tem que dar 500
+    describe('- Favorite Meal that dont exist', () => {
+        it('Should return invalid meal error', () => {
           return chai
           .request(server)
-          .get(baseUrl+'/favoriteMeals/'+favMealId)
+          .delete(baseUrl+'/favoriteMeals/ae10809a-0533-4d19-b763-f01a44986703')
+          .set("Authorization", invalidToken)
+          .then(res => {
+            res.should.have.status(401)
+              chai.expect(res.body).to.have.property("Error")
+          })
+        })
+      })
+
+    // TODO: como a query filtra o uid não vale a pena testar com outro user
+
+    describe('- Remove One Fav Meal Right', () => {
+        it('Should remove a favorite meal of the user', () => {
+          return chai
+          .request(server)
+          .delete(baseUrl+'/favoriteMeals/'+favMealId)
           .set("Authorization", token)
           .then(res => {
             res.should.have.status(200)
-
-            chai.expect(res.body).to.be.an("object")
-    
-            chai.expect(res.body).to.have.property("name")
-            chai.expect(res.body).to.have.property("preparationtime")
-            chai.expect(res.body).to.have.property("price")
-            chai.expect(res.body).to.have.property("url")
-    
-            chai.expect(res.body['name']).to.be.a("string")
-            chai.expect(res.body['preparationtime']).to.be.a("number")
-            chai.expect(res.body['price']).to.be.a("number")
-            if (res.body['url'] != null) {
-                chai.expect(res.body['url']).to.be.a("string")
-            }
-          })
+            })
         })
     })
 })
