@@ -16,6 +16,8 @@ export class SeeOneFavService {
     async execute(uId: string, favMealId: string) {
         const seeOneFavDBClient = createClient();
 
+        // TODO: user a ver uma refeição que não lhe pertence dá status 200 e devia dar 404
+        
         const query = await seeOneFavDBClient.query(`SELECT meals.name, meals.preparationtime, meals.price, mealimages.url 
                                             FROM favoritemeals 
                                             JOIN meals ON favoritemeals.mealid = meals.mealid 
