@@ -54,13 +54,22 @@ export class EditMealService {
 
         // TODO: incrementedlimit e decrementedlimit não está a ter nenhum valor mesmo passado por body
         allowedChanges.forEach( async (currentvalue:IMealAllowedChange,index,array)=>{
-            console.log(currentvalue)
-            console.log(currentvalue.incrementlimit)
-            console.log(currentvalue.decrementlimit)
             await editMealDBClient.query(`INSERT INTO allowedchanges (mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit) 
                                         VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`, [mealId, currentvalue.ingname, currentvalue.ingdosage, currentvalue.isremoveonly, currentvalue.canbedecremented, currentvalue.canbedecremented, currentvalue.incrementlimit, currentvalue.decrementlimit])
         })
 
-        return { msg: "Meal edited successfully" , status: 200 }
+        const query = await editMealDBClient.query(`SELECT meals.name, meals.preparationTime, meals.description, meals.canTakeAway, meals.price
+                                                FROM meals
+                                                WHERE mealid = $1`, [mealId])
+
+        let editedMeal = query["rows"][0]
+
+        const queryAllowedChanges = await editMealDBClient.query(`SELECT ingname, ingdosage, isremoveonly, canbedecremented, canbedecremented, incrementlimit, decrementlimit
+                                                                FROM allowedchanges
+                                                                WHERE mealid = $1`, [mealId])
+
+        editedMeal["allowedChanges"] = queryAllowedChanges["rows"]                                                
+
+        return { editedMeal , status: 200 }
     }
 }

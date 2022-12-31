@@ -31,7 +31,9 @@ export class RemoveMealService {
         if(userBarId != mealBarId) {
             throw new Error('Bars are not the same')
         }
-
+        
+        // TODO: meter isDeleted só para esta meal não ser mostrada ao utilizador final
+        // TODO: apagar a meal caso ela não esteja associada a um ticket
         const removeMealDBClient= createClient();
         await removeMealDBClient.query(`DELETE FROM allowedchanges
                                         WHERE mealid = $1`, [mealId])

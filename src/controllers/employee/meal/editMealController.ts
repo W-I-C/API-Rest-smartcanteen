@@ -47,7 +47,7 @@ export class EditMealController {
         allowedChanges
       });
       
-      response.status(resp.status).json(resp.msg);
+      response.status(resp.status).json(resp.editedMeal);
     } catch (e) {
       response.status(500).json(e.message);
     }

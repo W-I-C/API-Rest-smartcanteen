@@ -23,12 +23,18 @@ export class AcceptTradeService {
 
         const isConfirmed = true;
         const confirmationDate = new Date();
-
+        
+        // TODO: se receptorDecisison já estiver a 1 pode se editar para 0?
+        // TODO: se receptorDecisison já estiver a 1 pode se editar? o isConfirmed é sempre true?
         if(tradeExists && userIsReceiver) {
-            const query = await acceptTradeDBClient.query(`UPDATE tickettrade
+            await acceptTradeDBClient.query(`UPDATE tickettrade
                                                         SET isconfirmed = $1, confirmationdate = $2, receptordecision = $3   
                                                         WHERE uid = $4 AND ticketid = $5`, [isConfirmed, confirmationDate, receptorDecision, uId, ticketId])
 
+            const query = await acceptTradeDBClient.query(`SELECT isconfirmed, confirmationdate, receptordecision
+                                                    FROM tickettrade 
+                                                    WHERE uid = $1 AND ticketid = $2`, [uId, ticketId])
+            
             const data = query["rows"][0]
 
             return { data, status: 200 }
