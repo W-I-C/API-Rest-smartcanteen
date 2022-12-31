@@ -10,7 +10,8 @@
     "docs": "npx typedoc --cleanOutputDir --out docs src/api/**/*.ts src/api/**/**/*.ts src/api/**/**/**/*.ts src/api/**/**/**/**/*.ts src/**.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test_both_profile": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/both/profile/seeProfileTest.ts'",
-    "test_consumer_ticket": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/ticket/seeTicketsHistoryTest.ts'"
+    "test_consumer_ticket": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/ticket/seeTicketsHistoryTest.ts'",
+    "test_employee_ticket": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/ticket/seeUndeliveredTicketsTest.ts'"
   },
   "keywords": [],
   "author": "",
