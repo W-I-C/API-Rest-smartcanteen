@@ -12,7 +12,7 @@
     "test_both_profile": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/both/profile/seeProfileTest.ts'",
     "test_consumer_ticket": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/ticket/seeTicketsHistoryTest.ts'",
     "test_employee_ticket": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/ticket/seeUndeliveredTicketsTest.ts'",
-    "test_consumer_favmeal": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/favoriteMeal/seeOneFavTest.ts'"
+    "test_consumer_favmeal": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/favoriteMeal/removeFavTest.ts'"
   },
   "keywords": [],
   "author": "",
