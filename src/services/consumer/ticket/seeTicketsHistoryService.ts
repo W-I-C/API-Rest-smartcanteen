@@ -15,7 +15,7 @@ export class SeeTicketsHistoryService {
     async execute(uId: string) {
         const seeTicketsHistoryDBClient = createClient();
         
-        // TODO: falta o price
+        // TODO: falta o price e mudar de ticketid para identificador
         const query = await seeTicketsHistoryDBClient.query(`SELECT ticketid, ticketamount, states.name
                                                             FROM tickets
                                                             JOIN states ON tickets.stateid = states.stateid
