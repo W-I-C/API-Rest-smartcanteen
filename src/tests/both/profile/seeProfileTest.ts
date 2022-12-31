@@ -24,7 +24,6 @@ describe("Test get logged in user profile", () => {
         })
         .end((err, res) => {
           token = `Bearer ${res.body.token}`;
-          console.log(token)
           res.should.have.status(200);
           done();
         });
@@ -65,7 +64,6 @@ describe("Test get logged in user profile", () => {
             res.should.have.status(200)
             // verificar se é um object
             chai.expect(res.body).to.be.an("object")
-            console.log(res.body)
     
             chai.expect(res.body).to.have.property("name")
             chai.expect(res.body).to.have.property("campusname")
@@ -75,7 +73,9 @@ describe("Test get logged in user profile", () => {
             chai.expect(res.body['name']).to.be.a("string")
             chai.expect(res.body['campusname']).to.be.a("string")
             chai.expect(res.body['barname']).to.be.a("string")
-            chai.expect(res.body['imgurl']).to.be.a("string")
+            if (res.body['imgurl'] != null) {
+                chai.expect(res.body['imgurl']).to.be.a("string")
+            }
           })
         })
     })

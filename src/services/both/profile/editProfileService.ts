@@ -21,12 +21,18 @@ export class EditProfileService {
 
         const campusBar = await getCampusBar(preferredBar)
 
+        // TODO: não deixar editar com exatamente os mesmos valores que já tem
         if(resp && campusBar == preferredCampus) {
             const query = await editProfileDBClient.query(`UPDATE users
                                                         SET preferredcampus = $1, preferredBar = $2, imgurl = $3   
                                                         WHERE users.uid = $4`, [preferredCampus, preferredBar, imgUrl, uId])
-
-            const data = query["rows"][0]
+            
+            const query_edited = await editProfileDBClient.query(`SELECT preferredcampus, preferredBar, imgurl
+                                                                FROM users
+                                                                WHERE users.uid = $1`, [uId])
+            
+            const data = query_edited["rows"][0]
+            console.log(data)
 
             return { data, status: 200 }
         }
