@@ -14,14 +14,15 @@ export class SeeTradesHistoryService {
      * @param uId authenticated user id
      */
     async execute(uId:string) { 
-        console.log(uId)
+       
         
         const selectTicket= createClient();
       
-        const verifyUser=await selectTicket.query('SELECT * from ticketTrade WHERE uId=$1',[uId])
+        const verifyUser=await selectTicket.query('SELECT ticketid,isconfirmed,proposaldate,confirmationdate,receptordecision,isdeleted from ticketTrade WHERE uId=$1',[uId])
         
         const data=verifyUser["rows"]
 
         return { data, status: 200 }
     }
+
 }

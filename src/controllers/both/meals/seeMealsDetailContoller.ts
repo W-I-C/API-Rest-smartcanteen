@@ -19,10 +19,11 @@ export class SeeMealsDetailController {
      * @param response response.
      */
         const uId=response.locals.uid;
+        const mealId=request.params.mealid;
         
         try {
             const seeMealsDetailService = new SeeMealsDetailService();
-            const resp = await seeMealsDetailService.execute(uId);
+            const resp = await seeMealsDetailService.execute(uId,mealId);
 
             response.status(resp.status).send(resp.data);
         } catch(e) {

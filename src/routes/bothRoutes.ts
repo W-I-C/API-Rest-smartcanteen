@@ -29,7 +29,7 @@ bothRouter.get("/newSessionToken", newSessionToken.handle);
 bothRouter.get("/logout", validateToken, validateRefreshToken, logoutController.handle);
 
 
-bothRouter.get("/meals",validateToken, validateRefreshToken,seeMealsDetailController .handle);
+bothRouter.get("/meals/:mealid",validateToken, validateRefreshToken,seeMealsDetailController .handle);
 
 
 // ver as refeições num bar

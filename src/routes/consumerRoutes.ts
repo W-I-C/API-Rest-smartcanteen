@@ -39,12 +39,15 @@ consumerRouter.get("/favoriteMeals/:favoriteMealId", validateToken, validateRefr
 consumerRouter.post("/cart/:mealId", validateToken, validateRefreshToken,addMealCartController.handle);
 
 consumerRouter.get("/cart/meals",validateToken, validateRefreshToken, seeMealsCartController.handle);
+
 consumerRouter.delete("/meals/:cartMealId",validateToken, validateRefreshToken, removeMealsCartController.handle);
+
 consumerRouter.get("/trades",validateToken, validateRefreshToken, seeTradesHistoryController.handle);
 consumerRouter.delete("/tickets/:ticketId",validateToken, validateRefreshToken, removeTicketController.handle);
 consumerRouter.delete("/tickets/:ticketId",validateToken, validateRefreshToken, removeTicketController.handle);
 consumerRouter.get("/tickets",validateToken, validateRefreshToken, seeTicketsHistoryController.handle);
 consumerRouter.put("/trades/:ticketId",validateToken, validateRefreshToken, acceptTradeController.handle);
+
 consumerRouter.get("/trades/available",validateToken, validateRefreshToken, seeTradesController.handle);
 
 
