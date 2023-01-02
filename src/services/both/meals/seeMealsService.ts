@@ -27,9 +27,9 @@ export class SeeMealsService {
         const query= await seeMeals.query('SELECT * from Meals WHERE barId=($1)',[barId])
         
         
-      
+      const data=query["rows"]
 
-        return { data: {query}, status: 200 }
+        return { data, status: 200 }
    
     }
 }
