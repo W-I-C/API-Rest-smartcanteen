@@ -19,7 +19,9 @@
     "test_consumer_seeMealCart": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/cart/seeMealCartTest.ts'",
     "test_consumer_seeBarMeal": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/both/meals/seeMealsTest.ts'",
     "test_employee_createMeal": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/meal/createMealTest.ts'",
-    "test_employee_addMealCart": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/cart/addmealCartTest.ts'"
+    "test_employee_addMealCart": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/cart/addmealCartTest.ts'",
+    "test_both_seeMealDetail": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/both/meals/seeMealsDetailTest.ts'"
+
   },
   "keywords": [],
   "author": "",
