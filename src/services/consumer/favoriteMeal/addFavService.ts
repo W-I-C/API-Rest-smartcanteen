@@ -24,7 +24,9 @@ export class AddFavService {
         
         const queryFav= await favMeal.query('SELECT * from FavoriteMeals')
 
-        return { data: {queryFav}, status: 200 }
+        const data=queryFav["rows"]
+
+        return { data, status: 200 }
    
     }
 }
