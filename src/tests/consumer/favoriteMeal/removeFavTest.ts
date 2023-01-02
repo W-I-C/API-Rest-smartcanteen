@@ -8,7 +8,7 @@ const should = chai.should();
 const baseUrl = "/api/v1/consumer"
 const server = "localhost:3000"
 const invalidToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTAwMjQ1MzgsImV4cCI6MTY1MDAyNTQzOCwic3ViIjoiMDAwZDFlMTQtNjE3ZS00MjNlLThhMWEtZjYzZDRmYTVhZjZhIn0.b0U-__cRpH8YBsAtZEtClr0fAj4t9IOwDAcI2R3j-qk'
-const favMealId = 'ae10809a-0533-4d19-b763-f01a44986703'
+const favMealId = '3aa4e90e-2b7a-464d-b231-c2e7f9aed79e'
 
 // this variable will store the token that results from the correct login
 let token=''
@@ -55,21 +55,29 @@ describe("Test remove one favorite meal of the user", () => {
       })
     })
 
-    // TODO: tem que dar 500
     describe('- Favorite Meal that dont exist', () => {
         it('Should return invalid meal error', () => {
           return chai
           .request(server)
-          .delete(baseUrl+'/favoriteMeals/ae10809a-0533-4d19-b763-f01a44986703')
-          .set("Authorization", invalidToken)
+          .delete(baseUrl+'/favoriteMeals/27f4b889-8ed9-4bfa-95b1-bd16cfa25f4c')
+          .set("Authorization", token)
           .then(res => {
-            res.should.have.status(401)
-              chai.expect(res.body).to.have.property("Error")
+            res.should.have.status(500)
           })
         })
       })
 
-    // TODO: como a query filtra o uid não vale a pena testar com outro user
+      describe('- Remove One Favorite Meal That Does Not Belong To The Person', () => {
+        it('Should return user error', () => {
+          return chai
+          .request(server)
+          .get(baseUrl+'/favoriteMeals/27f4b889-8ed9-4bfa-95b1-bd16cfa25f4b')
+          .set("Authorization", token)
+          .then(res => {
+            res.should.have.status(500)
+          })
+        })
+      })
 
     describe('- Remove One Fav Meal Right', () => {
         it('Should remove a favorite meal of the user', () => {

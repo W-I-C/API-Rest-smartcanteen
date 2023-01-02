@@ -35,8 +35,26 @@ export class RemoveMealService {
         // TODO: meter isDeleted só para esta meal não ser mostrada ao utilizador final
         // TODO: apagar a meal caso ela não esteja associada a um ticket
         const removeMealDBClient= createClient();
+        
+        const removeAllowedChanges = await removeMealDBClient.query(`SELECT * FROM allowedchanges
+                                        WHERE mealid = $1`, [mealId])
+        
+        const allowedChanges = removeAllowedChanges["rows"]
+
         await removeMealDBClient.query(`DELETE FROM allowedchanges
                                         WHERE mealid = $1`, [mealId])
+        
+        // se a refeição não está em nenhum ticket
+        const removeMeal = await removeMealDBClient.query(`DELETE FROM meals
+                                        WHERE mealid = $1`, [mealId]) 
+
+        //if()
+
+
+        // se a refeição ainda não está num ticket - num carrinho finalizado
+        // se a refeição estiver em algum carrinho não finalizado, removemos a refeição desses carrinhos e mandamos uma notificação ao utilizador
+
+        
 
         await removeMealDBClient.query(`DELETE FROM meals
                                         WHERE mealid = $1`, [mealId])

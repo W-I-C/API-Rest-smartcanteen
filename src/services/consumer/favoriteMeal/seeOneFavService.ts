@@ -3,6 +3,7 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
+import { checkFavMealExists, getUserFavMeal } from "../../../validations/consumer/favoriteMeal/seeOneFavValidation";
 
 /**
  * Class responsible for the service that serves to get the details of a meal that the authenticated user has already added to favorites
@@ -16,8 +17,18 @@ export class SeeOneFavService {
     async execute(uId: string, favMealId: string) {
         const seeOneFavDBClient = createClient();
 
-        // TODO: user a ver uma refeição que não lhe pertence dá status 200 e devia dar 404
+        const mealIdExists = await checkFavMealExists(favMealId)
+
+        if(!mealIdExists){
+            throw new Error('FavMeal does not exists')
+        }
         
+        const userMealId = await getUserFavMeal(favMealId);
+
+        if(userMealId != uId){
+            throw new Error('Favmeal does not belong to you')
+        }
+
         const query = await seeOneFavDBClient.query(`SELECT meals.name, meals.preparationtime, meals.price, mealimages.url 
                                             FROM favoritemeals 
                                             JOIN meals ON favoritemeals.mealid = meals.mealid 

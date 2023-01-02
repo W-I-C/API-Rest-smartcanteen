@@ -8,7 +8,7 @@ const should = chai.should();
 const baseUrl = "/api/v1/consumer"
 const server = "localhost:3000"
 const invalidToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTAwMjQ1MzgsImV4cCI6MTY1MDAyNTQzOCwic3ViIjoiMDAwZDFlMTQtNjE3ZS00MjNlLThhMWEtZjYzZDRmYTVhZjZhIn0.b0U-__cRpH8YBsAtZEtClr0fAj4t9IOwDAcI2R3j-qk'
-const ticketId = '6e81af81-e551-4078-9e6f-919b21426816'
+const ticketId = 'f6219d36-b8ef-4338-8d2a-cfcd77433dc2'
 
 let token=''
 
@@ -54,8 +54,6 @@ describe("Test accept one Trade", () => {
       })
     })
 
-    // TODO: Should return incomplete body error ou status 500?
-    // TODO: ver mensagens de erro que são retornadas
     describe('- Accept a Trade without body', () => {
         it('Should return incomplete body error', () => {
           return chai
@@ -83,18 +81,32 @@ describe("Test accept one Trade", () => {
         })
       })
 
-      // TODO: criar um troca associada a outro user e testar isto
-      describe('- The user accepting the trade is not the user receiving the trade', () => {
+    describe('- The trade proposal does not exist', () => {
         it('Should return user error', () => {
           return chai
             .request(server)
-            .put(baseUrl+'/trades/04720b43-2c3b-4c78-baef-fcada0a40baa')
+            .put(baseUrl+'/trades/534cf037-6a41-475b-81d8-c90af631084c')
             .set("Authorization", token)
             .send({
                 receptorDecision: 1
               })
             .then(res => {
-              res.should.have.status(500)
+              res.should.have.status(404)
+            })
+        })
+      })
+      
+    describe('- The user accepting the trade is not the user receiving the trade', () => {
+        it('Should return user error', () => {
+          return chai
+            .request(server)
+            .put(baseUrl+'/trades/534cf037-6a41-475b-81d8-c90af631084f')
+            .set("Authorization", token)
+            .send({
+                receptorDecision: 1
+              })
+            .then(res => {
+              res.should.have.status(404)
             })
         })
       })
