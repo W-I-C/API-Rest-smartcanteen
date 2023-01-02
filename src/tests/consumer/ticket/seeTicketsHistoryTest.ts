@@ -66,13 +66,16 @@ describe("Test get tickets history of the user", () => {
             chai.expect(res.body).to.be.an("array")
             chai.expect(res.body[0]).to.be.an("object")
     
-            // TODO: falta o price e mudar de ticketid para identificador
             chai.expect(res.body[0]).to.have.property("ticketid")
+            chai.expect(res.body[0]).to.have.property("nencomenda")
             chai.expect(res.body[0]).to.have.property("ticketamount")
+            chai.expect(res.body[0]).to.have.property("total")
             chai.expect(res.body[0]).to.have.property("name")
     
             chai.expect(res.body[0]['ticketid']).to.be.a("string")
+            chai.expect(res.body[0]['nencomenda']).to.be.a("number")
             chai.expect(res.body[0]['ticketamount']).to.be.a("number")
+            chai.expect(res.body[0]['total']).to.be.a("number")
             chai.expect(res.body[0]['name']).to.be.a("string")
           })
         })

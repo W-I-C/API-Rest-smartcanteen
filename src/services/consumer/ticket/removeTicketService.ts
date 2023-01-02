@@ -24,6 +24,7 @@ export class RemoveTicketService {
         }
 
         // TODO: ao remover tenho que remover de todas as tabelas que tenham este ticketid
+        // TODO: isDeleted em vez de removewr direto
         const removeTicketDBClient = createClient();
         await removeTicketDBClient.query(`DELETE FROM tickets
                                             WHERE uid = $1 AND ticketid = $2`, [uId, ticketId])
