@@ -14,7 +14,19 @@
     "test_employee_ticket": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/ticket/seeUndeliveredTicketsTest.ts'",
     "test_consumer_favmeal": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/favoriteMeal/seeOneFavTest.ts'",
     "test_employee_editmeal": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/meal/editMealTest.ts'",
-    "test_consumer_accepttrade": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/acceptTradeTest.ts'"
+    "test_consumer_accepttrade": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/acceptTradeTest.ts'",
+    "test_consumer_addFavMeal": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/favoriteMeal/addFavTest.ts'",
+    "test_consumer_seeMealCart": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/cart/seeMealCartTest.ts'",
+    "test_consumer_seeBarMeal": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/both/meals/seeMealsTest.ts'",
+    "test_employee_createMeal": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/meal/createMealTest.ts'",
+    "test_employee_addMealCart": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/cart/addmealCartTest.ts'"
+
+
+
+   
+
+
+
   },
   "keywords": [],
   "author": "",

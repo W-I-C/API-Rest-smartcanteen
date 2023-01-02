@@ -56,8 +56,10 @@ export class AddMealCartService {
             
             
             const query= await favMeal.query('INSERT INTO CartMeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,cartId,amount,mealPrice])
-        
-            const data=query["rows"]
+            
+            const queryCart=await favMeal.query('SELECT mealid,amount,mealprice from cartmeals WHERE cartid=$1',[cartId])
+            const data=queryCart["rows"]
+            
             
             return { data, status: 200 }
             }

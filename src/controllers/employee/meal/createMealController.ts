@@ -53,7 +53,7 @@ export class CreateMealController {
                 allowedChanges
              });
  
-            response.status(resp.status).json(resp.data);
+            response.status(resp.status).json(resp.meal);
         } catch(e) {
             response.status(500).json(e.message)
         }

@@ -35,7 +35,9 @@ consumerRouter.post("/favoriteMeals/:mealId", validateToken, validateRefreshToke
 consumerRouter.delete("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, removeFavController.handle);
 consumerRouter.get("/favoriteMeals", validateToken, validateRefreshToken, seeFavController.handle);
 consumerRouter.get("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, seeOneFavController.handle);
-consumerRouter.post("consumer/cart/:mealId", validateToken, validateRefreshToken,addMealCartController.handle);
+
+consumerRouter.post("/cart/:mealId", validateToken, validateRefreshToken,addMealCartController.handle);
+
 consumerRouter.get("/cart/meals",validateToken, validateRefreshToken, seeMealsCartController.handle);
 consumerRouter.delete("/meals/:cartMealId",validateToken, validateRefreshToken, removeMealsCartController.handle);
 consumerRouter.get("/trades",validateToken, validateRefreshToken, seeTradesHistoryController.handle);
