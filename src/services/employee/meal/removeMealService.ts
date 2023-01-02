@@ -45,10 +45,15 @@ export class RemoveMealService {
                                         WHERE mealid = $1`, [mealId])
         
         // se a refeição não está em nenhum ticket
-        const removeMeal = await removeMealDBClient.query(`DELETE FROM meals
-                                        WHERE mealid = $1`, [mealId]) 
+        try {
+            const removeMeal = await removeMealDBClient.query(`DELETE FROM meals
+                                        WHERE mealid = $1`, [mealId])
+        } catch (err) {
+            console.log(err.stack)
+        }
+        
 
-        //if()
+        // if()
 
 
         // se a refeição ainda não está num ticket - num carrinho finalizado
