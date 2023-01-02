@@ -15,6 +15,20 @@ export async function checkMealExists(mealId: string) {
 }
 
 /**
+ * For the employee to be able to delete a meal, he must first check if any user has already added that meal to the cart
+ * 
+ * @param mealId id of the meal to be removed
+ */
+export async function checkMealCartExists(mealId: string) {
+    const checkMealExistsDBClient = createClient();
+    const query = await checkMealExistsDBClient.query(`SELECT mealid FROM cartmeals
+                                                        WHERE mealid = $1`, [mealId]);
+
+                                                        
+    return query['rows'].length == 0
+}
+
+/**
  * A meal is on the bar menu. For the employee to be able to remove this meal, 
  * it is necessary to check if the bar of the meal is the same as the employee's bar.
  * This function allows to get the bar of the meal
