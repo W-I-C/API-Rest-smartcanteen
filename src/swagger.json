@@ -69,7 +69,9 @@
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
                   "Remove meal from favorites": {
-                    "value": { "msg": "Meal removed from favorites with success" }
+                    "value": {
+                      "msg": "Meal removed from favorites with success"
+                    }
                   }
                 }
               }
@@ -124,7 +126,9 @@
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
                   "Get all favorites meals": {
-                    "value": { "msg": "Successfully obtained all the favorite meals" }
+                    "value": {
+                      "msg": "Successfully obtained all the favorite meals"
+                    }
                   }
                 }
               }
@@ -147,26 +151,25 @@
             "required": true,
             "schema": { "properties": { "mealId": { "type": "string" } } }
           }
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "amount": { "type": "number" }
-                  }
-                },
-                "examples": {
-                  "Adicionar refeição ao cart": {
-                    "value": {
-        
-                      "amount": 4
-                    }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "amount": { "type": "number" }
+                }
+              },
+              "examples": {
+                "Adicionar refeição ao cart": {
+                  "value": {
+                    "amount": 4
                   }
                 }
               }
             }
-          },
+          }
+        },
 
         "responses": {
           "500": { "description": "ERROR" },
@@ -262,7 +265,7 @@
         "summary": "get meal from cart",
         "description": "get a meal from cart ",
         "tags": ["Meal"],
-        
+
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -305,14 +308,13 @@
                   "description": { "type": "string" },
                   "canTakeAway": { "type": "number" },
                   "price": { "type": "number" },
-                  "ingname":{"type":"string"},
-                  "ingdosage":{"type":"string"},
-                  "isremoveonly":{"type":"number"},
-                  "canbeincremented":{"type":"number"},
-                  "canbedecremented":{"type":"number"},
-                  "incrementlimit":{"type":"number"},
-                  "decrementlimit":{"type":"number"}
-
+                  "ingname": { "type": "string" },
+                  "ingdosage": { "type": "string" },
+                  "isremoveonly": { "type": "number" },
+                  "canbeincremented": { "type": "number" },
+                  "canbedecremented": { "type": "number" },
+                  "incrementlimit": { "type": "number" },
+                  "decrementlimit": { "type": "number" }
                 }
               },
               "examples": {
@@ -323,24 +325,26 @@
                     "description": "prego",
                     "canTakeaway": true,
                     "price": 0.02,
-                    "allowedChanges":[{		
-                      "ingname": "queijo",
-                      "ingdosage": "porção",
-                      "isremoveonly": true,
-                      "canbeincremented": true,
-                      "canbedecremented": true,
-                      "incrementedlimir": 2,
-                      "decrementedlimit": 1
-                    },
-                    {		
-                      "ingname": "fiambre",
-                      "ingdosage": "porção",
-                      "isremoveonly": true,
-                      "canbeincremented": true,
-                      "canbedecremented": true,
-                      "incrementedlimir": 2,
-                      "decrementedlimit": 1
-                    }]
+                    "allowedChanges": [
+                      {
+                        "ingname": "queijo",
+                        "ingdosage": "porção",
+                        "isremoveonly": true,
+                        "canbeincremented": true,
+                        "canbedecremented": true,
+                        "incrementedlimir": 2,
+                        "decrementedlimit": 1
+                      },
+                      {
+                        "ingname": "fiambre",
+                        "ingdosage": "porção",
+                        "isremoveonly": true,
+                        "canbeincremented": true,
+                        "canbedecremented": true,
+                        "incrementedlimir": 2,
+                        "decrementedlimit": 1
+                      }
+                    ]
                   }
                 }
               }
@@ -450,33 +454,35 @@
                     "description": "prego",
                     "canTakeaway": true,
                     "price": 0.02,
-                    "allowedChanges":[{		
-                      "ingname": "atum",
-                      "ingdosage": "porção",
-                      "isremoveonly": true,
-                      "canbeincremented": true,
-                      "canbedecremented": true,
-                      "incrementedlimir": 2,
-                      "decrementedlimit": 1
-                    },
-                    {		
-                      "ingname": "fiambre",
-                      "ingdosage": "porção",
-                      "isremoveonly": true,
-                      "canbeincremented": true,
-                      "canbedecremented": true,
-                      "incrementedlimit": 2,
-                      "decrementedlimit": 1
-                    },
-                    {		
-                    "ingname": "ovo",
-                    "ingdosage": "porção",
-                    "isremoveonly": true,
-                    "canbeincremented": true,
-                    "canbedecremented": true,
-                    "incrementedlimit": 2,
-                    "decrementedlimit": 1
-                    }]
+                    "allowedChanges": [
+                      {
+                        "ingname": "atum",
+                        "ingdosage": "porção",
+                        "isremoveonly": true,
+                        "canbeincremented": true,
+                        "canbedecremented": true,
+                        "incrementedlimir": 2,
+                        "decrementedlimit": 1
+                      },
+                      {
+                        "ingname": "fiambre",
+                        "ingdosage": "porção",
+                        "isremoveonly": true,
+                        "canbeincremented": true,
+                        "canbedecremented": true,
+                        "incrementedlimit": 2,
+                        "decrementedlimit": 1
+                      },
+                      {
+                        "ingname": "ovo",
+                        "ingdosage": "porção",
+                        "isremoveonly": true,
+                        "canbeincremented": true,
+                        "canbedecremented": true,
+                        "incrementedlimit": 2,
+                        "decrementedlimit": 1
+                      }
+                    ]
                   }
                 }
               }
@@ -602,7 +608,9 @@
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
                   "Get all orders": {
-                    "value": { "msg": "Successfully obtained all orders from the bar" }
+                    "value": {
+                      "msg": "Successfully obtained all orders from the bar"
+                    }
                   }
                 }
               }
@@ -625,7 +633,9 @@
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
                   "Get all orders": {
-                    "value": { "msg": "Successfully obtained all details meal from an ticket" }
+                    "value": {
+                      "msg": "Successfully obtained all details meal from an ticket"
+                    }
                   }
                 }
               }
@@ -648,7 +658,9 @@
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
                   "Get all orders": {
-                    "value": { "msg": "Successfully obtained all available trades" }
+                    "value": {
+                      "msg": "Successfully obtained all available trades"
+                    }
                   }
                 }
               }
@@ -690,7 +702,74 @@
               }
             }
           }
-        },  
+        },
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Accept Trade": {
+                    "value": { "msg": "Trade accepted/rejected successfully" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "summary": "Login",
+        "description": "A user can do login",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              },
+              "examples": {
+                "Employee": {
+                  "value": {
+                    "email": "employee@employe.com",
+                    "password": "Teste_#"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Accept Trade": {
+                    "value": { "msg": "Trade accepted/rejected successfully" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consumer/notifications": {
+      "get": {
+        "summary": "Get all notifications",
+        "description": "A user can get all his notifications",
+        "tags": ["Notifications"],
+        "security": [{ "basicAuth": [] }],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -711,6 +790,12 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
     "schemas": {
       "Meal": {
         "type": "object",
@@ -727,7 +812,6 @@
               "$ref": "#/components/schemas/AllowedChanges"
             }
           }
-
         }
       },
       "AllowedChanges": {
