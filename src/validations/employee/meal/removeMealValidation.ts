@@ -8,7 +8,7 @@ import { createClient } from "../../../config/db";
 export async function checkMealExists(mealId: string) {
     const checkMealExistsDBClient = createClient();
     const query = await checkMealExistsDBClient.query(`SELECT mealid FROM meals
-                                                        WHERE mealid = $1`, [mealId]);
+                                                        WHERE mealid = $1 AND isdeleted = $2`, [mealId, false]);
 
                                                         
     return query['rows'].length != 0
@@ -23,9 +23,8 @@ export async function checkMealCartExists(mealId: string) {
     const checkMealExistsDBClient = createClient();
     const query = await checkMealExistsDBClient.query(`SELECT mealid FROM cartmeals
                                                         WHERE mealid = $1`, [mealId]);
-
-                                                        
-    return query['rows'].length == 0
+                                            
+    return query['rows'].length != 0
 }
 
 /**
