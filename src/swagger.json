@@ -49,6 +49,7 @@
         "summary": "Remove a meal from favorites",
         "description": "Remove a specific meal from the favorites of the authenticated user",
         "tags": ["Favorite Meal"],
+        "security": [{ "basicAuth": [] }],
         "parameters": [
           {
             "name": "favMealId",
@@ -83,6 +84,7 @@
         "summary": "Get one favorite meal",
         "description": "Get a specific meal from the favorites of the authenticated user",
         "tags": ["Favorite Meal"],
+        "security": [{ "basicAuth": [] }],
         "parameters": [
           {
             "name": "favMealId",
@@ -117,6 +119,7 @@
         "summary": "Get all the favorite meals",
         "description": "Get all the favorite meals of the authenticated user",
         "tags": ["Favorite Meal"],
+        "security": [{ "basicAuth": [] }],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -374,6 +377,7 @@
         "summary": "View my profile",
         "description": "This route allows a user of the application to view his profile",
         "tags": ["Profile"],
+        "security": [{ "basicAuth": [] }],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -390,6 +394,7 @@
         "summary": "Edit profile",
         "description": "Edit the profile of the authenticated user",
         "tags": ["Profile"],
+        "security": [{ "basicAuth": [] }],
         "requestBody": {
           "content": {
             "application/json": {
@@ -431,6 +436,7 @@
         "summary": "Edit meal",
         "description": "edit meal",
         "tags": ["Meal"],
+        "security": [{ "basicAuth": [] }],
         "parameters": [
           {
             "name": "mealId",
@@ -510,6 +516,7 @@
         "summary": "Remove a meal",
         "description": "Remove a meal from a bar",
         "tags": ["Meal cart"],
+        "security": [{ "basicAuth": [] }],
         "parameters": [
           {
             "name": "mealId",
@@ -542,6 +549,7 @@
         "summary": "Get all orders",
         "description": "Get all the orders of the authenticated user",
         "tags": ["Tickets"],
+        "security": [{ "basicAuth": [] }],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -599,6 +607,7 @@
         "summary": "Get all orders of the bar",
         "description": "Get all the orders of the bar where the authenticated user works",
         "tags": ["Tickets"],
+        "security": [{ "basicAuth": [] }],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -619,7 +628,7 @@
         }
       }
     },
-    "employee/detail/ticket/{ticketId}": {
+    "/employee/detail/ticket/{ticketId}": {
       "get": {
         "summary": "Get details meal of an order",
         "description": "Get details od an order",
@@ -674,6 +683,7 @@
         "summary": "Accept trade",
         "description": "A user can accept or decline an exchange proposal made by another user",
         "tags": ["Trades"],
+        "security": [{ "basicAuth": [] }],
         "parameters": [
           {
             "name": "ticketId",
