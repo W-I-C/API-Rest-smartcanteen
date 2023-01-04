@@ -13,8 +13,6 @@ const mealId = '1f19215b-720b-4764-9528-86dd6bf0e795'
 // this variable will store the token that results from the correct login
 let token=''
 
-// TODO: fazer esta rota
-
 describe("Test remove one meal of the bar that employee works", () => {
 
     beforeEach((done) => {

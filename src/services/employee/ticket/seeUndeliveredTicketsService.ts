@@ -18,7 +18,7 @@ export class SeeUndeliveredTicketsService {
     
         const barId = await getEmployeeBar(uId);
 
-        const query = await seeUndeliveredTicketsDBClient.query(`SELECT ticketid, users.name, states.name AS stateName
+        const query = await seeUndeliveredTicketsDBClient.query(`SELECT ticketid, nencomenda, users.name, states.name AS stateName
                                                                 FROM tickets
                                                                 JOIN states ON tickets.stateid = states.stateid
                                                                 JOIN users ON tickets.uid = users.uid

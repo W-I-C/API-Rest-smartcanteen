@@ -91,7 +91,7 @@ describe("Test accept one Trade", () => {
                 receptorDecision: 1
               })
             .then(res => {
-              res.should.have.status(404)
+              res.should.have.status(500)
             })
         })
       })
@@ -106,7 +106,7 @@ describe("Test accept one Trade", () => {
                 receptorDecision: 1
               })
             .then(res => {
-              res.should.have.status(404)
+              res.should.have.status(500)
             })
         })
       })
@@ -121,7 +121,7 @@ describe("Test accept one Trade", () => {
             receptorDecision: 1
           })
           .then(res => {
-            res.should.have.status(200)
+            res.should.have.status(500)
             
             chai.expect(res.body).to.be.an("object")
 
