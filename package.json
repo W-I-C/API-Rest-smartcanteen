@@ -19,13 +19,18 @@
     "test_consumer_seeMealCart": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/cart/seeMealCartTest.ts'",
     "test_consumer_seeBarMeal": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/both/meals/seeMealsTest.ts'",
     "test_employee_createMeal": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/meal/createMealTest.ts'",
+    "test_employee_removeMeal": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/meal/removeMealTest.ts'",
     "test_employee_addMealCart": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/cart/addmealCartTest.ts'",
     "test_both_seeMealDetail": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/both/meals/seeMealsDetailTest.ts'",
     "test_consumer_seeTradesHistory": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/seeTradesHistoryTest.ts'",
     "test_consumer_removeMealCart": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/cart/removeMealCartTest.ts'",
+<<<<<<< HEAD
     "test_consumer_seeTrades": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/seeTradesTest.ts'",
     "test_login": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/both/auth/loginTest.ts'",
     "test_logout": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/both/auth/logoutTest.ts'"
+=======
+    "test_consumer_seeTrades": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/seeTradesTest.ts'"
+>>>>>>> 1428bfe6073d06c051c5f136033f79cfeb6f145b
   },
   "keywords": [],
   "author": "",
