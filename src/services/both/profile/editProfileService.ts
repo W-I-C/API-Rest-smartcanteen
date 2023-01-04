@@ -36,7 +36,7 @@ export class EditProfileService {
             return { data, status: 200 }
         }
         else {
-            return { msg: "Invalid Data", status: 404 }
+            return { msg: "Invalid Data", status: 500 }
         }  
     }
 }

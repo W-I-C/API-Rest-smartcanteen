@@ -40,7 +40,7 @@ export class AcceptTradeService {
             return { data, status: 200 }
         }
         else {
-            return { msg: "Invalid Data", status: 404 }
+            return { msg: "Invalid Data", status: 500 }
         }  
 
         // TODO: notificação a avisar o utilizador que propos a troca (que detem o ticket) rque a troca foi aceite ou não pelo recetor
