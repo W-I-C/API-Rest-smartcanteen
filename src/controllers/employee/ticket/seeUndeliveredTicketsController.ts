@@ -9,7 +9,7 @@ import { SeeUndeliveredTicketsService } from "../../../services/employee/ticket/
  */
 export class SeeUndeliveredTicketsController {
     /**
-     * Allows to obtain all orders placed by consumers, redirected afterwards to the associated service
+     * Allows to obtain all orders placed by consumers, redirecting afterwards to the associated service
      *
      * {@link seeUndeliveredTicketsService}
      * @param request request receive.
@@ -17,9 +17,9 @@ export class SeeUndeliveredTicketsController {
      */
     async handle(request: Request, response: Response) {
         const uId = response.locals.uid;
-        
+
         try {
-            if(uId === undefined) {
+            if (uId === undefined) {
                 throw new Error("Invalid request");
             }
 
@@ -27,7 +27,7 @@ export class SeeUndeliveredTicketsController {
             const resp = await seeUndeliveredTicketsService.execute(uId);
 
             response.status(resp.status).json(resp.data);
-        } catch(e) {
+        } catch (e) {
             response.status(500).json(e.message)
         }
     }

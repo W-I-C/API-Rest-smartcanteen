@@ -10,7 +10,7 @@ import { SeeTradesService } from "../../../services/consumer/trades/seeTradesSer
 
 export class SeeTradesController {
   /**
-   * Allows to get a meal that the authenticated user has already added to favorites, redirected afterwards to the associated service
+   * Allows to get a meal that the authenticated user has already added to favorites, redirecting afterwards to the associated service
    *
    * {@link seeTradesService}
    *

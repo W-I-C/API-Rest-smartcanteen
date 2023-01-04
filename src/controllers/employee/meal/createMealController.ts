@@ -8,40 +8,40 @@ import { CreateMealService } from "../../../services/employee/meal/createMealSer
  * Class responsible for receiving and calling the service methods that allow the employee to create a meal in a bar
  */
 export class CreateMealController {
-      /**
-     * Allows to get a meal that the authenticated user has already added to favorites, redirected afterwards to the associated service
-     *
-     * {@link createmealService}
-     * @param request request receive.
-     * @param response response.
-     */
+    /**
+   * Allows to get a meal that the authenticated user has already added to favorites, redirecting afterwards to the associated service
+   *
+   * {@link createmealService}
+   * @param request request receive.
+   * @param response response.
+   */
     async handle(request: Request, response: Response) {
-        const barId= request.params.barId;
-        const uId=response.locals.uid;
+        const barId = request.params.barId;
+        const uId = response.locals.uid;
         let { name,
-            preparationTime, 
+            preparationTime,
             description,
-            canTakeaway, 
+            canTakeaway,
             price,
-            allowedChanges} = request.body;
-               
+            allowedChanges } = request.body;
+
         try {
-            if (              
-              barId=== undefined||
-              name === undefined ||
-              preparationTime === undefined ||
-              description === undefined ||
-              canTakeaway === undefined ||
-              price === undefined||
-              allowedChanges===undefined
-              
+            if (
+                barId === undefined ||
+                name === undefined ||
+                preparationTime === undefined ||
+                description === undefined ||
+                canTakeaway === undefined ||
+                price === undefined ||
+                allowedChanges === undefined
+
             ) {
-              throw new Error("Some parameter is incorrect");
+                throw new Error("Some parameter is incorrect");
             }
 
             const createMealService = new CreateMealService();
 
-          
+
             const resp = await createMealService.execute({
                 uId,
                 barId,
@@ -51,10 +51,10 @@ export class CreateMealController {
                 canTakeaway,
                 price,
                 allowedChanges
-             });
- 
+            });
+
             response.status(resp.status).json(resp.meal);
-        } catch(e) {
+        } catch (e) {
             response.status(500).json(e.message)
         }
     }

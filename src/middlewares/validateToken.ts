@@ -1,5 +1,17 @@
+/**
+ * @module validateToken
+ */
 import { Request, Response, NextFunction } from "express"
 import { verify, decode } from "jsonwebtoken"
+
+
+/**
+ * Validate session token middleware
+ * 
+ * @param request request received
+ * @param response response objecet
+ * @param next next function to execute
+ */
 export async function validateToken(request: Request, response: Response, next: NextFunction) {
   const auth = request.headers.authorization
   if (!auth || auth === undefined || auth === null) {

@@ -10,7 +10,7 @@ import { RemoveMealService } from "../../../services/employee/meal/removeMealSer
 export class RemoveMealController {
   async handle(request: Request, response: Response) {
     /**
-     * Allows to remove a meal, redirected afterwards to the associated service
+     * Allows to remove a meal, redirecting afterwards to the associated service
      *
      * {@link removeMealService}
      * @param request request receive.

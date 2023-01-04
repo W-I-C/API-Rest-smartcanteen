@@ -10,20 +10,20 @@ import { SeeMealsCartService } from "../../../services/consumer/cart/seeMealCart
  */
 export class SeeMealsCartController {
     async handle(request: Request, response: Response) {
-         /**
-     * Allows to remove a meal, redirected afterwards to the associated service
-     *
-     * {@link seeeMealsCartService}
-     * @param response response.
-     */
-        const uId=response.locals.uid;
-        
+        /**
+    * Allows to remove a meal, redirecting afterwards to the associated service
+    *
+    * {@link seeeMealsCartService}
+    * @param response response.
+    */
+        const uId = response.locals.uid;
+
         try {
             const seeMealsCartService = new SeeMealsCartService();
             const resp = await seeMealsCartService.execute(uId);
 
             response.status(resp.status).send(resp.data);
-        } catch(e) {
+        } catch (e) {
             response.status(500).json(e.message)
         }
     }

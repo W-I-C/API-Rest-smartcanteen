@@ -9,7 +9,7 @@ import { SeeTicketsHistoryService } from "../../../services/consumer/ticket/seeT
  */
 export class SeeTicketsHistoryController {
     /**
-     * Allows to get all orders that the authenticated user has placed, redirected afterwards to the associated service
+     * Allows to get all orders that the authenticated user has placed, redirecting afterwards to the associated service
      *
      * {@link seeTicketsHitoryService}
      * @param request request receive.
@@ -17,9 +17,9 @@ export class SeeTicketsHistoryController {
      */
     async handle(request: Request, response: Response) {
         const uId = response.locals.uid;
-        
+
         try {
-            if(uId === undefined) {
+            if (uId === undefined) {
                 throw new Error("Invalid request");
             }
 
@@ -27,7 +27,7 @@ export class SeeTicketsHistoryController {
             const resp = await seeTicketsHistoryService.execute(uId);
 
             response.status(resp.status).json(resp.data);
-        } catch(e) {
+        } catch (e) {
             response.status(500).json(e.message)
         }
     }

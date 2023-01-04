@@ -1154,7 +1154,16 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "properties": { "msg": { "type": "string" } } },
+                "schema": {
+                  "properties": {
+                    "notifications": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Notification"
+                      }
+                    }
+                  }
+                },
                 "examples": {
                   "Notifications": {
                     "value": [
@@ -1175,6 +1184,103 @@
           }
         }
       }
+    },
+    "/employee/meal/{mealId}/canBeMade": {
+      "put": {
+        "summary": "Indicate that meal can be or not be made",
+        "description": "An employee can indicate that meal can be or not be made",
+        "tags": ["Meal"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "Meal Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "status": { "type": "boolean" }
+                }
+              },
+              "examples": {
+                "Can Be Made": {
+                  "value": {
+                    "status": true
+                  }
+                },
+                "Cannot Be Made": {
+                  "value": {
+                    "status": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "msg": {
+                    "value": "Meal doesn't exist"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "msg": {
+                    "value": "Meal updated"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1185,6 +1291,18 @@
       }
     },
     "schemas": {
+      "Notification": {
+        "type": "object",
+        "properties": {
+          "notiid": { "type": "string" },
+          "date": { "type": "string" },
+          "receiverid": { "type": "string" },
+          "senderid": { "type": "string" },
+          "description": { "type": "string" },
+          "isseen": { "type": "boolean" },
+          "istradeproposal": { "type": "boolean" }
+        }
+      },
       "Meal": {
         "type": "object",
         "properties": {
