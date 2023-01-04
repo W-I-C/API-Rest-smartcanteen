@@ -26,6 +26,17 @@ describe("Test login", function () {
         })
     })
   })
+  describe('- Wrong Credentials', () => {
+    it('Should return incomplete body error', () => {
+      return chai
+        .request(server)
+        .post(baseUrl + '/login')
+        .then(res => {
+          res.should.have.status(401)
+          chai.expect(res.body).to.have.property("msg")
+        })
+    })
+  })
   describe('- Correct Login', () => {
     it('Should return session token', () => {
       return chai
