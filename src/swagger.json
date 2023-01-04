@@ -49,6 +49,7 @@
         "summary": "Remove a meal from favorites",
         "description": "Remove a specific meal from the favorites of the authenticated user",
         "tags": ["Favorite Meal"],
+        "security": [{ "basicAuth": [] }],
         "parameters": [
           {
             "name": "favMealId",
@@ -69,7 +70,9 @@
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
                   "Remove meal from favorites": {
-                    "value": { "msg": "Meal removed from favorites with success" }
+                    "value": {
+                      "msg": "Meal removed from favorites with success"
+                    }
                   }
                 }
               }
@@ -81,6 +84,7 @@
         "summary": "Get one favorite meal",
         "description": "Get a specific meal from the favorites of the authenticated user",
         "tags": ["Favorite Meal"],
+        "security": [{ "basicAuth": [] }],
         "parameters": [
           {
             "name": "favMealId",
@@ -115,6 +119,7 @@
         "summary": "Get all the favorite meals",
         "description": "Get all the favorite meals of the authenticated user",
         "tags": ["Favorite Meal"],
+        "security": [{ "basicAuth": [] }],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -124,7 +129,9 @@
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
                   "Get all favorites meals": {
-                    "value": { "msg": "Successfully obtained all the favorite meals" }
+                    "value": {
+                      "msg": "Successfully obtained all the favorite meals"
+                    }
                   }
                 }
               }
@@ -147,26 +154,25 @@
             "required": true,
             "schema": { "properties": { "mealId": { "type": "string" } } }
           }
-          ],
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "amount": { "type": "number" }
-                  }
-                },
-                "examples": {
-                  "Adicionar refeição ao cart": {
-                    "value": {
-        
-                      "amount": 4
-                    }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "amount": { "type": "number" }
+                }
+              },
+              "examples": {
+                "Adicionar refeição ao cart": {
+                  "value": {
+                    "amount": 4
                   }
                 }
               }
             }
-          },
+          }
+        },
 
         "responses": {
           "500": { "description": "ERROR" },
@@ -262,7 +268,7 @@
         "summary": "get meal from cart",
         "description": "get a meal from cart ",
         "tags": ["Meal"],
-        
+
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -305,14 +311,13 @@
                   "description": { "type": "string" },
                   "canTakeAway": { "type": "number" },
                   "price": { "type": "number" },
-                  "ingname":{"type":"string"},
-                  "ingdosage":{"type":"string"},
-                  "isremoveonly":{"type":"number"},
-                  "canbeincremented":{"type":"number"},
-                  "canbedecremented":{"type":"number"},
-                  "incrementlimit":{"type":"number"},
-                  "decrementlimit":{"type":"number"}
-
+                  "ingname": { "type": "string" },
+                  "ingdosage": { "type": "string" },
+                  "isremoveonly": { "type": "number" },
+                  "canbeincremented": { "type": "number" },
+                  "canbedecremented": { "type": "number" },
+                  "incrementlimit": { "type": "number" },
+                  "decrementlimit": { "type": "number" }
                 }
               },
               "examples": {
@@ -323,24 +328,26 @@
                     "description": "prego",
                     "canTakeaway": true,
                     "price": 0.02,
-                    "allowedChanges":[{		
-                      "ingname": "queijo",
-                      "ingdosage": "porção",
-                      "isremoveonly": true,
-                      "canbeincremented": true,
-                      "canbedecremented": true,
-                      "incrementedlimir": 2,
-                      "decrementedlimit": 1
-                    },
-                    {		
-                      "ingname": "fiambre",
-                      "ingdosage": "porção",
-                      "isremoveonly": true,
-                      "canbeincremented": true,
-                      "canbedecremented": true,
-                      "incrementedlimir": 2,
-                      "decrementedlimit": 1
-                    }]
+                    "allowedChanges": [
+                      {
+                        "ingname": "queijo",
+                        "ingdosage": "porção",
+                        "isremoveonly": true,
+                        "canbeincremented": true,
+                        "canbedecremented": true,
+                        "incrementedlimir": 2,
+                        "decrementedlimit": 1
+                      },
+                      {
+                        "ingname": "fiambre",
+                        "ingdosage": "porção",
+                        "isremoveonly": true,
+                        "canbeincremented": true,
+                        "canbedecremented": true,
+                        "incrementedlimir": 2,
+                        "decrementedlimit": 1
+                      }
+                    ]
                   }
                 }
               }
@@ -370,6 +377,7 @@
         "summary": "View my profile",
         "description": "This route allows a user of the application to view his profile",
         "tags": ["Profile"],
+        "security": [{ "basicAuth": [] }],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -386,6 +394,7 @@
         "summary": "Edit profile",
         "description": "Edit the profile of the authenticated user",
         "tags": ["Profile"],
+        "security": [{ "basicAuth": [] }],
         "requestBody": {
           "content": {
             "application/json": {
@@ -393,7 +402,7 @@
                 "$ref": "#/components/schemas/Profile"
               },
               "examples": {
-                "Edit Meal": {
+                "Edit Profile": {
                   "value": {
                     "preferredCampus": "13be23c1-2e9b-43fc-acaa-839c6b3573bc",
                     "preferredBar": "0d9c0499-f2f8-44d5-9b49-a0529266433a",
@@ -427,6 +436,7 @@
         "summary": "Edit meal",
         "description": "edit meal",
         "tags": ["Meal"],
+        "security": [{ "basicAuth": [] }],
         "parameters": [
           {
             "name": "mealId",
@@ -450,33 +460,35 @@
                     "description": "prego",
                     "canTakeaway": true,
                     "price": 0.02,
-                    "allowedChanges":[{		
-                      "ingname": "atum",
-                      "ingdosage": "porção",
-                      "isremoveonly": true,
-                      "canbeincremented": true,
-                      "canbedecremented": true,
-                      "incrementedlimir": 2,
-                      "decrementedlimit": 1
-                    },
-                    {		
-                      "ingname": "fiambre",
-                      "ingdosage": "porção",
-                      "isremoveonly": true,
-                      "canbeincremented": true,
-                      "canbedecremented": true,
-                      "incrementedlimit": 2,
-                      "decrementedlimit": 1
-                    },
-                    {		
-                    "ingname": "ovo",
-                    "ingdosage": "porção",
-                    "isremoveonly": true,
-                    "canbeincremented": true,
-                    "canbedecremented": true,
-                    "incrementedlimit": 2,
-                    "decrementedlimit": 1
-                    }]
+                    "allowedChanges": [
+                      {
+                        "ingname": "atum",
+                        "ingdosage": "porção",
+                        "isremoveonly": true,
+                        "canbeincremented": true,
+                        "canbedecremented": true,
+                        "incrementedlimir": 2,
+                        "decrementedlimit": 1
+                      },
+                      {
+                        "ingname": "fiambre",
+                        "ingdosage": "porção",
+                        "isremoveonly": true,
+                        "canbeincremented": true,
+                        "canbedecremented": true,
+                        "incrementedlimit": 2,
+                        "decrementedlimit": 1
+                      },
+                      {
+                        "ingname": "ovo",
+                        "ingdosage": "porção",
+                        "isremoveonly": true,
+                        "canbeincremented": true,
+                        "canbedecremented": true,
+                        "incrementedlimit": 2,
+                        "decrementedlimit": 1
+                      }
+                    ]
                   }
                 }
               }
@@ -504,6 +516,7 @@
         "summary": "Remove a meal",
         "description": "Remove a meal from a bar",
         "tags": ["Meal cart"],
+        "security": [{ "basicAuth": [] }],
         "parameters": [
           {
             "name": "mealId",
@@ -536,6 +549,7 @@
         "summary": "Get all orders",
         "description": "Get all the orders of the authenticated user",
         "tags": ["Tickets"],
+        "security": [{ "basicAuth": [] }],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -593,6 +607,7 @@
         "summary": "Get all orders of the bar",
         "description": "Get all the orders of the bar where the authenticated user works",
         "tags": ["Tickets"],
+        "security": [{ "basicAuth": [] }],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -602,7 +617,9 @@
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
                   "Get all orders": {
-                    "value": { "msg": "Successfully obtained all orders from the bar" }
+                    "value": {
+                      "msg": "Successfully obtained all orders from the bar"
+                    }
                   }
                 }
               }
@@ -611,7 +628,7 @@
         }
       }
     },
-    "employee/detail/ticket/{ticketId}": {
+    "/employee/detail/ticket/{ticketId}": {
       "get": {
         "summary": "Get details meal of an order",
         "description": "Get details od an order",
@@ -625,7 +642,9 @@
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
                   "Get all orders": {
-                    "value": { "msg": "Successfully obtained all details meal from an ticket" }
+                    "value": {
+                      "msg": "Successfully obtained all details meal from an ticket"
+                    }
                   }
                 }
               }
@@ -648,7 +667,9 @@
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
                   "Get all orders": {
-                    "value": { "msg": "Successfully obtained all available trades" }
+                    "value": {
+                      "msg": "Successfully obtained all available trades"
+                    }
                   }
                 }
               }
@@ -662,6 +683,7 @@
         "summary": "Accept trade",
         "description": "A user can accept or decline an exchange proposal made by another user",
         "tags": ["Trades"],
+        "security": [{ "basicAuth": [] }],
         "parameters": [
           {
             "name": "ticketId",
@@ -690,7 +712,7 @@
               }
             }
           }
-        },  
+        },
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -708,9 +730,197 @@
           }
         }
       }
+    },
+    "/login": {
+      "post": {
+        "summary": "Login",
+        "description": "A user can do login",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              },
+              "examples": {
+                "Employee": {
+                  "value": {
+                    "email": "employe@employee.com",
+                    "password": "Teste_#"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Login Error": {
+                    "value": { "msg": "Wrong Credentials!" }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "token": { "type": "string" } } },
+                "examples": {
+                  "Login Success": {
+                    "value": { "token": "Session Token" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "summary": "Logout",
+        "description": "A user can do logout",
+        "tags": ["Authentication"],
+        "security": [{ "basicAuth": [] }],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Logout": {
+                    "value": { "msg": "Logout successful" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/newSessionToken": {
+      "get": {
+        "summary": "New Session Token",
+        "description": "A user can generate a new session token",
+        "tags": ["Authentication"],
+        "security": [{ "basicAuth": [] }],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "token": { "type": "string" } } },
+                "examples": {
+                  "Logout": {
+                    "value": { "token": "session token" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consumer/notifications": {
+      "get": {
+        "summary": "Get all notifications",
+        "description": "A user can get all his notifications",
+        "tags": ["Notifications"],
+        "security": [{ "basicAuth": [] }],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Notifications": {
+                    "value": [
+                      {
+                        "notiid": "uid",
+                        "date": "09:44:38.33929+00",
+                        "receiverid": "uid",
+                        "senderid": "uid",
+                        "description": "Notification body",
+                        "isseen": false,
+                        "istradeproposal": false
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
     "schemas": {
       "Meal": {
         "type": "object",
@@ -727,7 +937,6 @@
               "$ref": "#/components/schemas/AllowedChanges"
             }
           }
-
         }
       },
       "AllowedChanges": {

@@ -47,9 +47,13 @@ export class CreateMealService {
            const allowchanges= await createMeal.query('INSERT INTO allowedchanges (mealId,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit) VALUES($1,$2,$3,$4,$5,$6,$7,$8)', [mealId,currentvalue.ingname,currentvalue.ingdosage,currentvalue.isremoveonly,currentvalue.canbeincremented,currentvalue.canbedecremented,currentvalue.incrementlimit,currentvalue.decrementlimit])
            
         })
-        const data="refeição creada com sucesso"
-            
-        return { data, status: 200 }
+        const selectmeal=await createMeal.query('SELECT * from Meals WHERE mealid=$1',[mealId])
+        let meal=selectmeal["rows"][0]
+        const selectAllowed=await createMeal.query('SELECT changeid,mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit from allowedchanges WHERE mealid=$1',[mealId])
+        meal["allowedchanges"]=selectAllowed["rows"]
+       
+        
+        return { meal, status: 200 }
     
     }
 }

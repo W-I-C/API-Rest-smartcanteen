@@ -8,9 +8,22 @@ import { createClient } from "../../../config/db";
 export async function checkMealExists(mealId: string) {
     const checkMealExistsDBClient = createClient();
     const query = await checkMealExistsDBClient.query(`SELECT mealid FROM meals
-                                                        WHERE mealid = $1`, [mealId]);
+                                                        WHERE mealid = $1 AND isdeleted = $2`, [mealId, false]);
 
                                                         
+    return query['rows'].length != 0
+}
+
+/**
+ * For the employee to be able to delete a meal, he must first check if any user has already added that meal to the cart
+ * 
+ * @param mealId id of the meal to be removed
+ */
+export async function checkMealCartExists(mealId: string) {
+    const checkMealExistsDBClient = createClient();
+    const query = await checkMealExistsDBClient.query(`SELECT mealid FROM cartmeals
+                                                        WHERE mealid = $1`, [mealId]);
+                                            
     return query['rows'].length != 0
 }
 

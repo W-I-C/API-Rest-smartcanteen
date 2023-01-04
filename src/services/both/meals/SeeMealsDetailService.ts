@@ -14,14 +14,14 @@ export class SeeMealsDetailService {
     
      */
     
-    async execute(uId:string) {
+    async execute(uId:string,mealId:string) {
 
         
         const mealsDetail=createClient();
         
         
  
-        const query=await mealsDetail.query('SELECT name,preparationTime,description,canTakeAway,price from Meals')
+        const query=await mealsDetail.query('SELECT name,preparationTime,description,canTakeAway,price from Meals WHERE mealid=$1',[mealId])
         
     
         const data=query["rows"]

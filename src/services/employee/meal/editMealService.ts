@@ -52,15 +52,27 @@ export class EditMealService {
         await editMealDBClient.query(`DELETE FROM allowedchanges 
                                     WHERE mealid = $1`, [mealId])
 
-        // TODO: incrementedlimit e decrementedlimit não está a ter nenhum valor mesmo passado por body
         allowedChanges.forEach( async (currentvalue:IMealAllowedChange,index,array)=>{
-            console.log(currentvalue)
-            console.log(currentvalue.incrementlimit)
-            console.log(currentvalue.decrementlimit)
+            console.log(currentvalue.canbedecremented,currentvalue.incrementlimit, currentvalue.decrementlimit)
             await editMealDBClient.query(`INSERT INTO allowedchanges (mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit) 
                                         VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`, [mealId, currentvalue.ingname, currentvalue.ingdosage, currentvalue.isremoveonly, currentvalue.canbedecremented, currentvalue.canbedecremented, currentvalue.incrementlimit, currentvalue.decrementlimit])
         })
 
-        return { msg: "Meal edited successfully" , status: 200 }
+        const query = await editMealDBClient.query(`SELECT meals.name, meals.preparationTime, meals.description, meals.canTakeAway, meals.price
+                                                FROM meals
+                                                WHERE mealid = $1`, [mealId])
+
+        let editedMeal = query["rows"][0]
+
+        const queryAllowedChanges = await editMealDBClient.query(`SELECT ingname, ingdosage, isremoveonly, canbeincremented, canbedecremented, incrementlimit, decrementlimit
+                                                                FROM allowedchanges
+                                                                WHERE mealid = $1`, [mealId])
+
+        editedMeal["allowedChanges"] = queryAllowedChanges["rows"]    
+        
+        // TODO: notificação a avisar o utilizador que a refeição foi alterada
+        // TODO: ao mudar o nome por algo que já existe o nome do isDeleted true fica a false
+
+        return { editedMeal , status: 200 }
     }
 }

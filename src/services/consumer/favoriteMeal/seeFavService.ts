@@ -15,7 +15,7 @@ export class SeeFavService {
     async execute(uId: string) {
         const seeFavDBClient = createClient();
 
-        const query = await seeFavDBClient.query(`SELECT favoritemeals.uid, meals.name, meals.preparationtime, meals.price, mealimages.url 
+        const query = await seeFavDBClient.query(`SELECT meals.name, meals.preparationtime, meals.price, mealimages.url 
                                             FROM favoritemeals 
                                             JOIN meals ON favoritemeals.mealid = meals.mealid 
                                             LEFT JOIN mealimages ON meals.mealid = mealimages.mealid 

@@ -5,7 +5,7 @@ require('dotenv').config();
 import { createClient } from "../../../config/db";
 
 /**
- * Class responsible for the service that allows you to see the available exchanges
+ * Class responsible for the service that allows you to see the available trades
  */
 export class SeeTradesService {
  
