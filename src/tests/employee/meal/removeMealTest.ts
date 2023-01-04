@@ -81,8 +81,6 @@ describe("Test remove one meal of the bar that employee works", () => {
         })
       })
 
-    // TODO: como a query filtra o uid não vale a pena testar com outro user
-
     describe('- Remove One Meal Right', () => {
         it('Should remove a meal of the bar that employee works', () => {
           return chai
