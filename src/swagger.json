@@ -738,7 +738,7 @@
               "examples": {
                 "Employee": {
                   "value": {
-                    "email": "employee@employe.com",
+                    "email": "employe@employee.com",
                     "password": "Teste_#"
                   }
                 }
@@ -747,15 +747,27 @@
           }
         },
         "responses": {
-          "500": { "description": "ERROR" },
-          "200": {
-            "description": "OK",
+          "500": {
+            "description": "ERROR",
             "content": {
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
                   "Accept Trade": {
-                    "value": { "msg": "Trade accepted/rejected successfully" }
+                    "value": { "msg": "Wrong Credentials!" }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "token": { "type": "string" } } },
+                "examples": {
+                  "Accept Trade": {
+                    "value": { "token": "Session Token" }
                   }
                 }
               }
@@ -779,7 +791,17 @@
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
                   "Accept Trade": {
-                    "value": { "msg": "Trade accepted/rejected successfully" }
+                    "value": [
+                      {
+                        "notiid": "uid",
+                        "date": "09:44:38.33929+00",
+                        "receiverid": "uid",
+                        "senderid": "uid",
+                        "description": "Notification body",
+                        "isseen": false,
+                        "istradeproposal": false
+                      }
+                    ]
                   }
                 }
               }

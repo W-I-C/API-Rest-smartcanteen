@@ -11,12 +11,20 @@ export class LoginService {
                                               `, [email, password])
 
     // dados a carregar no token
-    const role = query['rows'][0]['name']
-    const uid = query['rows'][0]['uid']
+    if (query['rowCount'] == 1) {
+      const role = query['rows'][0]['name']
+      const uid = query['rows'][0]['uid']
+      const sessionToken = createSessionToken(uid, role)
+      await createRefreshToken(uid)
+      return { token: sessionToken }
+    } else {
+      return { msg: 'Wrong Credentials!' }
+    }
 
-    const sessionToken = createSessionToken(uid, role)
 
-    await createRefreshToken(uid)
-    return sessionToken
+
+
+
+
   }
 }
