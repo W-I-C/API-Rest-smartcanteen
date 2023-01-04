@@ -23,17 +23,32 @@ export class AcceptTradeService {
 
         const isConfirmed = true;
         const confirmationDate = new Date();
-        
-        // TODO: se receptorDecisison já estiver a 1 pode se editar para 0?
-        // TODO: se receptorDecisison já estiver a 1 pode se editar? o isConfirmed é sempre true?
+        let description
+
+        if(receptorDecision == 0) {
+            description = "The trade proposal was refused"
+        } else {
+            description = "The trade proposal was accepted"
+        }
+
+        const queryOwner = await acceptTradeDBClient.query(`SELECT uid
+                                                    FROM tickets 
+                                                    WHERE ticketid = $1`, [ticketId])
+
+        const ticketOwner = queryOwner["rows"][0]["uid"]
+
         if(tradeExists && userIsReceiver) {
+            console.log("234")
             await acceptTradeDBClient.query(`UPDATE tickettrade
                                                         SET isconfirmed = $1, confirmationdate = $2, receptordecision = $3   
                                                         WHERE uid = $4 AND ticketid = $5`, [isConfirmed, confirmationDate, receptorDecision, uId, ticketId])
-
+                                                        
             const query = await acceptTradeDBClient.query(`SELECT isconfirmed, confirmationdate, receptordecision
                                                     FROM tickettrade 
                                                     WHERE uid = $1 AND ticketid = $2`, [uId, ticketId])
+            
+            await acceptTradeDBClient.query(`INSERT INTO notifications (date, receiverid, senderid, description)
+                                            VALUES ($1, $2, $3, $4)`, [confirmationDate, ticketOwner, uId, description])
             
             const data = query["rows"][0]
 
@@ -42,7 +57,5 @@ export class AcceptTradeService {
         else {
             return { msg: "Invalid Data", status: 500 }
         }  
-
-        // TODO: notificação a avisar o utilizador que propos a troca (que detem o ticket) rque a troca foi aceite ou não pelo recetor
     }
 }
