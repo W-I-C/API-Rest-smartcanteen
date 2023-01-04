@@ -2,7 +2,7 @@ import express from "express";
 const consumerRouter = express.Router();
 import { validateToken } from "../middlewares/validateToken";
 import { validateRefreshToken } from "../middlewares/validateRefreshToken";
-
+import { isConsumer } from "../middlewares/isConsumer";
 
 import { AddFavController } from "../controllers/consumer/favoriteMeal/addFavController";
 import { AddMealCartController } from "../controllers/consumer/cart/addMealCartController";
@@ -53,6 +53,6 @@ consumerRouter.put("/trades/:ticketId", validateToken, validateRefreshToken, acc
 consumerRouter.get("/trades/available", validateToken, validateRefreshToken, seeTradesController.handle);
 
 
-consumerRouter.get("/notifications", validateToken, validateRefreshToken, getNotificationsController.handle);
+consumerRouter.get("/notifications", validateToken, validateRefreshToken, isConsumer, getNotificationsController.handle);
 
 export { consumerRouter }
