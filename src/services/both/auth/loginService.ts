@@ -16,9 +16,9 @@ export class LoginService {
       const uid = query['rows'][0]['uid']
       const sessionToken = createSessionToken(uid, role)
       await createRefreshToken(uid)
-      return { token: sessionToken }
+      return { status: 200, data: { token: sessionToken } }
     } else {
-      return { msg: 'Wrong Credentials!' }
+      return { status: 401, data: { msg: 'Wrong Credentials!' } }
     }
 
 

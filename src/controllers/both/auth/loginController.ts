@@ -11,7 +11,6 @@ export class LoginController {
     const loginService = new LoginService()
     const resp = await loginService.execute(email, password)
 
-    response.status(200).json(resp);
-
+    response.status(resp.status).json(resp.data);
   }
 }
