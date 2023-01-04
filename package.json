@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/src/app.js",
   "scripts": {
-    "start": "npm i tsc && nodemon dist/src/app.js",
+    "start": "npm i && tsc && nodemon dist/src/app.js",
     "dev": "nodemon ./src/app.ts",
     "lint": "eslint . --ext .ts",
     "docs": "npx typedoc --cleanOutputDir --out docs src/api/**/*.ts src/api/**/**/*.ts src/api/**/**/**/*.ts src/api/**/**/**/**/*.ts src/**.ts",
