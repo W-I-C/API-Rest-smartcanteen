@@ -10,7 +10,7 @@ import { GetNotificiationsService } from "../../../services/consumer/notificatio
  */
 export class GetNotificationsController {
   /**
- * Allows user to get all his notifications, redirected afterwards to the associated service
+ * Allows user to get all his notifications, redirecting afterwards to the associated service
  *
  * {@link getNotificationsService}
  * @param request request receive.

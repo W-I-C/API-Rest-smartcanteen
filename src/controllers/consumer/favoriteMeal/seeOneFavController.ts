@@ -9,7 +9,7 @@ import { SeeOneFavService } from "../../../services/consumer/favoriteMeal/seeOne
  */
 export class SeeOneFavController {
     /**
-     * Allows to get a meal that the authenticated user has already added to favorites, redirected afterwards to the associated service
+     * Allows to get a meal that the authenticated user has already added to favorites, redirecting afterwards to the associated service
      *
      * {@link seeOneFavService}
      * @param request request receive.
@@ -18,9 +18,9 @@ export class SeeOneFavController {
     async handle(request: Request, response: Response) {
         const uId = response.locals.uid;
         const favMealId = request.params.favoriteMealId
-        
+
         try {
-            if(uId === undefined || favMealId == undefined) {
+            if (uId === undefined || favMealId == undefined) {
                 throw new Error("Invalid request");
             }
 
@@ -28,7 +28,7 @@ export class SeeOneFavController {
             const resp = await seeOneFavService.execute(uId, favMealId);
 
             response.status(resp.status).json(resp.data);
-        } catch(e) {
+        } catch (e) {
             response.status(500).json(e.message)
         }
     }

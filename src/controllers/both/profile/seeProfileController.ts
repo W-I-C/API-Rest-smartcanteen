@@ -9,7 +9,7 @@ import { SeeProfileService } from "../../../services/both/profile/seeProfileServ
  */
 export class SeeProfileController {
   /**
-   * Allows to obtain all the user's data, redirected afterwards to the associated service
+   * Allows to obtain all the user's data, redirecting afterwards to the associated service
    *
    * {@link seeProfileService}
    * @param request request receive.

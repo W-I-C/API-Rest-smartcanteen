@@ -10,7 +10,7 @@ import { EditMealService } from "../../../services/employee/meal/editMealService
 export class EditMealController {
   async handle(request: Request, response: Response) {
     /**
-     * Allows to edit a meal, redirected afterwards to the associated service
+     * Allows to edit a meal, redirecting afterwards to the associated service
      *
      * {@link editMealService}
      * @param request request receive.
@@ -46,7 +46,7 @@ export class EditMealController {
         price,
         allowedChanges
       });
-      
+
       response.status(resp.status).json(resp.editedMeal);
     } catch (e) {
       response.status(500).json(e.message);
