@@ -21,7 +21,7 @@ export class AcceptTradeController {
     let { receptorDecision } = request.body
 
     try {
-      if (uId === undefined || ticketId === undefined || receptorDecision === undefined) {
+      if (uId === undefined || ticketId === undefined || receptorDecision === undefined || typeof receptorDecision != "number") {
         throw new Error("Invalid request");
       }
 
