@@ -38,7 +38,6 @@ export class AcceptTradeService {
         const ticketOwner = queryOwner["rows"][0]["uid"]
 
         if(tradeExists && userIsReceiver) {
-            console.log("234")
             await acceptTradeDBClient.query(`UPDATE tickettrade
                                                         SET isconfirmed = $1, confirmationdate = $2, receptordecision = $3   
                                                         WHERE uid = $4 AND ticketid = $5`, [isConfirmed, confirmationDate, receptorDecision, uId, ticketId])
