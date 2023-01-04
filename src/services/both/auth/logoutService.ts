@@ -2,12 +2,14 @@ import { createClient } from "../../../config/db";
 
 
 export class LogoutService {
-  async execute(uid: string) {
+  async execute(uid: string, sessionToken: string) {
 
     // obter dados do user
-    const loginDBClient = createClient();
-    const query = await loginDBClient.query(`UPDATE users SET "refreshtoken"='' WHERE uid = $1
+    const logoutDBClient = createClient();
+    const query = await logoutDBClient.query(`UPDATE users SET "refreshtoken"='' WHERE uid = $1
                                               `, [uid])
-    // TODO: Adicionar o token de sessão à black list
+    await logoutDBClient.query(`INSERT INTO blacklist(uid, token) VALUES($1,$2)`, [uid, sessionToken])
+
+    return { msg: 'Logout Successful' }
   }
 }
