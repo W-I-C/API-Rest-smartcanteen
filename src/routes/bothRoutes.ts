@@ -8,9 +8,7 @@ import { validateRefreshToken } from "../middlewares/validateRefreshToken";
 import { LogoutController } from "../controllers/both/auth/logoutController";
 import { SeeMealsController } from "../controllers/both/meals/seeMealsController";
 import { SeeMealsDetailController } from "../controllers/both/meals/seeMealsDetailContoller";
-
-
-
+import { SeeDetailsMealTicketController } from "../controllers/both/tickets/seeDetailsMealTicketController";
 
 const bothRouter = express.Router();
 
@@ -21,6 +19,7 @@ const newSessionToken = new NewSessionTokenController();
 const logoutController = new LogoutController();
 const seeMealsController = new SeeMealsController();
 const seeMealsDetailController=new SeeMealsDetailController();
+const seeDetailsMealTicketController = new SeeDetailsMealTicketController();
 
 bothRouter.get("/profile", validateToken, validateRefreshToken, seeProfileController.handle);
 bothRouter.put("/profile", validateToken, validateRefreshToken, editProfileController.handle);
@@ -34,5 +33,7 @@ bothRouter.get("/meals/:mealid",validateToken, validateRefreshToken,seeMealsDeta
 
 // ver as refeições num bar
 bothRouter.get("/meals/:barId",validateToken,validateRefreshToken, seeMealsController.handle);
+
+bothRouter.get("/detail/ticket/:ticketId", validateToken, validateRefreshToken, seeDetailsMealTicketController.handle);
 
 export { bothRouter };

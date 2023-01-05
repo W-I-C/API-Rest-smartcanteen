@@ -51,6 +51,8 @@ describe("Test login", function () {
           // verificar se é um object
           chai.expect(res.body).to.be.an("object")
           chai.expect(res.body).to.have.property("token")
+          chai.expect(res.body).to.have.property("role")
+          chai.expect(res.body).property("token").to.be.a("string")
           chai.expect(res.body).property("token").to.be.a("string")
         })
     })

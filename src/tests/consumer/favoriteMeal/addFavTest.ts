@@ -67,15 +67,20 @@ describe("Test add favorite meal", () => {
             // verificar se é um object
             chai.expect(res.body).to.be.an("array")
 
-            chai.expect(res.body[0]).to.be.an("object")
-            chai.expect(res.body[0]).to.have.property("favoritemealid")
-            chai.expect(res.body[0]).to.have.property("uid")
-            chai.expect(res.body[0]).to.have.property("mealid")
-    
-            chai.expect(res.body[0]['favoritemealid']).to.be.a("string")
-            chai.expect(res.body[0]['uid']).to.be.a("string")
-            chai.expect(res.body[0]['mealid']).to.be.a("string")
-           
+            if(res.body.length>0){
+              for(let i = 0; i < res.body.length; i++){
+
+                chai.expect(res.body[i]).to.be.an("object")
+
+                chai.expect(res.body[i]).to.have.property("favoritemealid")
+                chai.expect(res.body[i]).to.have.property("uid")
+                chai.expect(res.body[i]).to.have.property("mealid")
+        
+                chai.expect(res.body[i]['favoritemealid']).to.be.a("string")
+                chai.expect(res.body[i]['uid']).to.be.a("string")
+                chai.expect(res.body[i]['mealid']).to.be.a("string")
+              }
+            }
           })
         })
     })

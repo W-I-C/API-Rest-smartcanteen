@@ -33,26 +33,18 @@ const seeTradesController = new SeeTradesController();
 const getNotificationsController = new GetNotificationsController()
 
 //adicionar aos favoritos refeição
-consumerRouter.post("/favoriteMeals/:mealId", validateToken, validateRefreshToken, addFavController.handle);
-consumerRouter.delete("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, removeFavController.handle);
-consumerRouter.get("/favoriteMeals", validateToken, validateRefreshToken, seeFavController.handle);
-consumerRouter.get("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, seeOneFavController.handle);
-
-consumerRouter.post("/cart/:mealId", validateToken, validateRefreshToken, addMealCartController.handle);
-
-consumerRouter.get("/cart/meals", validateToken, validateRefreshToken, seeMealsCartController.handle);
-
-consumerRouter.delete("/meals/:cartMealId", validateToken, validateRefreshToken, removeMealsCartController.handle);
-
-consumerRouter.get("/trades", validateToken, validateRefreshToken, seeTradesHistoryController.handle);
-consumerRouter.delete("/tickets/:ticketId", validateToken, validateRefreshToken, removeTicketController.handle);
-
-consumerRouter.get("/tickets", validateToken, validateRefreshToken, seeTicketsHistoryController.handle);
-consumerRouter.put("/trades/:ticketId", validateToken, validateRefreshToken, acceptTradeController.handle);
-
-consumerRouter.get("/trades/available", validateToken, validateRefreshToken, seeTradesController.handle);
-
-
+consumerRouter.post("/favoriteMeals/:mealId", validateToken, validateRefreshToken, isConsumer, addFavController.handle);
+consumerRouter.delete("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, isConsumer, removeFavController.handle);
+consumerRouter.get("/favoriteMeals", validateToken, validateRefreshToken, isConsumer, seeFavController.handle);
+consumerRouter.get("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, isConsumer, seeOneFavController.handle);
+consumerRouter.post("/cart/:mealId", validateToken, validateRefreshToken, isConsumer, addMealCartController.handle);
+consumerRouter.get("/cart/meals", validateToken, validateRefreshToken, isConsumer, seeMealsCartController.handle);
+consumerRouter.delete("/meals/:cartMealId", validateToken, validateRefreshToken, isConsumer, removeMealsCartController.handle);
+consumerRouter.get("/trades", validateToken, validateRefreshToken, isConsumer, seeTradesHistoryController.handle);
+consumerRouter.delete("/tickets/:ticketId", validateToken, validateRefreshToken, isConsumer, removeTicketController.handle);
+consumerRouter.get("/tickets", validateToken, validateRefreshToken, isConsumer, seeTicketsHistoryController.handle);
+consumerRouter.put("/trades/:ticketId", validateToken, validateRefreshToken, isConsumer, acceptTradeController.handle);
+consumerRouter.get("/trades/available", validateToken, validateRefreshToken, isConsumer, seeTradesController.handle);
 consumerRouter.get("/notifications", validateToken, validateRefreshToken, isConsumer, getNotificationsController.handle);
 
 export { consumerRouter }

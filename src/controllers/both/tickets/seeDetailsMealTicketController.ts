@@ -2,7 +2,7 @@
  * @module seedetailMealController
  */
 import { Request, Response } from "express";
-import { SeeDetailsMealTicketService } from "../../../services/employee/ticket/seeDetailsMealTicketService";
+import { SeeDetailsMealTicketService } from "../../../services/both/tickets/seeDetailsMealTicketService";
 
 
 /**

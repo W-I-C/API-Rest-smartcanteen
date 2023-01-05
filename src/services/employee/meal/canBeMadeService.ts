@@ -16,9 +16,8 @@ export class CanBeMadeService {
     */
   async execute(uid: string, mealId: string, status: boolean) {
 
-    // TODO: chech if the user that is changing is in the bar
+    // TODO: check if the user that is changing is in the bar
     const barId = await getEmployeeBar(uid);
-
 
     const canBeMadeDBClient = createClient();
 

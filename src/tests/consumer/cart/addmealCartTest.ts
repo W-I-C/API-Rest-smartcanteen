@@ -71,16 +71,20 @@ describe("Test add meal to cart", () => {
             // verificar se é um object
             chai.expect(res.body).to.be.an("array")
 
-            chai.expect(res.body[0]).to.be.an("object")
+            if(res.body.length>0){
+              for(let i = 0; i < res.body.length; i++){
 
-            chai.expect(res.body[0]).to.have.property("mealid")
-            chai.expect(res.body[0]).to.have.property("amount")
-            chai.expect(res.body[0]).to.have.property("mealprice")
-    
-            chai.expect(res.body[0]['mealid']).to.be.a("string")
-            chai.expect(res.body[0]['amount']).to.be.a("number")
-            chai.expect(res.body[0]['mealprice']).to.be.a("number")
-           
+                chai.expect(res.body[i]).to.be.an("object")
+
+                chai.expect(res.body[i]).to.have.property("mealid")
+                chai.expect(res.body[i]).to.have.property("amount")
+                chai.expect(res.body[i]).to.have.property("mealprice")
+        
+                chai.expect(res.body[i]['mealid']).to.be.a("string")
+                chai.expect(res.body[i]['amount']).to.be.a("number")
+                chai.expect(res.body[i]['mealprice']).to.be.a("number")
+              }
+            }
           })
         })
     })

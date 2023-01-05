@@ -12,6 +12,8 @@ export class SeeTradesService {
     async execute() {
         const selectTicket = createClient();
 
+        // TODO: filtrar pelo campus e meter nos tests
+
         const verifyUser = await selectTicket.query('SELECT * from tickets WHERE istrading=$1 AND ispickedup=$2', [true, false])
 
         const data = verifyUser["rows"]

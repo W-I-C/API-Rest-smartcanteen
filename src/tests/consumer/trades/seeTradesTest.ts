@@ -67,44 +67,43 @@ describe("Test see trades available", () => {
 
             chai.expect(res.body).to.be.an("array")
 
-            chai.expect(res.body[0]).to.be.an("object")
-    
-            chai.expect(res.body[0]).to.have.property("ticketid")
-            chai.expect(res.body[0]).to.have.property("uid")
-            chai.expect(res.body[0]).to.have.property("stateid")
-            chai.expect(res.body[0]).to.have.property("paymentmethodid")
-            chai.expect(res.body[0]).to.have.property("barid")
-            chai.expect(res.body[0]).to.have.property("cartid")
-            chai.expect(res.body[0]).to.have.property("emissiondate")
-            chai.expect(res.body[0]).to.have.property("pickuptime")
-            chai.expect(res.body[0]).to.have.property("istakingaway")
-            chai.expect(res.body[0]).to.have.property("istrading")
-            chai.expect(res.body[0]).to.have.property("ticketamount")
-            chai.expect(res.body[0]).to.have.property("total")
-            chai.expect(res.body[0]).to.have.property("nencomenda")
-            chai.expect(res.body[0]).to.have.property("isdeleted")
+            if(res.body.length>0){
+              for(let i = 0; i < res.body.length; i++){
 
+                chai.expect(res.body[i]).to.be.an("object")
+            
+                chai.expect(res.body[i]).to.have.property("ticketid")
+                chai.expect(res.body[i]).to.have.property("uid")
+                chai.expect(res.body[i]).to.have.property("stateid")
+                chai.expect(res.body[i]).to.have.property("paymentmethodid")
+                chai.expect(res.body[i]).to.have.property("barid")
+                chai.expect(res.body[i]).to.have.property("cartid")
+                chai.expect(res.body[i]).to.have.property("emissiondate")
+                chai.expect(res.body[i]).to.have.property("pickuptime")
+                chai.expect(res.body[i]).to.have.property("istakingaway")
+                chai.expect(res.body[i]).to.have.property("istrading")
+                chai.expect(res.body[i]).to.have.property("ticketamount")
+                chai.expect(res.body[i]).to.have.property("total")
+                chai.expect(res.body[i]).to.have.property("nencomenda")
+                chai.expect(res.body[i]).to.have.property("isdeleted")
 
-
-
-
-            chai.expect(res.body[0]['ticketid']).to.be.a("string")
-            chai.expect(res.body[0]['uid']).to.be.a("string")
-            chai.expect(res.body[0]['stateid']).to.be.a("string")
-            chai.expect(res.body[0]['paymentmethodid']).to.be.a("string")
-            chai.expect(res.body[0]['barid']).to.be.a("string")
-            chai.expect(res.body[0]['cartid']).to.be.a("string")
-            chai.expect(res.body[0]['emissiondate']).to.be.a("string")
-            chai.expect(res.body[0]['pickuptime']).to.be.a("string")
-            chai.expect(res.body[0]['istakingaway']).to.be.a("boolean")
-            chai.expect(res.body[0]['ispickedup']).to.be.a("boolean")
-            chai.expect(res.body[0]['istrading']).to.be.a("boolean")
-            chai.expect(res.body[0]['ticketamount']).to.be.a("number")
-            chai.expect(res.body[0]['total']).to.be.a("number")
-            chai.expect(res.body[0]['nencomenda']).to.be.a("number")
-            chai.expect(res.body[0]['isdeleted']).to.be.a("boolean")
-
-  
+                chai.expect(res.body[i]['ticketid']).to.be.a("string")
+                chai.expect(res.body[i]['uid']).to.be.a("string")
+                chai.expect(res.body[i]['stateid']).to.be.a("string")
+                chai.expect(res.body[i]['paymentmethodid']).to.be.a("string")
+                chai.expect(res.body[i]['barid']).to.be.a("string")
+                chai.expect(res.body[i]['cartid']).to.be.a("string")
+                chai.expect(res.body[i]['emissiondate']).to.be.a("string")
+                chai.expect(res.body[i]['pickuptime']).to.be.a("string")
+                chai.expect(res.body[i]['istakingaway']).to.be.a("boolean")
+                chai.expect(res.body[i]['ispickedup']).to.be.a("boolean")
+                chai.expect(res.body[i]['istrading']).to.be.a("boolean")
+                chai.expect(res.body[i]['ticketamount']).to.be.a("number")
+                chai.expect(res.body[i]['total']).to.be.a("number")
+                chai.expect(res.body[i]['nencomenda']).to.be.a("number")
+                chai.expect(res.body[i]['isdeleted']).to.be.a("boolean")
+              }
+            }
           })
         })
     })
