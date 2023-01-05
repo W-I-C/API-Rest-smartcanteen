@@ -15,21 +15,20 @@ import { createClient } from "../../../config/db";
 
 export class SeeMealsService {
  
-     /**
-     * Method that allows you to see a meals from bar
-     */
-    async execute( barId:string,uId:string) {
+  /**
+   * Method that allows you to see a meals from bar
+   */
+  async execute( barId:string,uId:string) {
 
-        
-        const seeMeals =createClient();
-        
-        
-        const query= await seeMeals.query('SELECT * from Meals WHERE barId=($1)',[barId])
-        
-        
+      
+      const seeMeals =createClient();
+      
+      
+      const query= await seeMeals.query('SELECT * from Meals WHERE barId=($1) AND isdeleted = $2',[barId, false])
+      
+      
       const data=query["rows"]
 
-        return { data, status: 200 }
-   
-    }
+      return { data, status: 200 }
+  }
 }

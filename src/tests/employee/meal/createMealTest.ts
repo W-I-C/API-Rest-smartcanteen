@@ -221,26 +221,26 @@ describe("Test create one Meal", () => {
             chai.expect(res.body['allowedChanges']).to.be.an("array")
 
             if(res.body['allowedChanges'].length>0){
+              for(let i = 0; i < res.body['allowedChanges'].length; i++){
 
-                chai.expect(res.body['allowedChanges'][0]).to.be.an("object") 
+                chai.expect(res.body['allowedChanges'][i]).to.be.an("object") 
 
-                chai.expect(res.body['allowedChanges'][0]).to.have.property("ingname")
-                chai.expect(res.body['allowedChanges'][0]).to.have.property("ingdosage")
-                chai.expect(res.body['allowedchanges'][0]).to.have.property("isremoveonly")
-                chai.expect(res.body['allowedChanges'][0]).to.have.property("canbeincremented")
-                chai.expect(res.body['allowedChanges'][0]).to.have.property("canbedecremented")
-                chai.expect(res.body['allowedChanges'][0]).to.have.property("incrementlimit")
-                chai.expect(res.body['allowedChanges'][0]).to.have.property("decrementlimit")
+                chai.expect(res.body['allowedChanges'][i]).to.have.property("ingname")
+                chai.expect(res.body['allowedChanges'][i]).to.have.property("ingdosage")
+                chai.expect(res.body['allowedchanges'][i]).to.have.property("isremoveonly")
+                chai.expect(res.body['allowedChanges'][i]).to.have.property("canbeincremented")
+                chai.expect(res.body['allowedChanges'][i]).to.have.property("canbedecremented")
+                chai.expect(res.body['allowedChanges'][i]).to.have.property("incrementlimit")
+                chai.expect(res.body['allowedChanges'][i]).to.have.property("decrementlimit")
 
-                chai.expect(res.body['allowedChanges'][0]['ingname']).to.be.a("string")
-                chai.expect(res.body['allowedChanges'][0]['ingdosage']).to.be.a("string")
-                chai.expect(res.body['allowedChanges'][0]['isremoveonly']).to.be.a("boolean")
-                chai.expect(res.body['allowedChanges'][0]['canbeincremented']).to.be.a("boolean")
-                chai.expect(res.body['allowedChanges'][0]['canbedecremented']).to.be.a("boolean")
-                chai.expect(res.body['allowedChanges'][0]['incrementlimit']).to.be.a("number")
-                chai.expect(res.body['allowedChanges'][0]['decrementlimit']).to.be.an("number")
-
-
+                chai.expect(res.body['allowedChanges'][i]['ingname']).to.be.a("string")
+                chai.expect(res.body['allowedChanges'][i]['ingdosage']).to.be.a("string")
+                chai.expect(res.body['allowedChanges'][i]['isremoveonly']).to.be.a("boolean")
+                chai.expect(res.body['allowedChanges'][i]['canbeincremented']).to.be.a("boolean")
+                chai.expect(res.body['allowedChanges'][i]['canbedecremented']).to.be.a("boolean")
+                chai.expect(res.body['allowedChanges'][i]['incrementlimit']).to.be.a("number")
+                chai.expect(res.body['allowedChanges'][i]['decrementlimit']).to.be.an("number")
+              }
             }
           })
         })

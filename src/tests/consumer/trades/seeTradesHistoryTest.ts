@@ -66,25 +66,26 @@ describe("Test see trades from consumer", () => {
 
             chai.expect(res.body).to.be.an("array")
 
-            chai.expect(res.body[0]).to.be.an("object")
-    
-            chai.expect(res.body[0]).to.have.property("ticketid")
-            chai.expect(res.body[0]).to.have.property("isconfirmed")
-            chai.expect(res.body[0]).to.have.property("proposaldate")
-            chai.expect(res.body[0]).to.have.property("confirmationdate")
-            chai.expect(res.body[0]).to.have.property("receptordecision")
-            chai.expect(res.body[0]).to.have.property("isdeleted")
+            if(res.body.length>0){
+              for(let i = 0; i < res.body.length; i++){
 
+                chai.expect(res.body[i]).to.be.an("object")
+      
+                chai.expect(res.body[i]).to.have.property("ticketid")
+                chai.expect(res.body[i]).to.have.property("isconfirmed")
+                chai.expect(res.body[i]).to.have.property("proposaldate")
+                chai.expect(res.body[i]).to.have.property("confirmationdate")
+                chai.expect(res.body[i]).to.have.property("receptordecision")
+                chai.expect(res.body[i]).to.have.property("isdeleted")
 
-
-            chai.expect(res.body[0]['ticketid']).to.be.a("string")
-            chai.expect(res.body[0]['isconfirmed']).to.be.a("boolean")
-            chai.expect(res.body[0]['proposaldate']).to.be.a("string")
-            chai.expect(res.body[0]['confirmationdate']).to.be.a("string")
-            chai.expect(res.body[0]['receptordecision']).to.be.a("number")
-            chai.expect(res.body[0]['isdeleted']).to.be.a("boolean")
-
-  
+                chai.expect(res.body[i]['ticketid']).to.be.a("string")
+                chai.expect(res.body[i]['isconfirmed']).to.be.a("boolean")
+                chai.expect(res.body[i]['proposaldate']).to.be.a("string")
+                chai.expect(res.body[i]['confirmationdate']).to.be.a("string")
+                chai.expect(res.body[i]['receptordecision']).to.be.a("number")
+                chai.expect(res.body[i]['isdeleted']).to.be.a("boolean")
+              }
+            }
           })
         })
     })

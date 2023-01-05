@@ -24,7 +24,8 @@ export class AddMealCartController {
         try {
             if (uId === undefined ||
                 mealId === undefined ||
-                amount === undefined) {
+                amount === undefined || 
+                typeof amount != "number") {
                 throw new Error("Invalid request");
             }
 
