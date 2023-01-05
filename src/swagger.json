@@ -290,11 +290,11 @@
         }
       }
     },
-    "/consumers/cart/{mealId}": {
+    "/cart/{mealId}": {
       "post": {
         "summary": "Add meal to cart",
         "description": "Add a meal to cart ",
-        "tags": ["Favorite Meal"],
+        "tags": ["Cart"],
         "security": [{ "basicAuth": [] }],
         "parameters": [
           {
@@ -370,8 +370,8 @@
     },
     "/meals/{barId}": {
       "get": {
-        "summary": "Get meal from a bar",
-        "description": "Get a meal from a bar ",
+        "summary": "See meals from a bar",
+        "description": "See meals from a bar ",
         "tags": ["Meal"],
         "security": [{ "basicAuth": [] }],
         "parameters": [
@@ -443,9 +443,42 @@
         }
       }
     },
-    "/meals/{cartMealId}": {
+    "/meals/{mealId}": {
+      "get": {
+        "summary": "See meals detail from a bar",
+        "description": "See meals detail from a bar ",
+        "tags": ["Meal"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "meal id",
+            "required": true,
+            "schema": { "properties": { "mealId": { "type": "string" } } }
+          }
+        ],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "See meals detail": {
+                    "value": { "msg": "meals detail" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consumer/meals/{cartMealId}": {
       "delete": {
-        "summary": "Delete a meal from cart",
+        "summary": "delete from cart",
         "description": "delete from cart ",
         "tags": ["Meal cart"],
         "security": [{ "basicAuth": [] }],
@@ -454,13 +487,6 @@
             "name": "mealId",
             "in": "path",
             "description": "meal id",
-            "required": true,
-            "schema": { "properties": { "barId": { "type": "string" } } }
-          },
-          {
-            "name": "cartId",
-            "in": "path",
-            "description": "cart id",
             "required": true,
             "schema": { "properties": { "barId": { "type": "string" } } }
           }
@@ -1298,6 +1324,32 @@
                         "isdeleted": false
                       }
                     ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consumer/trades": {
+      "get": {
+        "summary": "See all trades history",
+        "description": "See all trades history",
+        "tags": ["Trades"],
+        "security": [{ "basicAuth": [] }],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Get all orders": {
+                    "value": {
+                      "msg": "Successfully obtained all trades history"
+                    }
                   }
                 }
               }
