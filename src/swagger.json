@@ -573,6 +573,7 @@
         "summary": "Remove a order",
         "description": "Remove a specific order from the authenticated user",
         "tags": ["Tickets"],
+        "security": [{ "basicAuth": [] }],
         "parameters": [
           {
             "name": "ticketId",
@@ -585,7 +586,25 @@
           }
         ],
         "responses": {
-          "500": { "description": "ERROR" },
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Remove a order that doesnt exist": {
+                    "value": { "msg": "Order does not exist!" }
+                  },
+                  "Remove a order that isnt yours": {
+                    "value": { "msg": "Not your Order!" }
+                  },
+                  "Remove a order that is already in preparation": {
+                    "value": { "msg": "Order Already in preperation!" }
+                  }
+                }
+              }
+            }
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -750,6 +769,12 @@
                   "value": {
                     "email": "employe@employee.com",
                     "password": "Teste_#"
+                  }
+                },
+                "Consumer": {
+                  "value": {
+                    "email": "consumer@consumer.com",
+                    "password": "Teste#"
                   }
                 }
               }

@@ -29,7 +29,7 @@ export class RemoveTicketController {
             const removeTicketService = new RemoveTicketService();
             const resp = await removeTicketService.execute(uId, ticketId);
 
-            response.status(resp.status).json(resp.msg);
+            response.status(resp.status).json(resp.data);
         } catch (e) {
             response.status(500).json(e.message)
         }

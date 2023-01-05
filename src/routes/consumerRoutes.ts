@@ -46,7 +46,7 @@ consumerRouter.delete("/meals/:cartMealId", validateToken, validateRefreshToken,
 
 consumerRouter.get("/trades", validateToken, validateRefreshToken, seeTradesHistoryController.handle);
 consumerRouter.delete("/tickets/:ticketId", validateToken, validateRefreshToken, removeTicketController.handle);
-consumerRouter.delete("/tickets/:ticketId", validateToken, validateRefreshToken, removeTicketController.handle);
+
 consumerRouter.get("/tickets", validateToken, validateRefreshToken, seeTicketsHistoryController.handle);
 consumerRouter.put("/trades/:ticketId", validateToken, validateRefreshToken, acceptTradeController.handle);
 
