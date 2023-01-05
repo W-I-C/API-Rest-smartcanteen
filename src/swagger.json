@@ -1145,7 +1145,7 @@
     },
     "/consumer/tickets/{ticketId}": {
       "delete": {
-        "summary": "Remove a order",
+        "summary": "Remove an order",
         "description": "Remove a specific order from the authenticated user",
         "tags": ["Tickets"],
         "security": [{ "basicAuth": [] }],
@@ -1167,13 +1167,13 @@
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
-                  "Remove a order that doesnt exist": {
+                  "Remove an order that doesnt exist": {
                     "value": { "msg": "Order does not exist!" }
                   },
-                  "Remove a order that isnt yours": {
+                  "Remove an order that isnt yours": {
                     "value": { "msg": "Not your Order!" }
                   },
-                  "Remove a order that is already in preparation": {
+                  "Remove an order that is already in preparation": {
                     "value": { "msg": "Order Already in preperation!" }
                   }
                 }
@@ -1186,7 +1186,7 @@
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
-                  "Remove a order": {
+                  "Remove an order": {
                     "value": { "msg": "Order removed successfully" }
                   }
                 }
@@ -1850,6 +1850,100 @@
                       "toDeliverTickets": 2,
                       "tradedTickets": 2
                     }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consumer/trades/{ticketId}/direct/{receiverid}": {
+      "put": {
+        "summary": "Make direct trade with user",
+        "description": "A consumer can make a direct trade with another user",
+        "tags": ["Trades"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "Ticket Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          },
+          {
+            "name": "receiverid",
+            "in": "path",
+            "description": "Receiver Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Trade an order with a user that doesnt exist": {
+                    "value": { "msg": "User does not exist!" }
+                  },
+                  "Trade an order with a employee": {
+                    "value": { "msg": "Can only trade with another consumer" }
+                  },
+                  "Trade an order that doesnt exist": {
+                    "value": { "msg": "Order does not exist!" }
+                  },
+                  "Trade an order that isnt yours": {
+                    "value": { "msg": "Not your Order!" }
+                  },
+                  "Trade an order that is already in preparation": {
+                    "value": { "msg": "Order Already in preperation!" }
+                  },
+                  "Trade with the same user again": {
+                    "value": {
+                      "msg": "Trade proposal to this user already sent!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "msg": {
+                    "value": "Trade proposal done successfully"
                   }
                 }
               }

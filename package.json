@@ -31,7 +31,8 @@
     "test_logout": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/both/auth/logoutTest.ts'",
     "test_canBeMadeTest": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/meal/canBeMadeTest.ts'",
     "test_removeTicket": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/ticket/removeTicketTest.ts'",
-    "test_canteen_statistics": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/general/getBarStatisticsTest.ts'"
+    "test_canteen_statistics": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/general/getBarStatisticsTest.ts'",
+    "test_direct_trade": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/directTicketTradeTest.ts'"
   },
   "keywords": [],
   "author": "",

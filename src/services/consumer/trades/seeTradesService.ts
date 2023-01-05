@@ -13,6 +13,7 @@ export class SeeTradesService {
         const selectTicket = createClient();
 
         // TODO: filtrar pelo campus e meter nos tests
+        // TODO: join com ticket trades para ver se tem troca direta
 
         const verifyUser = await selectTicket.query('SELECT * from tickets WHERE istrading=$1 AND ispickedup=$2', [true, false])
 
