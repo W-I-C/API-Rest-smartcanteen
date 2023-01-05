@@ -12,7 +12,7 @@ export class CanBeMadeController {
   /**
  * Allows to indicate that a meal cant be made, redirecting afterwards to the associated service
  *
- * {@link canBeMadeController}
+ * {@link canBeMadeService}
  * @param request request receive.
  * @param response response.
  */

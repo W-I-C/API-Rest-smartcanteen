@@ -8,3 +8,11 @@ export async function getRefreshToken(uid: string) {
                                               `, [uid])
   return query['rows'][0]['refreshtoken']
 }
+
+
+export async function getNotStartedStatusId() {
+  const getNotStartedStatusIdDBClient = createClient();
+  const query = await getNotStartedStatusIdDBClient.query(`SELECT stateid FROM states WHERE name=$1`, ['Não Iniciado'])
+
+  return query['rows'][0]['stateid']
+}
