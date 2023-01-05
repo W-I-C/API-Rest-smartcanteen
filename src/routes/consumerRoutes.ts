@@ -17,6 +17,7 @@ import { SeeTicketsHistoryController } from "../controllers/consumer/ticket/seeT
 import { AcceptTradeController } from "../controllers/consumer/trades/acceptTradeController";
 import { SeeTradesController } from "../controllers/consumer/trades/seeTradesController";
 import { GetNotificationsController } from "../controllers/consumer/notifications/getNotificationsController";
+import { DirectTicketTradeController } from "../controllers/consumer/trades/directTicketTradeController";
 
 const addFavController = new AddFavController();
 const removeFavController = new RemoveFavController();
@@ -31,6 +32,7 @@ const seeTicketsHistoryController = new SeeTicketsHistoryController();
 const acceptTradeController = new AcceptTradeController();
 const seeTradesController = new SeeTradesController();
 const getNotificationsController = new GetNotificationsController()
+const directTicketTradeController = new DirectTicketTradeController()
 
 //adicionar aos favoritos refeição
 consumerRouter.post("/favoriteMeals/:mealId", validateToken, validateRefreshToken, isConsumer, addFavController.handle);
@@ -46,5 +48,6 @@ consumerRouter.get("/tickets", validateToken, validateRefreshToken, isConsumer, 
 consumerRouter.put("/trades/:ticketId", validateToken, validateRefreshToken, isConsumer, acceptTradeController.handle);
 consumerRouter.get("/trades/available", validateToken, validateRefreshToken, isConsumer, seeTradesController.handle);
 consumerRouter.get("/notifications", validateToken, validateRefreshToken, isConsumer, getNotificationsController.handle);
+consumerRouter.put("/trades/:ticketId/direct/:receiverId", validateToken, validateRefreshToken, isConsumer, directTicketTradeController.handle);
 
 export { consumerRouter }
