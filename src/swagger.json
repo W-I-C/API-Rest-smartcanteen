@@ -1458,6 +1458,12 @@
                     "email": "employe@employee.com",
                     "password": "Teste_#"
                   }
+                },
+                "Consumer": {
+                  "value": {
+                    "email": "consumer@consumer.com",
+                    "password": "Teste#"
+                  }
                 }
               }
             }
