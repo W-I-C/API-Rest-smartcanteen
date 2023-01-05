@@ -15,7 +15,6 @@ export class AddMealCartService {
      * @param mealId meal to be added to cart
      * @param amount quantity of meal to be added to cart
      */
-
     async execute( mealId:string,uId:string,amount:number) {
 
 
@@ -63,7 +62,5 @@ export class AddMealCartService {
             
             return { data, status: 200 }
             }
-        
-
     }
 }

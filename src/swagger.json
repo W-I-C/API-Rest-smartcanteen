@@ -1064,7 +1064,7 @@
                   }
                 }
               }
-            }
+            } 
           },
           "401": {
             "description": "Unauthorized",
@@ -1767,6 +1767,106 @@
         }
       }
     },
+    "/employee/tickets/{ticketId}": {
+      "put": {
+        "summary": "Edit ticket state",
+        "description": "A employee can edit the state of an ticket that belongs to the same bar",
+        "tags": ["Tickets"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "Ticket id",
+            "required": true,
+            "schema": {
+              "properties": { "ticketId": { "type": "string" } }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "stateName": { "type": "string" }
+                }
+              },
+              "examples": {
+                "Edit ticket state": {
+                  "value": {
+                    "stateName": "Entregue"
+                  }
+               	}
+              }
+            }
+	        }
+        },
+        "responses": {
+          "500": {     
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Ticket does not exists": {
+                    "value": {
+                      "msg": "Ticket does not exists"
+                    }
+                  },
+                  "State does not exists": {
+                    "value": {
+                      "msg": "State does not exists"
+                    }
+                  },
+                  "Bars are not the same": {
+                    "value": {
+                      "msg": "Bars are not the same"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { 
+                  "properties": { 
+                    "ticketid": { "type": "string" }, 
+                    "stateid": { "type": "string" } 
+                  } 
+                },
+                "examples": {
+                  "Edit ticket state": {
+                    "value": {
+                        "ticketid": "42977dd1-cfbe-4e0d-a8b0-db1619decb30",
+                        "stateid": "5669f7ec-4991-4dee-a1f4-9b944580ac33"
+                      }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+	  },
     "/employee/bar/{barId}/statistics": {
       "get": {
         "summary": "Get bar statistics",
@@ -1826,7 +1926,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {
+              	"schema": {
                   "properties": {
                     "totalTickets": {
                       "type": "integer"
@@ -1952,7 +2052,7 @@
         }
       }
     }
-  },
+  },                 
   "components": {
     "securitySchemes": {
       "basicAuth": {
