@@ -70,7 +70,6 @@ export class EditMealService {
 
         editedMeal["allowedChanges"] = queryAllowedChanges["rows"]    
         
-        // TODO: notificação a avisar o utilizador que a refeição foi alterada
         // TODO: ao mudar o nome por algo que já existe o nome do isDeleted true fica a false
 
         return { editedMeal , status: 200 }

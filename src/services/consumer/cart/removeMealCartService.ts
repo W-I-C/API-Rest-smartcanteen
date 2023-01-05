@@ -28,7 +28,7 @@ export class RemoveMealsCartService {
         const data=querySelect["rows"]
         return { data, status: 200 }
         }else{
-            throw new Error('o user não pertence a este carrinho');
+            throw new Error('The cart dont belongs to this user');
             
         }
     }

@@ -35,7 +35,7 @@ export class CreateMealService {
         const mealExist=await mealExists.query('SELECT * from Meals WHERE name=$1 AND barId=$2',[name,barId])
 
         if (mealExist.rowCount > 0) {
-            throw new Error('Refeição já existe');
+            throw new Error('Meal already exists');
           }
         const createMeals= await createMeal.query('INSERT INTO Meals (name, preparationTime,description,canTakeaway,price,barId) VALUES ($1,$2,$3,$4,$5,$6)', [name,preparationTime,description,canTakeaway,price,barId])
         const selectId= await createMeal.query('SELECT mealId from Meals WHERE name=$1 AND barId=$2', [name,barId])

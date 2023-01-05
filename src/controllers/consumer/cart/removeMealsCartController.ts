@@ -20,8 +20,6 @@ export class RemoveMealsCartController {
      */
         const uId=response.locals.uid;
         const cartMealId = request.params.cartMealId;
-      
-
 
         try {
             if(cartMealId === undefined)

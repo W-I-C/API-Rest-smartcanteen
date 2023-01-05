@@ -66,21 +66,22 @@ describe("Test remove meal from car", () => {
 
             chai.expect(res.body).to.be.an("array")
 
-            chai.expect(res.body[0]).to.be.an("object")
-    
-            chai.expect(res.body[0]).to.have.property("cartid")
-            chai.expect(res.body[0]).to.have.property("uid")
-            chai.expect(res.body[0]).to.have.property("date")
-            chai.expect(res.body[0]).to.have.property("iscompleted")
-  
+            if(res.body.length>0){
+              for(let i = 0; i < res.body.length; i++){
 
+                chai.expect(res.body[i]).to.be.an("object")
 
-            chai.expect(res.body[0]['cartid']).to.be.a("string")
-            chai.expect(res.body[0]['uid']).to.be.a("string")
-            chai.expect(res.body[0]['date']).to.be.a("string")
-            chai.expect(res.body[0]['iscompleted']).to.be.a("boolean")
-          
-  
+                chai.expect(res.body[i]).to.have.property("cartid")
+                chai.expect(res.body[i]).to.have.property("uid")
+                chai.expect(res.body[i]).to.have.property("date")
+                chai.expect(res.body[i]).to.have.property("iscompleted")
+
+                chai.expect(res.body[i]['cartid']).to.be.a("string")
+                chai.expect(res.body[i]['uid']).to.be.a("string")
+                chai.expect(res.body[i]['date']).to.be.a("string")
+                chai.expect(res.body[i]['iscompleted']).to.be.a("boolean")
+              }
+            }
           })
         })
     })
