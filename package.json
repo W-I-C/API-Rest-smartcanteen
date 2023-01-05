@@ -29,7 +29,8 @@
     "test_consumer_seeTrades": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/seeTradesTest.ts'",
     "test_login": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/both/auth/loginTest.ts'",
     "test_logout": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/both/auth/logoutTest.ts'",
-    "test_canBeMadeTest": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/meal/canBeMadeTest.ts'"
+    "test_canBeMadeTest": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/meal/canBeMadeTest.ts'",
+    "test_ticketstate": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/ticket/editTicketStateTest.ts'"
   },
   "keywords": [],
   "author": "",
