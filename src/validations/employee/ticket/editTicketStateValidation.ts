@@ -1,3 +1,6 @@
+/**
+ * @module editTicketStateValidation
+ */
 import { createClient } from "../../../config/db";
 
 /**
@@ -10,8 +13,7 @@ export async function getTicketBar(ticketId: string) {
     const checkTicketBarDBClient = createClient();
     const query = await checkTicketBarDBClient.query(`SELECT barid FROM tickets
                                                         WHERE ticketid = $1`, [ticketId]);
-
-    console.log(query['rows'][0]["barid"])                                           
+                                           
     return query['rows'][0]["barid"]
 }
 

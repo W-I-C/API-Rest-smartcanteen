@@ -18,11 +18,13 @@ export class SeeUndeliveredTicketsService {
     
         const barId = await getEmployeeBar(uId);
 
+        const stateId = "5669f7ec-4991-4dee-a1f4-9b944580ac33"
+
         const query = await seeUndeliveredTicketsDBClient.query(`SELECT ticketid, nencomenda, users.name, states.name AS stateName
                                                                 FROM tickets
                                                                 JOIN states ON tickets.stateid = states.stateid
                                                                 JOIN users ON tickets.uid = users.uid
-                                                                WHERE tickets.barid = $1`, [barId]) 
+                                                                WHERE tickets.barid = $1 AND tickets.isdeleted = $2 AND tickets.ispickedup = $3 AND tickets.stateid != $4`, [barId, false, false, stateId]) 
         
         const data = query["rows"]
                                             

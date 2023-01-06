@@ -69,8 +69,6 @@ export class EditMealService {
                                                                 WHERE mealid = $1`, [mealId])
 
         editedMeal["allowedChanges"] = queryAllowedChanges["rows"]    
-        
-        // TODO: ao mudar o nome por algo que já existe o nome do isDeleted true fica a false
 
         return { editedMeal , status: 200 }
     }

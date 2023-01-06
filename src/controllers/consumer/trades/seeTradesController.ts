@@ -25,7 +25,7 @@ export class SeeTradesController {
       }
 
       const seeTradesService = new SeeTradesService();
-      const resp = await seeTradesService.execute();
+      const resp = await seeTradesService.execute(uId);
 
       response.status(resp.status).json(resp.data);
     } catch (e) {

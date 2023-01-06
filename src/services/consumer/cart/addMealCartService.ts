@@ -3,6 +3,7 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
+import { checkMealExists } from "../../../validations/employee/meal/editMealValidation";
 
 /**
  * Class responsible for the service that serves to add meal to consumer cart
@@ -17,14 +18,17 @@ export class AddMealCartService {
      */
     async execute( mealId:string,uId:string,amount:number) {
 
-
+        // TODO: verificar se a meal canbemade
     
         const favMeal= createClient();
         let date= new Date();
        
-        const verifyUser=await favMeal.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2',[uId,false])
+        const verifyUser = await favMeal.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2',[uId,false])
         
-        
+        const mealExists = await checkMealExists(mealId)
+        if(!mealExists) {
+            throw new Error("Meal dont exist")
+        }
 
         if (verifyUser.rowCount <= 0) {
             
