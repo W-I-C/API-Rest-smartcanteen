@@ -17,8 +17,6 @@ export class SeeMealsController {
                 throw new Error("Invalid request");
             }
 
-            console.log("123")
-
             const seeMealsService = new SeeMealsService();
             const resp = await seeMealsService.execute(barId,uId);
 

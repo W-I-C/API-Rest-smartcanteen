@@ -17,6 +17,13 @@ export async function getNotStartedStatusId() {
   return query['rows'][0]['stateid']
 }
 
+export async function getDeliveredStatusId() {
+  const getNotStartedStatusIdDBClient = createClient();
+  const query = await getNotStartedStatusIdDBClient.query(`SELECT stateid FROM states WHERE name=$1`, ['Entregue'])
+
+  return query['rows'][0]['stateid']
+}
+
 export async function getUserName(uid: string) {
   const getUserNameDBClient = createClient()
   const query = await getUserNameDBClient.query(`SELECT name FROM users WHERE uid=$1`, [uid])
