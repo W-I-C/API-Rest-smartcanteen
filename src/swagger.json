@@ -2261,6 +2261,100 @@
           }
         }
       }
+    },
+    "/consumer/cart/{cartId}/complete": {
+      "post": {
+        "summary": "Complete cart",
+        "description": "A consumer can complete his cart",
+        "tags": ["Cart"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "description": "Cart Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "paymentmethodid": { "type": "string" },
+                  "barid": { "type": "string" },
+                  "ticketAmount": { "type": "string" },
+                  "pickuptime": { "type": "string" },
+                  "istakingaway": { "type": "string" }
+                }
+              },
+              "examples": {
+                "Complete cart": {
+                  "value": {
+                    "paymentmethodid": "57f7066e-e2a8-45bd-bad3-7f6773b2e26b",
+                    "barid": "0d9c0499-f2f8-44d5-9b49-a0529266433a",
+                    "ticketAmount": 1,
+                    "pickuptime": "2022-10-06 13:20:00",
+                    "istakingaway": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Trade an order with a user that doesnt exist": {
+                    "value": { "msg": "Cart does not exist!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "msg": {
+                    "value": "Cart completed successfully"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
