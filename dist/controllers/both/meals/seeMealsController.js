@@ -20,10 +20,10 @@ const seeMealsService_1 = require("../../../services/both/meals/seeMealsService"
 class SeeMealsController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const barId = request.params.barId;
+            const barId = request.params.barid;
             const uId = response.locals.uid;
             try {
-                if (barId === undefined) {
+                if (uId === undefined || barId === undefined) {
                     throw new Error("Invalid request");
                 }
                 const seeMealsService = new seeMealsService_1.SeeMealsService();

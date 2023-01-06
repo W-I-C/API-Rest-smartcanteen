@@ -3,18 +3,16 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-import { getCampusBar } from "../../../validations/both/profile/editProfileValidation";
-import { getUserCampus } from "../../../validations/consumer/trades/seeTradesValidation";
 
 /**
  * Class responsible for the service that allows you to see the available trades
  */
 export class SeeTradesService {
-     /**
-     * Method that allows to see all the tickets that are available to trade in the campus of the user
-     * @param uId authenticated user id
-     */
-    async execute(uId: string,campusid:string) {
+    /**
+    * Method that allows to see all the tickets that are available to trade in the campus of the user
+    * @param uId authenticated user id
+    */
+    async execute(uId: string, campusid: string) {
         const seeTradesAvailableDBClient = createClient();
 
         const verifyUser = await seeTradesAvailableDBClient.query(`SELECT * FROM campus
@@ -24,7 +22,7 @@ export class SeeTradesService {
                                                         WHERE campus.campusid=$1 
                                                         AND tickets.istrading = true 
                                                         AND tickets.isdirecttrade=false
-                                                        AND tickettrade.receptordecision is NULL`,[campusid])
+                                                        AND tickettrade.receptordecision is NULL`, [campusid])
 
         const data = verifyUser["rows"]
 

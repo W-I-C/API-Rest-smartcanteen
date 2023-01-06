@@ -10,6 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getEmployeeBar = void 0;
+/**
+ * @module seeUndeliveredTicketValidation
+ */
 const db_1 = require("../../../config/db");
 /**
  * An employee has access to a list of orders placed by different students that have not yet been delivered.

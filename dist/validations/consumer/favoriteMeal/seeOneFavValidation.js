@@ -10,6 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUserFavMeal = exports.checkFavMealExists = void 0;
+/**
+ * @module seeOneFavValidation
+ */
 const db_1 = require("../../../config/db");
 /**
  * For the consumer to see a specific a meal from the favorites, first we need to check if the favorite meal exists

@@ -1,7 +1,20 @@
+
+/**
+ * @module loginService
+ */
 import { createClient } from "../../../config/db";
 import { createRefreshToken, createSessionToken } from "../../../helpers/jwtHelpers";
-import{compare} from "bcrypt"
+import { compare } from "bcrypt"
+
+/**
+ * class responsible for logging in
+ */
 export class LoginService {
+  /**
+   * Method that allows you to logout
+   * @param email email
+   * @param password password
+  */
   async execute(email: string, password: string) {
     // obter dados do user
     const loginDBClient = createClient();
@@ -9,11 +22,11 @@ export class LoginService {
                                               JOIN userrole On userrole.roleid = users.roleid
                                               WHERE email=$1 
                                               `, [email])
-                                              
-    const querypassword=query["rows"][0]["password"]
 
-    const comp= compare(password,querypassword)
-    if(!comp){
+    const querypassword = query["rows"][0]["password"]
+
+    const comp = compare(password, querypassword)
+    if (!comp) {
       throw new Error("authentication error")
     }
 

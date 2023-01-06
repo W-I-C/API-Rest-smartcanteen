@@ -12,7 +12,7 @@ const should = chai_1.default.should();
 const baseUrl = "/api/v1/employee";
 const server = "localhost:3000";
 const invalidToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTAwMjQ1MzgsImV4cCI6MTY1MDAyNTQzOCwic3ViIjoiMDAwZDFlMTQtNjE3ZS00MjNlLThhMWEtZjYzZDRmYTVhZjZhIn0.b0U-__cRpH8YBsAtZEtClr0fAj4t9IOwDAcI2R3j-qk';
-const mealId = '29efcbf0-6b9d-4b0c-ab23-0a7906310b5a';
+const mealId = 'e88d03d7-be1a-4f6a-bb25-6bd6c3b5fff1';
 // this variable will store the token that results from the correct login
 let token = '';
 describe("Test edit one Meal", () => {

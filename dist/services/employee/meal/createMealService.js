@@ -15,6 +15,8 @@ exports.CreateMealService = void 0;
  */
 require('dotenv').config();
 const db_1 = require("../../../config/db");
+const seeMealsValidation_1 = require("../../../validations/both/meals/seeMealsValidation");
+const editMealValidation_1 = require("../../../validations/employee/meal/editMealValidation");
 /**
  * Class responsible for the service that serves to create meals in bar
  */
@@ -26,10 +28,17 @@ class CreateMealService {
         return __awaiter(this, void 0, void 0, function* () {
             const createMeal = (0, db_1.createClient)();
             const mealExists = (0, db_1.createClient)();
-            //TODO falta verificar se o funcionario está no bar em que quer inserir
+            const barExists = yield (0, seeMealsValidation_1.checkBarExists)(barId);
+            if (!barExists) {
+                throw new Error('Bar dont exist');
+            }
+            const userBar = yield (0, editMealValidation_1.getEmployeeBar)(uId);
+            if (userBar != barId) {
+                throw new Error('Bars are not the same');
+            }
             const mealExist = yield mealExists.query('SELECT * from Meals WHERE name=$1 AND barId=$2', [name, barId]);
             if (mealExist.rowCount > 0) {
-                throw new Error('Refeição já existe');
+                throw new Error('Meal already exists');
             }
             const createMeals = yield createMeal.query('INSERT INTO Meals (name, preparationTime,description,canTakeaway,price,barId) VALUES ($1,$2,$3,$4,$5,$6)', [name, preparationTime, description, canTakeaway, price, barId]);
             const selectId = yield createMeal.query('SELECT mealId from Meals WHERE name=$1 AND barId=$2', [name, barId]);

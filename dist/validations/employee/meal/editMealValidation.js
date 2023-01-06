@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkMealExistsBar = exports.getEmployeeBar = exports.getMealBar = exports.checkMealExists = void 0;
+exports.checkMealExistsBar = exports.getEmployeeBar = exports.getMealBar = exports.checkBarFromMealsExists = exports.checkCartMealsExists = exports.checkMealExists = void 0;
 /**
  * @module editMealValidation
  */
@@ -28,6 +28,24 @@ function checkMealExists(mealId) {
     });
 }
 exports.checkMealExists = checkMealExists;
+function checkCartMealsExists(cartId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const checkMealExistsDBClient = (0, db_1.createClient)();
+        const query = yield checkMealExistsDBClient.query(`SELECT cartmealid FROM cartmeals
+                                                        WHERE cartid = $1`, [cartId]);
+        return query['rows'].length != 0;
+    });
+}
+exports.checkCartMealsExists = checkCartMealsExists;
+function checkBarFromMealsExists(mealId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const checkMealExistsDBClient = (0, db_1.createClient)();
+        const query = yield checkMealExistsDBClient.query(`SELECT barid FROM meals
+                                                        WHERE mealid = $1`, [mealId]);
+        return query['rows'].length != 0;
+    });
+}
+exports.checkBarFromMealsExists = checkBarFromMealsExists;
 /**
  * A meal is on the bar menu. For the employee to be able to edit this meal,
  * it is necessary to check if the bar of the meal is the same as the employee's bar.

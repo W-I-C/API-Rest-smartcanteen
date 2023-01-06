@@ -2,7 +2,6 @@
  * @module completeCartController
  */
 import { Request, Response } from "express";
-import { AddMealCartService } from "../../../services/consumer/cart/addMealCartService";
 import { CompleteCartService } from "../../../services/consumer/cart/completeCartService";
 
 /**

@@ -47,7 +47,6 @@ class EditMealService {
             yield editMealDBClient.query(`DELETE FROM allowedchanges 
                                     WHERE mealid = $1`, [mealId]);
             allowedChanges.forEach((currentvalue, index, array) => __awaiter(this, void 0, void 0, function* () {
-                console.log(currentvalue.canbedecremented, currentvalue.incrementlimit, currentvalue.decrementlimit);
                 yield editMealDBClient.query(`INSERT INTO allowedchanges (mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit) 
                                         VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`, [mealId, currentvalue.ingname, currentvalue.ingdosage, currentvalue.isremoveonly, currentvalue.canbedecremented, currentvalue.canbedecremented, currentvalue.incrementlimit, currentvalue.decrementlimit]);
             }));
@@ -59,8 +58,6 @@ class EditMealService {
                                                                 FROM allowedchanges
                                                                 WHERE mealid = $1`, [mealId]);
             editedMeal["allowedChanges"] = queryAllowedChanges["rows"];
-            // TODO: notificação a avisar o utilizador que a refeição foi alterada
-            // TODO: ao mudar o nome por algo que já existe o nome do isDeleted true fica a false
             return { editedMeal, status: 200 };
         });
     }

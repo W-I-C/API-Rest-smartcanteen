@@ -2,7 +2,6 @@
  * @module directTicketTradeController
  */
 import { Request, Response } from "express";
-import { SeeTradesService } from "../../../services/consumer/trades/seeTradesService";
 import { DirectTicketTradeService } from "../../../services/consumer/trades/directTicketTradeService";
 
 /**

@@ -25,7 +25,6 @@ class CanBeMadeService {
       */
     execute(uid, mealId, status) {
         return __awaiter(this, void 0, void 0, function* () {
-            // TODO: chech if the user that is changing is in the bar
             const barId = yield (0, editMealValidation_1.getEmployeeBar)(uid);
             const canBeMadeDBClient = (0, db_1.createClient)();
             const mealExistsDBClient = (0, db_1.createClient)();

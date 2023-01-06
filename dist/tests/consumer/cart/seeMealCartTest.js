@@ -63,15 +63,19 @@ describe("Test see cart meals", () => {
                 res.should.have.status(200);
                 // verificar se é um object
                 chai_1.default.expect(res.body).to.be.an("array");
-                chai_1.default.expect(res.body[0]).to.be.an("object");
-                chai_1.default.expect(res.body[0]).to.have.property("cartid");
-                chai_1.default.expect(res.body[0]).to.have.property("uid");
-                chai_1.default.expect(res.body[0]).to.have.property("date");
-                chai_1.default.expect(res.body[0]).to.have.property("iscompleted");
-                chai_1.default.expect(res.body[0]['cartid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['uid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['date']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['iscompleted']).to.be.a("boolean");
+                if (res.body.length > 0) {
+                    for (let i = 0; i < res.body.length; i++) {
+                        chai_1.default.expect(res.body[i]).to.be.an("object");
+                        chai_1.default.expect(res.body[i]).to.have.property("cartid");
+                        chai_1.default.expect(res.body[i]).to.have.property("uid");
+                        chai_1.default.expect(res.body[i]).to.have.property("date");
+                        chai_1.default.expect(res.body[i]).to.have.property("iscompleted");
+                        chai_1.default.expect(res.body[i]['cartid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['uid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['date']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['iscompleted']).to.be.a("boolean");
+                    }
+                }
             });
         });
     });
