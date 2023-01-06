@@ -4,6 +4,8 @@
 
 require('dotenv').config();
 import { createClient } from "../../../config/db";
+import { checkBarExists, getUserRole } from "../../../validations/both/meals/seeMealsValidation";
+import { getEmployeeBar } from "../../../validations/employee/meal/editMealValidation";
 /**
  * @param uId authenticated user id
  * @param barId id of the bar to see the meals
@@ -18,15 +20,24 @@ export class SeeMealsService {
   /**
    * Method that allows you to see a meals from bar
    */
-  async execute( barId:string,uId:string) {
+  async execute(barId:string,uId:string) {
 
-      
       const seeMeals =createClient();
-      
-      
-      const query= await seeMeals.query('SELECT * from Meals WHERE barId=($1) AND isdeleted = $2',[barId, false])
-      
-      
+    console.log("123")
+      const barExists = await checkBarExists(uId)
+      console.log(barExists)
+      if(!barExists) {
+          throw new Error('Bar not exist')
+      }
+
+      const userBar = await getEmployeeBar(uId)
+
+      if(userBar != barId) {
+          throw new Error('Bars are not the same')
+      }
+
+      const query= await seeMeals.query('SELECT * from Meals WHERE barId = $1 AND isdeleted = $2',[barId, false])
+
       const data=query["rows"]
 
       return { data, status: 200 }

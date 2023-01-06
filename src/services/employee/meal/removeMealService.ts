@@ -34,9 +34,9 @@ export class RemoveMealService {
 
         const removeMealDBClient= createClient();
         
-        const mealCart = checkMealCartExists(mealId)
+        const mealCart = await checkMealCartExists(mealId)
 
-        if(mealCart){
+        if(!mealCart == true){
             await removeMealDBClient.query(`UPDATE meals
                                         SET isdeleted = $1
                                         WHERE mealid = $2`, [true, mealId])
@@ -45,7 +45,6 @@ export class RemoveMealService {
             throw new Error('Impossible to remove the meal')
         }
 
-        // TODO: mandar uma notificação ao utilizador - acrescentar aos testes de código as novas verificações
         return { msg: "Meal successfully removed", status: 200 }
     }
 }

@@ -15,10 +15,9 @@ export class SeeTradesHistoryService {
      */
     async execute(uId:string) { 
        
-        
         const selectTicket= createClient();
       
-        const verifyUser=await selectTicket.query('SELECT ticketid,isconfirmed,proposaldate,confirmationdate,receptordecision,isdeleted from ticketTrade WHERE uId=$1',[uId])
+        const verifyUser=await selectTicket.query('SELECT ticketid,isconfirmed,proposaldate,confirmationdate,receptordecision,isdeleted FROM ticketTrade WHERE uId=$1 AND isdeleted = $2',[uId, false])
         
         const data=verifyUser["rows"]
 

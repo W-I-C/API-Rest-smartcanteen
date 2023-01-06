@@ -21,6 +21,7 @@ export class EditTicketStateService {
     async execute(uId: string, ticketId: string, stateName: string) {
         const ticketIdExists = await checkTicketExists(ticketId)
         
+        // TODO: pickuptime se estiver preenchido o ticket já foi entregue não existe - se mudar para entregue tem que se indicar o pickuptime
         if(!ticketIdExists){
             throw new Error('Ticket does not exists')
         }

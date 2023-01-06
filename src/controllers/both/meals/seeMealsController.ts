@@ -13,9 +13,11 @@ export class SeeMealsController {
         const barId = request.params.barId;
         const uId=response.locals.uid;
         try {
-            if(barId === undefined) {
+            if(uId === undefined || barId === undefined) {
                 throw new Error("Invalid request");
             }
+
+            console.log("123")
 
             const seeMealsService = new SeeMealsService();
             const resp = await seeMealsService.execute(barId,uId);

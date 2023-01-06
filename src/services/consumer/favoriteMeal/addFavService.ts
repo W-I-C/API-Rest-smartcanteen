@@ -5,6 +5,7 @@ require('dotenv').config();
 import { createClient } from "../../../config/db";
 import { IAddFavService } from "../../../models/IAddFavService";
 import { checkMealExists } from "../../../validations/consumer/favoriteMeal/addFavValidation";
+import { getEmployeeBar, getMealBar } from "../../../validations/employee/meal/editMealValidation";
 
 /**
  * Class responsible for the service that serves to add a meal to favoritemeal
@@ -26,12 +27,16 @@ export class AddFavService {
             throw new Error('Meal does not exists')
         }
 
-        // TODO: ver se o bar da meal e o bar do user é igual
+        const userBar = await getEmployeeBar(uId)
+        const mealBar = await getMealBar(mealId)
+
+        if(userBar != mealBar) {
+            throw new Error('Bars are not the same')
+        }
 
         const query= await favMeal.query('INSERT INTO FavoriteMeals (uId, mealId) VALUES ($1,$2)', [uId,mealId])
-        
-        // TODO: verificação para ver se o isDeleted é false - acrescentar aos testes de código
-        const queryFav= await favMeal.query('SELECT * from FavoriteMeals')
+
+        const queryFav= await favMeal.query('SELECT * from FavoriteMeals WHERE uid = $1', [uId])
 
         const data=queryFav["rows"]
 

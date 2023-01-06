@@ -45,6 +45,11 @@
                     "value": {
                       "msg": "Meal does not exists"
                     }
+                  },
+                  "Bars are not the same": {
+                    "value": {
+                      "msg": "Bars are not the same"
+                    }
                   }
                 }
               }
@@ -387,7 +392,26 @@
           }
         ],
         "responses": {
-          "500": { "description": "ERROR" },
+          "500": { 
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Bar not exist": {
+                    "value": {
+                      "msg": "Bar not exist"
+                    }
+                  },
+                  "Bars are not the same": {
+                    "value": {
+                      "msg": "Bars are not the same"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized",
             "content": {
@@ -419,14 +443,16 @@
                           "preparationtime": { "type": "number" },
                           "description": { "type": "string" },
                           "cantakeaway": { "type": "boolean" },
-                          "price": { "type": "number" }
+                          "price": { "type": "number" },
+                          "isdeleted": { "type": "boolean" },
+                          "canbemade": { "type": "boolean" }
                         }
                       }
                     }
                   }
                 },
                 "examples": {
-                  "Get meal from a bar": {
+                  "See meals from a bar": {
                     "value": [
                       {
                         "mealid": "04720b43-2c3b-4c78-baef-fcada0a40baa",
@@ -435,7 +461,9 @@
                         "preparationtime": 30,
                         "description": "panado com batata",
                         "cantakeaway": true,
-                        "price": 5
+                        "price": 5,
+                        "isdeleted": false,
+                        "canbemade": true
                       }
                     ]
                   }
@@ -487,11 +515,11 @@
         "security": [{ "basicAuth": [] }],
         "parameters": [
           {
-            "name": "mealId",
+            "name": "cartMealId",
             "in": "path",
-            "description": "meal id",
+            "description": "cart meal id",
             "required": true,
-            "schema": { "properties": { "barId": { "type": "string" } } }
+            "schema": { "properties": { "cartMealId": { "type": "string" } } }
           }
         ],
         "responses": {
@@ -501,6 +529,11 @@
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
+                  "CartMeal dont exist": {
+                    "value": {
+                      "msg": "CartMeal dont exist"
+                    }
+                  },
                   "The cart dont belongs to this user": {
                     "value": {
                       "msg": "The cart dont belongs to this user"
@@ -562,7 +595,7 @@
         }
       }
     },
-    "/cart/meals": {
+    "/consumer/cart/meals": {
       "get": {
         "summary": "See cart",
         "description": "See all details of a cart ",
@@ -686,6 +719,16 @@
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
+                  "Bar dont exist": {
+                    "value": {
+                      "msg": "Bar dont exist"
+                    }
+                  },
+                  "Bars are not the same": {
+                    "value": {
+                      "msg": "Bars are not the same"
+                    }
+                  },
                   "Meal already exists": {
                     "value": {
                       "msg": "Meal already exists"
@@ -1029,7 +1072,7 @@
       "delete": {
         "summary": "Remove a meal",
         "description": "Remove a meal from a bar",
-        "tags": ["Meal cart"],
+        "tags": ["Meal"],
         "security": [{ "basicAuth": [] }],
         "parameters": [
           {

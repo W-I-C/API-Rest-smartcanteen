@@ -38,8 +38,7 @@ export class GetBarStatisticsService {
       toDeliverTickets: Number(toDeliverTicketsQuery['rows'][0]['totalticketstodeliver']),
       tradedTickets: Number(ticketsTradedQuery['rows'][0]['totaltradestoday'])
     }
-    console.log(statistics)
-    return { data: statistics, status: 200 }
 
+    return { data: statistics, status: 200 }
   }
 }

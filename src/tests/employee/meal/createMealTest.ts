@@ -67,11 +67,48 @@ describe("Test create one Meal", () => {
         })
       })
 
-    describe('- create a meal that doesnt exist', () => {
+    describe('- Create a meal that already exist', () => {
         it('Should return campus error', () => {
           return chai
             .request(server)
-            .post(baseUrl+'/meal/'+ barId)
+            .post(baseUrl+'/meal/'+barId)
+            .set("Authorization", token)
+            .send({
+                name: "bife com batata",
+                preparationTime: 30,
+                description: "bacalhau com batata palha",
+                canTakeaway: true,
+                price: 10,
+                allowedChanges:[{		
+                    ingname: "maionese",
+                    ingdosage: "porção",
+                    isremoveonly: true,
+                    canbeincremented: true,
+                    canbedecremented: true,
+                    incrementedlimit: 2,
+                    decrementedlimit: 1
+                },
+                {		
+                    ingname: "ovo",
+                    ingdosage: "porção",
+                    isremoveonly: true,
+                    canbeincremented: true,
+                    canbedecremented: true,
+                    incrementedlimit: 2,
+                    decrementedlimit: 1
+                }]
+              })
+            .then(res => {
+              res.should.have.status(500)
+            })
+        })
+      })
+
+    describe('- Create a meal to a bar that doesnt exist', () => {
+        it('Should return bar error', () => {
+          return chai
+            .request(server)
+            .post(baseUrl+'/meal/ec3b5a78-16c4-4cfc-b7b5-efc64ddc0c71')
             .set("Authorization", token)
             .send({
                 name: "bacalhau à brás",
@@ -104,11 +141,11 @@ describe("Test create one Meal", () => {
         })
       })
 
-      describe('- Create a meal that is associated with a different bar than the employee', () => {
-        it('Should return campus error', () => {
+    describe('- Create a meal to a bar that is not the same as the user preferred bar', () => {
+        it('Should return bar error', () => {
           return chai
             .request(server)
-            .post(baseUrl+'/meal/'+ barId)
+            .post(baseUrl+'/meal/ec3b5a78-16c4-4cfc-b7b5-efc64ddc0c70')
             .set("Authorization", token)
             .send({
                 name: "bacalhau à brás",
@@ -176,7 +213,7 @@ describe("Test create one Meal", () => {
           .post(baseUrl+'/meal/'+ barId)
           .set("Authorization", token)
           .send({
-            name: "ovo",
+            name: "douradinhos",
             preparationTime: 30,
             description: "bacalhau",
             canTakeaway: true,
