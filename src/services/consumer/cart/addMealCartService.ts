@@ -3,6 +3,7 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
+import { IMealChange } from "../../../models/IMealChange";
 import { checkCartMealsExists, checkMealExists, getMealBar } from "../../../validations/employee/meal/editMealValidation";
 
 /**
@@ -16,11 +17,11 @@ export class AddMealCartService {
      * @param mealId meal to be added to cart
      * @param amount quantity of meal to be added to cart
      */
-    async execute( mealId:string,uId:string,amount:number) {
+    async execute( mealId:string,uId:string,amount:number, changes:Array<IMealChange>) {
     
         const favMeal= createClient();
         let date= new Date();
-       
+       //TODO : por a rota a funcionar
         const query = await favMeal.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2',[uId,false])
         const cartUser=query["rows"][0]["cartId"] 
 
@@ -37,23 +38,22 @@ export class AddMealCartService {
             
             const queryCreateCart=await favMeal.query('INSERT INTO cart (uId,date,isCompleted) VALUES ($1,$2,$3)',[uId,date,false]) 
            
-            const verifyUser=await favMeal.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2',[uId,false])
+            const cartQuery=await favMeal.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2',[uId,false])
 
-            const newcartId=verifyUser["rows"][0]["cartid"]
+            const newcartId=cartQuery["rows"][0]["cartid"]
 
            
             const queryPrice=await favMeal.query('SELECT price from Meals WHERE mealId=$1',[mealId])
-            const queryChange=await favMeal.query('SELECT * from allowedChanges WHERE mealid=$1', [mealId])
-            const value=queryChange["rows"][0]["changeId"]
 
-            if(value>=0){
+            const queryChange=await favMeal.query('SELECT * from allowedChanges WHERE mealid=$1', [mealId])
+            const value=queryChange["rows"]
+
+            if(value.length>=0){
                 const mealPrice= queryPrice["rows"][0]["price"]
             
             
-                const query= await favMeal.query(`INSERT INTO CartMeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)
-                                                 JOIN cartmealschanges on cartmeals.cartmealid=cartmealschanges.cartmealid 
-                                                 changeid=$5`, [mealId,newcartId,amount,mealPrice,value])
-            
+                const query= await favMeal.query('INSERT INTO cartmeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,newcartId,amount,mealPrice])
+                const selectinfomeals=await favMeal.query('SELECT * FROM cartmeals WHERE  (mealId,cartId,amount,mealPrice)',[])
                 const data=query["rows"]
                 
                 return { data, status: 200 }
