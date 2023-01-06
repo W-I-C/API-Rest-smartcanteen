@@ -11,7 +11,7 @@ export class CreateMealController {
     /**
    * Allows to get a meal that the authenticated user has already added to favorites, redirecting afterwards to the associated service
    *
-   * {@link createmealService}
+   * {@link createMealService}
    * @param request request receive.
    * @param response response.
    */

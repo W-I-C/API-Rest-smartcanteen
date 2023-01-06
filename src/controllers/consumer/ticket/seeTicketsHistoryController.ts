@@ -11,7 +11,7 @@ export class SeeTicketsHistoryController {
     /**
      * Allows to get all orders that the authenticated user has placed, redirecting afterwards to the associated service
      *
-     * {@link seeTicketsHitoryService}
+     * {@link seeTicketsHistoryService}
      * @param request request receive.
      * @param response response.
      */
