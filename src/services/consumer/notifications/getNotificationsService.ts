@@ -3,7 +3,6 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-import { checkFavMealExists, getUserFavMeal } from "../../../validations/consumer/favoriteMeal/removeFavValidation";
 
 /**
  * Class responsible for the service that serves to get all the notifications of the authenticated user

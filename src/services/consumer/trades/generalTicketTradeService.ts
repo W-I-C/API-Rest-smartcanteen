@@ -3,7 +3,6 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-import { getNotStartedStatusId, getUserName, getUserRole } from "../../../helpers/dbHelpers";
 
 /**
  * Class responsible for the service that serves to expose ticket for trading

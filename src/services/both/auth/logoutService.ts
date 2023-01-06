@@ -1,7 +1,18 @@
+
+/**
+ * @module logoutService
+ */
 import { createClient } from "../../../config/db";
 
-
+/**
+ * class responsible for logging out
+ */
 export class LogoutService {
+  /**
+ * Method that allows you to logout
+ * @param uid role id
+ * @param sessionToken psession token
+ */
   async execute(uid: string, sessionToken: string) {
 
     // obter dados do user

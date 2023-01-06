@@ -4,8 +4,6 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-import { getNotStartedStatusId } from "../../../helpers/dbHelpers";
-import { ICart } from "../../../models/ICart";
 import { hash } from "bcrypt";
 import { IUser } from "../../../models/IUsers";
 

@@ -3,7 +3,6 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-import { IMealAllowedChange } from "../../../models/IMealAllowedChanges";
 import { getEmployeeBar } from "../../../validations/employee/meal/editMealValidation";
 
 /**

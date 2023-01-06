@@ -4,7 +4,7 @@
 
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-import { checkBarExists, getUserRole } from "../../../validations/both/meals/seeMealsValidation";
+import { checkBarExists } from "../../../validations/both/meals/seeMealsValidation";
 import { getEmployeeBar } from "../../../validations/employee/meal/editMealValidation";
 /**
  * @param uId authenticated user id
@@ -16,29 +16,29 @@ import { getEmployeeBar } from "../../../validations/employee/meal/editMealValid
  */
 
 export class SeeMealsService {
- 
-  /**
-   * Method that allows you to see a meals from bar
-   */
-  async execute(barId:string,uId:string) {
 
-      const seeMeals =createClient();
+    /**
+     * Method that allows you to see a meals from bar
+     */
+    async execute(barId: string, uId: string) {
 
-      const barExists = await checkBarExists(uId)
-      if(!barExists) {
-          throw new Error('Bar not exist')
-      }
+        const seeMeals = createClient();
 
-      const userBar = await getEmployeeBar(uId)
+        const barExists = await checkBarExists(uId)
+        if (!barExists) {
+            throw new Error('Bar not exist')
+        }
 
-      if(userBar != barId) {
-          throw new Error('Bars are not the same')
-      }
+        const userBar = await getEmployeeBar(uId)
 
-      const query= await seeMeals.query('SELECT * from Meals WHERE barId = $1 AND isdeleted = $2',[barId, false])
+        if (userBar != barId) {
+            throw new Error('Bars are not the same')
+        }
 
-      const data=query["rows"]
+        const query = await seeMeals.query('SELECT * from Meals WHERE barId = $1 AND isdeleted = $2', [barId, false])
 
-      return { data, status: 200 }
-  }
+        const data = query["rows"]
+
+        return { data, status: 200 }
+    }
 }

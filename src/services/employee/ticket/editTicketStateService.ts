@@ -22,13 +22,13 @@ export class EditTicketStateService {
     async execute(uId: string, ticketId: string, stateName: string) {
         const ticketIdExists = await checkTicketExists(ticketId)
 
-        if(!ticketIdExists){
+        if (!ticketIdExists) {
             throw new Error('Ticket does not exists')
         }
 
         const stateNameExists = await checkStateNameExists(stateName)
 
-        if(!stateNameExists){
+        if (!stateNameExists) {
             throw new Error('State does not exists')
         }
 
@@ -36,7 +36,7 @@ export class EditTicketStateService {
         const userBarId = await getEmployeeBar(uId);
         const ticketBarId = await getTicketBar(ticketId);
 
-        if(userBarId != ticketBarId) {
+        if (userBarId != ticketBarId) {
             throw new Error('Bars are not the same')
         }
 
@@ -45,22 +45,22 @@ export class EditTicketStateService {
         const ticketStateId = await getTicketState(ticketId)
         const deliveredState = await getDeliveredStatusId()
 
-        if(ticketStateId == deliveredState) {
+        if (ticketStateId == deliveredState) {
             throw new Error('The ticket has already been delivered')
         }
 
-        const editMealDBClient= createClient();
-        await editMealDBClient.query(`UPDATE tickets
+        const editTicketStateDBClient = createClient();
+        await editTicketStateDBClient.query(`UPDATE tickets
                                     SET stateid = $1
                                     WHERE ticketid = $2`, [stateNameTicket, ticketId])
 
 
-        const query = await editMealDBClient.query(`SELECT ticketid, stateid
+        const query = await editTicketStateDBClient.query(`SELECT ticketid, stateid
                                                                 FROM tickets
                                                                 WHERE ticketid = $1`, [ticketId])
 
-        let editedMeal = query["rows"][0]   
+        let editedMeal = query["rows"][0]
 
-        return { editedMeal , status: 200 }
+        return { editedMeal, status: 200 }
     }
 }

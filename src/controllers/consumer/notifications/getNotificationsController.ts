@@ -2,7 +2,6 @@
  * @module removeFavController
  */
 import { Request, Response } from "express";
-import { RemoveFavService } from "../../../services/consumer/favoriteMeal/removeFavService";
 import { GetNotificiationsService } from "../../../services/consumer/notifications/getNotificationsService";
 
 /**
