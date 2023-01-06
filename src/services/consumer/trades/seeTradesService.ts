@@ -17,11 +17,7 @@ export class SeeTradesService {
     async execute(uId: string) {
         const selectTicket = createClient();
 
-        // TODO: filtrar pelo campus e meter nos tests - mostrar todos as trades do  bar - ver se a troca já foi aceite?
         const campusUser = getUserCampus(uId)
-        
-        // TODO: ir buscar todos os bares do campus
-        // TODO: join com ticket trades para ver se tem troca direta
         
         const verifyUser = await selectTicket.query('SELECT * from tickets WHERE istrading=$1 AND ispickedup=$2 AND ', [true, false])
 

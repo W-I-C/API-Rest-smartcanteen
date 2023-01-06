@@ -17,6 +17,20 @@ export async function getTicketBar(ticketId: string) {
     return query['rows'][0]["barid"]
 }
 
+/**
+ * An employee has access to a list of orders placed by different students that have not yet been delivered. 
+ * These tickets have an associated status that can be edited by the employee. For this to be done the bar must be the same as the order bar
+ * 
+ * @param ticketId id of the ticket that we want to know the state
+ */
+export async function getTicketState(ticketId: string) {
+    const getTicketStateDBClient = createClient();
+    const query = await getTicketStateDBClient.query(`SELECT stateid FROM tickets
+                                                        WHERE ticketid = $1`, [ticketId]);
+                                           
+    return query['rows'][0]["stateid"]
+}
+
 
 /**
  * To change the state of a ticket you need to get the state id

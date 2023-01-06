@@ -3,9 +3,10 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
+import { getDeliveredStatusId } from "../../../helpers/dbHelpers";
 import { checkTicketExists } from "../../../validations/consumer/ticket/removeTicketValidation";
 import { getEmployeeBar } from "../../../validations/employee/meal/editMealValidation";
-import { checkStateNameExists, getStateId, getTicketBar } from "../../../validations/employee/ticket/editTicketStateValidation";
+import { checkStateNameExists, getStateId, getTicketBar, getTicketState } from "../../../validations/employee/ticket/editTicketStateValidation";
 
 /**
  * Class responsible for the service that serves to edit the state of a ticket
@@ -20,8 +21,7 @@ export class EditTicketStateService {
      */
     async execute(uId: string, ticketId: string, stateName: string) {
         const ticketIdExists = await checkTicketExists(ticketId)
-        
-        // TODO: pickuptime se estiver preenchido o ticket já foi entregue não existe - se mudar para entregue tem que se indicar o pickuptime
+
         if(!ticketIdExists){
             throw new Error('Ticket does not exists')
         }
@@ -40,12 +40,19 @@ export class EditTicketStateService {
             throw new Error('Bars are not the same')
         }
 
-        const stateId = await getStateId(stateName)
+        const stateNameTicket = await getStateId(stateName)
+
+        const ticketStateId = await getTicketState(ticketId)
+        const deliveredState = await getDeliveredStatusId()
+
+        if(ticketStateId == deliveredState) {
+            throw new Error('The ticket has already been delivered')
+        }
 
         const editMealDBClient= createClient();
         await editMealDBClient.query(`UPDATE tickets
                                     SET stateid = $1
-                                    WHERE ticketid = $2`, [stateId, ticketId])
+                                    WHERE ticketid = $2`, [stateNameTicket, ticketId])
 
 
         const query = await editMealDBClient.query(`SELECT ticketid, stateid

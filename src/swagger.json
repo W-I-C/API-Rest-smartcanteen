@@ -1866,6 +1866,11 @@
                     "value": {
                       "msg": "Bars are not the same"
                     }
+                  },
+                  "The ticket has already been delivered": {
+                    "value": {
+                      "msg": "The ticket has already been delivered"
+                    }
                   }
                 }
               }

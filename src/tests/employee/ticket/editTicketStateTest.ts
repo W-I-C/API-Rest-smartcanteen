@@ -8,7 +8,7 @@ const should = chai.should();
 const baseUrl = "/api/v1/employee"
 const server = "localhost:3000"
 const invalidToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTAwMjQ1MzgsImV4cCI6MTY1MDAyNTQzOCwic3ViIjoiMDAwZDFlMTQtNjE3ZS00MjNlLThhMWEtZjYzZDRmYTVhZjZhIn0.b0U-__cRpH8YBsAtZEtClr0fAj4t9IOwDAcI2R3j-qk'
-const ticketId = '42977dd1-cfbe-4e0d-a8b0-db1619decb30'
+const ticketId = '534cf037-6a41-475b-81d8-c90af631084f'
 
 // this variable will store the token that results from the correct login
 let token=''
@@ -71,7 +71,7 @@ describe("Test edit ticket state", () => {
         it('Should return ticket error', () => {
           return chai
             .request(server)
-            .put(baseUrl+'/tickets/534cf037-6a41-475b-81d8-c90af631084f')
+            .put(baseUrl+'/tickets/534cf037-6a41-475b-81d8-c90af631084c')
             .set("Authorization", token)
             .send({
                 stateName: "Entregue"
@@ -102,6 +102,21 @@ describe("Test edit ticket state", () => {
           return chai
             .request(server)
             .put(baseUrl+'/meal/f6219d36-b8ef-4338-8d2a-cfcd77433dc2')
+            .set("Authorization", token)
+            .send({
+                stateName: "Entregue",
+              })
+            .then(res => {
+              res.should.have.status(500)
+            })
+        })
+      })
+
+      describe('- Edit a ticket that is already delivered', () => {
+        it('Should return bar error', () => {
+          return chai
+            .request(server)
+            .put(baseUrl+'/meal/534cf037-6a41-475b-81d8-c90af631084f')
             .set("Authorization", token)
             .send({
                 stateName: "Entregue",
