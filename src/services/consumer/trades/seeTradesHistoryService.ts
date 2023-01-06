@@ -15,11 +15,11 @@ export class SeeTradesHistoryService {
      */
     async execute(uId:string) { 
        
-        const selectTicket= createClient();
+        const SeeTradesHistoryDBClient= createClient();
       
-        const verifyUser=await selectTicket.query('SELECT ticketid,isconfirmed,proposaldate,confirmationdate,receptordecision,isdeleted FROM ticketTrade WHERE uId=$1 AND isdeleted = $2',[uId, false])
+        const query=await SeeTradesHistoryDBClient.query('SELECT ticketid,isconfirmed,proposaldate,confirmationdate,receptordecision,isdeleted FROM ticketTrade WHERE uId=$1 AND isdeleted = $2',[uId, false])
         
-        const data=verifyUser["rows"]
+        const data=query["rows"]
 
         return { data, status: 200 }
     }
