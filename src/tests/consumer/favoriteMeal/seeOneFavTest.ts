@@ -8,7 +8,7 @@ const should = chai.should();
 const baseUrl = "/api/v1/consumer"
 const server = "localhost:3000"
 const invalidToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTAwMjQ1MzgsImV4cCI6MTY1MDAyNTQzOCwic3ViIjoiMDAwZDFlMTQtNjE3ZS00MjNlLThhMWEtZjYzZDRmYTVhZjZhIn0.b0U-__cRpH8YBsAtZEtClr0fAj4t9IOwDAcI2R3j-qk'
-const favMealId = '578e1026-b2c5-433a-93ea-7f07f399f598'
+const favMealId = '84df4661-181c-4e59-95c5-8c4b81b31c4c'
 
 // this variable will store the token that results from the correct login
 let token=''

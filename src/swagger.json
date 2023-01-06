@@ -7,7 +7,14 @@
     "version": "1.0.0"
   },
   "servers": [
-    { "url": "http://localhost:3000/api/v1", "description": "API de teste" }
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Local docs"
+    },
+    {
+      "url": "https://smartcanteen-api.herokuapp.com/api/v1",
+      "description": "Productions docs"
+    }
   ],
   "paths": {
     "/consumer/favoriteMeals/{mealId}": {
@@ -28,15 +35,61 @@
           }
         ],
         "responses": {
-          "500": { "description": "ERROR" },
-          "200": {
-            "description": "OK",
+          "500": {
+            "description": "ERROR",
             "content": {
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
+                  "Meal does not exists": {
+                    "value": {
+                      "msg": "Meal does not exists"
+                    }
+                  },
+                  "Bars are not the same": {
+                    "value": {
+                      "msg": "Bars are not the same"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "favoritemealid": { "type": "string" },
+                    "uid": { "type": "string" },
+                    "mealid": { "type": "string" }
+                  }
+                },
+                "examples": {
                   "Add meal to favorites": {
-                    "value": { "msg": "Refeição adicionada aos favoritos" }
+                    "value": [
+                      {
+                        "favoritemealid": "578e1026-b2c5-433a-93ea-7f07f399f598",
+                        "uid": "f263dee2-2dd6-4006-a819-0457f615592c",
+                        "mealid": "04720b43-2c3b-4c78-baef-fcada0a40baa"
+                      }
+                    ]
                   }
                 }
               }
@@ -63,7 +116,26 @@
           }
         ],
         "responses": {
-          "500": { "description": "ERROR" },
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "FavMeal does not exists": {
+                    "value": {
+                      "msg": "FavMeal does not exists"
+                    }
+                  },
+                  "Favmeal does not belong to you": {
+                    "value": {
+                      "msg": "Favmeal does not belong to you"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized",
             "content": {
@@ -101,7 +173,26 @@
           }
         ],
         "responses": {
-          "500": { "description": "ERROR" },
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "FavMeal does not exists": {
+                    "value": {
+                      "msg": "FavMeal does not exists"
+                    }
+                  },
+                  "Favmeal does not belong to you": {
+                    "value": {
+                      "msg": "Favmeal does not belong to you"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized",
             "content": {
@@ -121,11 +212,13 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": {  
-                  "properties": { "name": { "type": "string" },
-                  "preparationTime": { "type": "number" },
-                  "description": { "type": "string" },  
-                  "url": { "type": "string" } } 
+                "schema": {
+                  "properties": {
+                    "name": { "type": "string" },
+                    "preparationTime": { "type": "number" },
+                    "description": { "type": "string" },
+                    "url": { "type": "string" }
+                  }
                 },
                 "examples": {
                   "Get one favorite meal": {
@@ -134,7 +227,7 @@
                         "name": "bacalhau com natas",
                         "preparationTime": 30,
                         "price": 1,
-                        "url":null
+                        "url": null
                       }
                     ]
                   }
@@ -174,7 +267,7 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "orders":{
+                    "orders": {
                       "type": "array",
                       "items": {
                         "properties": {
@@ -185,7 +278,7 @@
                         }
                       }
                     }
-                  } 
+                  }
                 },
                 "examples": {
                   "Get all the favorite meals": {
@@ -240,14 +333,41 @@
         },
         "responses": {
           "500": { "description": "ERROR" },
-          "200": {
-            "description": "OK",
+          "401": {
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
-                  "Add meal to favorites": {
-                    "value": { "msg": "Refeição adicionada ao carrinho" }
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "mealid": { "type": "string" },
+                    "amount": { "type": "number" },
+                    "mealprice": { "type": "number" }
+                  }
+                },
+                "examples": {
+                  "Add meal to cart": {
+                    "value": [
+                      {
+                        "mealid": "04720b43-2c3b-4c78-baef-fcada0a40baa",
+                        "amount": 2,
+                        "mealprice": 30
+                      }
+                    ]
                   }
                 }
               }
@@ -272,15 +392,80 @@
           }
         ],
         "responses": {
-          "500": { "description": "ERROR" },
-          "200": {
-            "description": "OK",
+          "500": { 
+            "description": "ERROR",
             "content": {
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
-                  "See meals": {
-                    "value": { "msg": "refeições de bar" }
+                  "Bar not exist": {
+                    "value": {
+                      "msg": "Bar not exist"
+                    }
+                  },
+                  "Bars are not the same": {
+                    "value": {
+                      "msg": "Bars are not the same"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "cart": {
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "mealid": { "type": "string" },
+                          "barid": { "type": "string" },
+                          "name": { "type": "string" },
+                          "preparationtime": { "type": "number" },
+                          "description": { "type": "string" },
+                          "cantakeaway": { "type": "boolean" },
+                          "price": { "type": "number" },
+                          "isdeleted": { "type": "boolean" },
+                          "canbemade": { "type": "boolean" }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "See meals from a bar": {
+                    "value": [
+                      {
+                        "mealid": "04720b43-2c3b-4c78-baef-fcada0a40baa",
+                        "barid": "a91aa933-440b-4c80-beef-f4cadd1aefff",
+                        "name": "panado",
+                        "preparationtime": 30,
+                        "description": "panado com batata",
+                        "cantakeaway": true,
+                        "price": 5,
+                        "isdeleted": false,
+                        "canbemade": true
+                      }
+                    ]
                   }
                 }
               }
@@ -334,19 +519,74 @@
             "in": "path",
             "description": "cart meal id",
             "required": true,
-            "schema": { "properties": { "barId": { "type": "string" } } }
+            "schema": { "properties": { "cartMealId": { "type": "string" } } }
           }
         ],
         "responses": {
-          "500": { "description": "ERROR" },
-          "200": {
-            "description": "OK",
+          "500": {
+            "description": "ERROR",
             "content": {
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
-                  "See meals": {
-                    "value": { "msg": "Eliminar refeição do carrinho" }
+                  "CartMeal dont exist": {
+                    "value": {
+                      "msg": "CartMeal dont exist"
+                    }
+                  },
+                  "The cart dont belongs to this user": {
+                    "value": {
+                      "msg": "The cart dont belongs to this user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "cart": {
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "cartid": { "type": "string" },
+                          "uid": { "type": "string" },
+                          "date": { "type": "string" },
+                          "iscompleted": { "type": "boolean" }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Delete a meal from cart": {
+                    "value": [
+                      {
+                        "cartid": "4eb6a316-8e9d-4b84-9456-18ae901f8be8",
+                        "uid": "f263dee2-2dd6-4006-a819-0457f615592c",
+                        "date": "2022-06-10 00:00:00",
+                        "iscompleted": true
+                      }
+                    ]
                   }
                 }
               }
@@ -357,20 +597,49 @@
     },
     "/consumer/cart/meals": {
       "get": {
-        "summary": "get meals from cart",
-        "description": "get meals from cart ",
-        "tags": ["Meal"],
+        "summary": "See cart",
+        "description": "See all details of a cart ",
+        "tags": ["Cart"],
         "security": [{ "basicAuth": [] }],
         "responses": {
           "500": { "description": "ERROR" },
-          "200": {
-            "description": "OK",
+          "401": {
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
-                  "See meals": {
-                    "value": { "msg": "Ver refeições " }
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "cartid": { "type": "string" },
+                    "uid": { "type": "string" },
+                    "date": { "type": "string" },
+                    "iscompleted": { "type": "boolean" }
+                  }
+                },
+                "examples": {
+                  "See cart": {
+                    "value": [
+                      {
+                        "cartid": "4eb6a316-8e9d-4b84-9456-18ae901f8be8",
+                        "uid": "f263dee2-2dd6-4006-a819-0457f615592c",
+                        "date": "2022-06-10 00:00:00",
+                        "iscompleted": true
+                      }
+                    ]
                   }
                 }
               }
@@ -398,38 +667,25 @@
           "content": {
             "application/json": {
               "schema": {
-                "properties": {
-                  "name": { "type": "string" },
-                  "preparationTime": { "type": "number" },
-                  "description": { "type": "string" },
-                  "canTakeAway": { "type": "number" },
-                  "price": { "type": "number" },
-                  "ingname": { "type": "string" },
-                  "ingdosage": { "type": "string" },
-                  "isremoveonly": { "type": "number" },
-                  "canbeincremented": { "type": "number" },
-                  "canbedecremented": { "type": "number" },
-                  "incrementlimit": { "type": "number" },
-                  "decrementlimit": { "type": "number" }
-                }
+                "$ref": "#/components/schemas/Meal"
               },
               "examples": {
-                "criar refeição": {
+                "Create Meal": {
                   "value": {
-                    "name": "bife com batata",
+                    "name": "bife com batatas",
                     "preparationTime": 30,
                     "description": "prego",
                     "canTakeaway": true,
                     "price": 0.02,
                     "allowedChanges": [
                       {
-                        "ingname": "queijo",
+                        "ingname": "atum",
                         "ingdosage": "porção",
                         "isremoveonly": true,
                         "canbeincremented": true,
                         "canbedecremented": true,
-                        "incrementedlimir": 2,
-                        "decrementedlimit": 1
+                        "incrementlimit": 2,
+                        "decrementlimit": 1
                       },
                       {
                         "ingname": "fiambre",
@@ -437,7 +693,16 @@
                         "isremoveonly": true,
                         "canbeincremented": true,
                         "canbedecremented": true,
-                        "incrementedlimir": 2,
+                        "incrementedlimit": 2,
+                        "decrementedlimit": 1
+                      },
+                      {
+                        "ingname": "ovo",
+                        "ingdosage": "porção",
+                        "isremoveonly": true,
+                        "canbeincremented": true,
+                        "canbedecremented": true,
+                        "incrementedlimit": 2,
                         "decrementedlimit": 1
                       }
                     ]
@@ -448,15 +713,84 @@
           }
         },
         "responses": {
-          "500": { "description": "ERROR" },
-          "200": {
-            "description": "OK",
+          "500": {
+            "description": "ERROR",
             "content": {
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
-                  "Create meal": {
-                    "value": { "msg": "Refeição criada" }
+                  "Bar dont exist": {
+                    "value": {
+                      "msg": "Bar dont exist"
+                    }
+                  },
+                  "Bars are not the same": {
+                    "value": {
+                      "msg": "Bars are not the same"
+                    }
+                  },
+                  "Meal already exists": {
+                    "value": {
+                      "msg": "Meal already exists"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Meal"
+                },
+                "examples": {
+                  "Create Meal": {
+                    "value": [
+                      {
+                        "name": "bife com batata",
+                        "preparationTime": 30,
+                        "description": "prego",
+                        "canTakeaway": true,
+                        "price": 0.02,
+                        "allowedChanges": [
+                          {
+                            "ingname": "atum",
+                            "ingdosage": "porção",
+                            "isremoveonly": true,
+                            "canbeincremented": true,
+                            "canbedecremented": true,
+                            "incrementlimit": 2,
+                            "decrementlimit": 1
+                          },
+                          {
+                            "ingname": "salada",
+                            "ingdosage": "porção",
+                            "isremoveonly": true,
+                            "canbeincremented": true,
+                            "canbedecremented": true,
+                            "incrementlimit": 2,
+                            "decrementlimit": 1
+                          }
+                        ]
+                      }
+                    ]
                   }
                 }
               }
@@ -492,14 +826,14 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { 
-                  "properties": { 
-                    "name": { "type": "string" }, 
-                    "campusname": { "type": "string" }, 
-                    "barname": { "type": "string" } ,
-                    "imgurl": { "type": "string" } 
-                    } 
-                  },
+                "schema": {
+                  "properties": {
+                    "name": { "type": "string" },
+                    "campusname": { "type": "string" },
+                    "barname": { "type": "string" },
+                    "imgurl": { "type": "string" }
+                  }
+                },
                 "examples": {
                   "View my profile": {
                     "value": [
@@ -541,7 +875,7 @@
           }
         },
         "responses": {
-          "500": { "description": "ERROR" },
+          "500": { "description": "Invalid Data" },
           "401": {
             "description": "Unauthorized",
             "content": {
@@ -561,13 +895,13 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { 
-                  "properties": { 
-                    "preferredcampus": { "type": "string" }, 
-                    "preferredbar": { "type": "string" } ,
-                    "imgurl": { "type": "string" } 
-                    } 
-                  },
+                "schema": {
+                  "properties": {
+                    "preferredcampus": { "type": "string" },
+                    "preferredbar": { "type": "string" },
+                    "imgurl": { "type": "string" }
+                  }
+                },
                 "examples": {
                   "Edit profile": {
                     "value": [
@@ -650,7 +984,31 @@
           }
         },
         "responses": {
-          "500": { "description": "ERROR" },
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Meal does not exists": {
+                    "value": {
+                      "msg": "Meal does not exists"
+                    }
+                  },
+                  "Bars are not the same": {
+                    "value": {
+                      "msg": "Bars are not the same"
+                    }
+                  },
+                  "Meal already exists in this bar": {
+                    "value": {
+                      "msg": "Meal already exists in this bar"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized",
             "content": {
@@ -674,7 +1032,7 @@
                   "$ref": "#/components/schemas/Meal"
                 },
                 "examples": {
-                  "Get all orders": {
+                  "Edit meal": {
                     "value": [
                       {
                         "name": "bife com batata",
@@ -682,7 +1040,8 @@
                         "description": "prego",
                         "canTakeaway": true,
                         "price": 0.02,
-                        "allowedChanges":[{		
+                        "allowedChanges": [
+                          {
                             "ingname": "atum",
                             "ingdosage": "porção",
                             "isremoveonly": true,
@@ -690,7 +1049,8 @@
                             "canbedecremented": true,
                             "incrementlimit": 2,
                             "decrementlimit": 1
-                        },{		
+                          },
+                          {
                             "ingname": "salada",
                             "ingdosage": "porção",
                             "isremoveonly": true,
@@ -698,7 +1058,8 @@
                             "canbedecremented": true,
                             "incrementlimit": 2,
                             "decrementlimit": 1
-                        }]
+                          }
+                        ]
                       }
                     ]
                   }
@@ -711,7 +1072,7 @@
       "delete": {
         "summary": "Remove a meal",
         "description": "Remove a meal from a bar",
-        "tags": ["Meal cart"],
+        "tags": ["Meal"],
         "security": [{ "basicAuth": [] }],
         "parameters": [
           {
@@ -723,7 +1084,31 @@
           }
         ],
         "responses": {
-          "500": { "description": "ERROR" },
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Meal does not exists": {
+                    "value": {
+                      "msg": "Meal does not exists"
+                    }
+                  },
+                  "Bars are not the same": {
+                    "value": {
+                      "msg": "Bars are not the same"
+                    }
+                  },
+                  "Impossible to remove the meal": {
+                    "value": {
+                      "msg": "Impossible to remove the meal"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized",
             "content": {
@@ -774,23 +1159,23 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "orders":{
+                    "orders": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/Order"
                       }
                     }
-                  } 
+                  }
                 },
                 "examples": {
                   "Get all orders": {
                     "value": [
                       {
-                          "ticketid": "534cf037-6a41-475b-81d8-c90af631084f",
-                          "nencomenda": 123,
-                          "ticketamount": 2,
-                          "total": 20,
-                          "name": "Preparação"
+                        "ticketid": "534cf037-6a41-475b-81d8-c90af631084f",
+                        "nencomenda": 123,
+                        "ticketamount": 2,
+                        "total": 20,
+                        "name": "Preparação"
                       }
                     ]
                   }
@@ -803,9 +1188,10 @@
     },
     "/consumer/tickets/{ticketId}": {
       "delete": {
-        "summary": "Remove a order",
+        "summary": "Remove an order",
         "description": "Remove a specific order from the authenticated user",
         "tags": ["Tickets"],
+        "security": [{ "basicAuth": [] }],
         "parameters": [
           {
             "name": "ticketId",
@@ -818,14 +1204,32 @@
           }
         ],
         "responses": {
-          "500": { "description": "ERROR" },
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Remove an order that doesnt exist": {
+                    "value": { "msg": "Order does not exist!" }
+                  },
+                  "Remove an order that isnt yours": {
+                    "value": { "msg": "Not your Order!" }
+                  },
+                  "Remove an order that is already in preparation": {
+                    "value": { "msg": "Order Already in preperation!" }
+                  }
+                }
+              }
+            }
+          },
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
-                  "Remove a order": {
+                  "Remove an order": {
                     "value": { "msg": "Order removed successfully" }
                   }
                 }
@@ -864,7 +1268,7 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "orders":{
+                    "orders": {
                       "type": "array",
                       "items": {
                         "properties": {
@@ -875,7 +1279,7 @@
                         }
                       }
                     }
-                  } 
+                  }
                 },
                 "examples": {
                   "Get all orders of the bar": {
@@ -895,11 +1299,12 @@
         }
       }
     },
-    "/employee/detail/ticket/{ticketId}": {
+    "/detail/ticket/{ticketId}": {
       "get": {
         "summary": "Get details meal of an order",
         "description": "Get details od an order",
         "tags": ["Tickets"],
+        "security": [{ "basicAuth": [] }],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -920,7 +1325,7 @@
         }
       }
     },
-    "/consumer/trade/available": {
+    "/consumer/trades/available": {
       "get": {
         "summary": "Get all trades available",
         "description": "Get all the trades available",
@@ -928,16 +1333,70 @@
         "security": [{ "basicAuth": [] }],
         "responses": {
           "500": { "description": "ERROR" },
-          "200": {
-            "description": "OK",
+          "401": {
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": { "properties": { "msg": { "type": "string" } } },
                 "examples": {
-                  "Get all orders": {
+                  "Unauthorized Request": {
                     "value": {
-                      "msg": "Successfully obtained all available trades"
+                      "Error": "Unauthorized Request"
                     }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "trades": {
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "ticketid": { "type": "string" },
+                          "uid": { "type": "string" },
+                          "stateid": { "type": "string" },
+                          "paymentmethodid": { "type": "string" },
+                          "barid": { "type": "string" },
+                          "cartid": { "type": "string" },
+                          "emissondate": { "type": "string" },
+                          "pickuptime": { "type": "string" },
+                          "istakingaway": { "type": "boolean" },
+                          "istrading": { "type": "boolean" },
+                          "ticketamount": { "type": "number" },
+                          "total": { "type": "number" },
+                          "nencomenda": { "type": "number" },
+                          "isdeleted": { "type": "boolean" }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Get all trades available": {
+                    "value": [
+                      {
+                        "ticketid": "534cf037-6a41-475b-81d8-c90af631084f",
+                        "uid": "f263dee2-2dd6-4006-a819-0457f615592c",
+                        "stateid": "95e3cef7-2f05-4c05-95ad-781a2ca29426",
+                        "paymentmethodid": "57f7066e-e2a8-45bd-bad3-7f6773b2e26b",
+                        "barid": "0d9c0499-f2f8-44d5-9b49-a0529266433a",
+                        "cartid": "4eb6a316-8e9d-4b84-9456-18ae901f8be8",
+                        "emissondate": "2022-10-05 00:00:00",
+                        "pickuptime": "2022-10-06 00:00:00",
+                        "istakingaway": false,
+                        "istrading": false,
+                        "ticketamount": 2,
+                        "total": 30,
+                        "nencomenda": 123,
+                        "isdeleted": false
+                      }
+                    ]
                   }
                 }
               }
@@ -1008,7 +1467,7 @@
           }
         },
         "responses": {
-          "500": { "description": "ERROR" },
+          "500": { "description": "Invalid Data" },
           "401": {
             "description": "Unauthorized",
             "content": {
@@ -1028,13 +1487,13 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { 
-                  "properties": { 
-                    "isconfirmed": { "type": "boolean" }, 
-                    "confirmationdate": { "type": "string" }, 
-                    "receptorDecision": { "type": "number" } 
-                    } 
-                  },
+                "schema": {
+                  "properties": {
+                    "isconfirmed": { "type": "boolean" },
+                    "confirmationdate": { "type": "string" },
+                    "receptorDecision": { "type": "number" }
+                  }
+                },
                 "examples": {
                   "Accept Trade": {
                     "value": [
@@ -1072,6 +1531,12 @@
                     "email": "employe@employee.com",
                     "password": "Teste_#"
                   }
+                },
+                "Consumer": {
+                  "value": {
+                    "email": "consumer@consumer.com",
+                    "password": "Teste#"
+                  }
                 }
               }
             }
@@ -1095,10 +1560,15 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { "properties": { "token": { "type": "string" } } },
+                "schema": {
+                  "properties": {
+                    "token": { "type": "string" },
+                    "role": { "type": "string" }
+                  }
+                },
                 "examples": {
                   "Login Success": {
-                    "value": { "token": "Session Token" }
+                    "value": { "token": "Session Token", "role": "employee" }
                   }
                 }
               }
@@ -1339,6 +1809,370 @@
           }
         }
       }
+    },
+    "/employee/tickets/{ticketId}": {
+      "put": {
+        "summary": "Edit ticket state",
+        "description": "A employee can edit the state of an ticket that belongs to the same bar",
+        "tags": ["Tickets"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "Ticket id",
+            "required": true,
+            "schema": {
+              "properties": { "ticketId": { "type": "string" } }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "stateName": { "type": "string" }
+                }
+              },
+              "examples": {
+                "Edit ticket state": {
+                  "value": {
+                    "stateName": "Entregue"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Ticket does not exists": {
+                    "value": {
+                      "msg": "Ticket does not exists"
+                    }
+                  },
+                  "State does not exists": {
+                    "value": {
+                      "msg": "State does not exists"
+                    }
+                  },
+                  "Bars are not the same": {
+                    "value": {
+                      "msg": "Bars are not the same"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "ticketid": { "type": "string" },
+                    "stateid": { "type": "string" }
+                  }
+                },
+                "examples": {
+                  "Edit ticket state": {
+                    "value": {
+                      "ticketid": "42977dd1-cfbe-4e0d-a8b0-db1619decb30",
+                      "stateid": "5669f7ec-4991-4dee-a1f4-9b944580ac33"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee/bar/{barId}/statistics": {
+      "get": {
+        "summary": "Get bar statistics",
+        "description": "An employee can get his bar statistics",
+        "tags": ["Canteen"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "barId",
+            "in": "path",
+            "description": "Bar Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Another Bar": {
+                    "value": "Cannot get statistics from another bar"
+                  },
+                  "Missing parameter": {
+                    "value": "Some parameter is incorrect"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "totalTickets": {
+                      "type": "integer"
+                    },
+                    "deliveredTickets": {
+                      "type": "integer"
+                    },
+                    "toDeliverTickets": {
+                      "type": "integer"
+                    },
+                    "tradedTickets": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "msg": {
+                    "value": {
+                      "totalTickets": 3,
+                      "deliveredTickets": 1,
+                      "toDeliverTickets": 2,
+                      "tradedTickets": 2
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consumer/trades/{ticketId}/direct/{receiverid}": {
+      "put": {
+        "summary": "Make direct trade with user",
+        "description": "A consumer can make a direct trade with another user",
+        "tags": ["Trades"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "Ticket Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          },
+          {
+            "name": "receiverid",
+            "in": "path",
+            "description": "Receiver Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Trade an order with a user that doesnt exist": {
+                    "value": { "msg": "User does not exist!" }
+                  },
+                  "Trade an order with a employee": {
+                    "value": { "msg": "Can only trade with another consumer" }
+                  },
+                  "Trade an order that doesnt exist": {
+                    "value": { "msg": "Order does not exist!" }
+                  },
+                  "Trade an order that isnt yours": {
+                    "value": { "msg": "Not your Order!" }
+                  },
+                  "Trade an order that is already in preparation": {
+                    "value": { "msg": "Order Already in preperation!" }
+                  },
+                  "Trade with the same user again": {
+                    "value": {
+                      "msg": "Trade proposal to this user already sent!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "msg": {
+                    "value": "Trade proposal done successfully"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consumer/trades/{ticketId}/general": {
+      "put": {
+        "summary": "Expose order for general trading",
+        "description": "A consumer can expose his order for general trading",
+        "tags": ["Trades"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "Ticket Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Trade an order with a user that doesnt exist": {
+                    "value": { "msg": "User does not exist!" }
+                  },
+                  "Trade an order that doesnt exist": {
+                    "value": { "msg": "Order does not exist!" }
+                  },
+                  "Trade an order that isnt yours": {
+                    "value": { "msg": "Not your Order!" }
+                  },
+                  "Trade with the same user again": {
+                    "value": {
+                      "msg": "Order already trading!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "msg": {
+                    "value": "Trade exposed successfully"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1400,7 +2234,7 @@
       },
       "Order": {
         "type": "object",
-        "items":{
+        "items": {
           "properties": {
             "ticketid": { "type": "string" },
             "nencomenda": { "type": "number" },

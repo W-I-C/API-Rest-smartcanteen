@@ -4,6 +4,7 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
+import { checkCartMealExists } from "../../../validations/employee/meal/removeMealValidation";
 
 /**
  * class responsible for removing a meal from the cart
@@ -18,18 +19,23 @@ export class RemoveMealsCartService {
 
         
         const removeMeal= createClient();
-        const verifyUser= await removeMeal.query('SELECT cartId from cart WHERE uId=$1', [uId])
-
+        const verifyUser= await removeMeal.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2', [uId, false])
+        
+        const cartMealExists = await checkCartMealExists(cartMealId)
+        if(!cartMealExists) {
+            throw new Error("CartMeal dont exist")
+        }
         
         if(verifyUser.rowCount>0){
-        const query= await removeMeal.query('DELETE FROM cartMeals WHERE cartMealId=$1',[cartMealId])
+            const query= await removeMeal.query('DELETE FROM cartMeals WHERE cartMealId=$1',[cartMealId])
 
-        const querySelect= await removeMeal.query('SELECT * from cart WHERE uId=$1',[uId])
-        const data=querySelect["rows"]
-        return { data, status: 200 }
-        }else{
-            throw new Error('o user não pertence a este carrinho');
+            const querySelect= await removeMeal.query('SELECT * from cart WHERE uId=$1',[uId])
             
+            const data=querySelect["rows"]
+            
+            return { data, status: 200 }
+        }else{
+            throw new Error('The cart dont belongs to this user');    
         }
     }
 }

@@ -67,11 +67,48 @@ describe("Test create one Meal", () => {
         })
       })
 
-    describe('- create a meal that doesnt exist', () => {
+    describe('- Create a meal that already exist', () => {
         it('Should return campus error', () => {
           return chai
             .request(server)
-            .post(baseUrl+'/meal/'+ barId)
+            .post(baseUrl+'/meal/'+barId)
+            .set("Authorization", token)
+            .send({
+                name: "bife com batata",
+                preparationTime: 30,
+                description: "bacalhau com batata palha",
+                canTakeaway: true,
+                price: 10,
+                allowedChanges:[{		
+                    ingname: "maionese",
+                    ingdosage: "porção",
+                    isremoveonly: true,
+                    canbeincremented: true,
+                    canbedecremented: true,
+                    incrementedlimit: 2,
+                    decrementedlimit: 1
+                },
+                {		
+                    ingname: "ovo",
+                    ingdosage: "porção",
+                    isremoveonly: true,
+                    canbeincremented: true,
+                    canbedecremented: true,
+                    incrementedlimit: 2,
+                    decrementedlimit: 1
+                }]
+              })
+            .then(res => {
+              res.should.have.status(500)
+            })
+        })
+      })
+
+    describe('- Create a meal to a bar that doesnt exist', () => {
+        it('Should return bar error', () => {
+          return chai
+            .request(server)
+            .post(baseUrl+'/meal/ec3b5a78-16c4-4cfc-b7b5-efc64ddc0c71')
             .set("Authorization", token)
             .send({
                 name: "bacalhau à brás",
@@ -104,11 +141,11 @@ describe("Test create one Meal", () => {
         })
       })
 
-      describe('- Create a meal that is associated with a different bar than the employee', () => {
-        it('Should return campus error', () => {
+    describe('- Create a meal to a bar that is not the same as the user preferred bar', () => {
+        it('Should return bar error', () => {
           return chai
             .request(server)
-            .post(baseUrl+'/meal/'+ barId)
+            .post(baseUrl+'/meal/ec3b5a78-16c4-4cfc-b7b5-efc64ddc0c70')
             .set("Authorization", token)
             .send({
                 name: "bacalhau à brás",
@@ -176,7 +213,7 @@ describe("Test create one Meal", () => {
           .post(baseUrl+'/meal/'+ barId)
           .set("Authorization", token)
           .send({
-            name: "ovo",
+            name: "douradinhos",
             preparationTime: 30,
             description: "bacalhau",
             canTakeaway: true,
@@ -221,26 +258,26 @@ describe("Test create one Meal", () => {
             chai.expect(res.body['allowedChanges']).to.be.an("array")
 
             if(res.body['allowedChanges'].length>0){
+              for(let i = 0; i < res.body['allowedChanges'].length; i++){
 
-                chai.expect(res.body['allowedChanges'][0]).to.be.an("object") 
+                chai.expect(res.body['allowedChanges'][i]).to.be.an("object") 
 
-                chai.expect(res.body['allowedChanges'][0]).to.have.property("ingname")
-                chai.expect(res.body['allowedChanges'][0]).to.have.property("ingdosage")
-                chai.expect(res.body['allowedchanges'][0]).to.have.property("isremoveonly")
-                chai.expect(res.body['allowedChanges'][0]).to.have.property("canbeincremented")
-                chai.expect(res.body['allowedChanges'][0]).to.have.property("canbedecremented")
-                chai.expect(res.body['allowedChanges'][0]).to.have.property("incrementlimit")
-                chai.expect(res.body['allowedChanges'][0]).to.have.property("decrementlimit")
+                chai.expect(res.body['allowedChanges'][i]).to.have.property("ingname")
+                chai.expect(res.body['allowedChanges'][i]).to.have.property("ingdosage")
+                chai.expect(res.body['allowedchanges'][i]).to.have.property("isremoveonly")
+                chai.expect(res.body['allowedChanges'][i]).to.have.property("canbeincremented")
+                chai.expect(res.body['allowedChanges'][i]).to.have.property("canbedecremented")
+                chai.expect(res.body['allowedChanges'][i]).to.have.property("incrementlimit")
+                chai.expect(res.body['allowedChanges'][i]).to.have.property("decrementlimit")
 
-                chai.expect(res.body['allowedChanges'][0]['ingname']).to.be.a("string")
-                chai.expect(res.body['allowedChanges'][0]['ingdosage']).to.be.a("string")
-                chai.expect(res.body['allowedChanges'][0]['isremoveonly']).to.be.a("boolean")
-                chai.expect(res.body['allowedChanges'][0]['canbeincremented']).to.be.a("boolean")
-                chai.expect(res.body['allowedChanges'][0]['canbedecremented']).to.be.a("boolean")
-                chai.expect(res.body['allowedChanges'][0]['incrementlimit']).to.be.a("number")
-                chai.expect(res.body['allowedChanges'][0]['decrementlimit']).to.be.an("number")
-
-
+                chai.expect(res.body['allowedChanges'][i]['ingname']).to.be.a("string")
+                chai.expect(res.body['allowedChanges'][i]['ingdosage']).to.be.a("string")
+                chai.expect(res.body['allowedChanges'][i]['isremoveonly']).to.be.a("boolean")
+                chai.expect(res.body['allowedChanges'][i]['canbeincremented']).to.be.a("boolean")
+                chai.expect(res.body['allowedChanges'][i]['canbedecremented']).to.be.a("boolean")
+                chai.expect(res.body['allowedChanges'][i]['incrementlimit']).to.be.a("number")
+                chai.expect(res.body['allowedChanges'][i]['decrementlimit']).to.be.an("number")
+              }
             }
           })
         })
