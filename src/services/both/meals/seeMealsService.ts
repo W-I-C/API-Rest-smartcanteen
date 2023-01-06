@@ -21,8 +21,7 @@ export class SeeMealsService {
      * Method that allows you to see a meals from bar
      */
     async execute(barId: string, uId: string) {
-
-        const seeMeals = createClient();
+        const seeMealsDBClient = createClient();
 
         const barExists = await checkBarExists(uId)
         if (!barExists) {
@@ -34,8 +33,9 @@ export class SeeMealsService {
         if (userBar != barId) {
             throw new Error('Bars are not the same')
         }
+        const query = await seeMealsDBClient.query('SELECT * from Meals WHERE barId = $1 AND isdeleted = $2', [barId, false])
 
-        const query = await seeMeals.query('SELECT * from Meals WHERE barId = $1 AND isdeleted = $2', [barId, false])
+
 
         const data = query["rows"]
 

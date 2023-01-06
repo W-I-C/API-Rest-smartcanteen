@@ -20,7 +20,7 @@ export class AddFavService {
         uId
     }:IAddFavService) {
 
-        const favMeal= createClient();
+        const addFavDBClient= createClient();
       
         const mealIdExists = await checkMealExists(mealId)
         if(!mealIdExists){
@@ -34,9 +34,9 @@ export class AddFavService {
             throw new Error('Bars are not the same')
         }
 
-        const query= await favMeal.query('INSERT INTO FavoriteMeals (uId, mealId) VALUES ($1,$2)', [uId,mealId])
+        const query= await addFavDBClient.query('INSERT INTO FavoriteMeals (uId, mealId) VALUES ($1,$2)', [uId,mealId])
 
-        const queryFav= await favMeal.query('SELECT * from FavoriteMeals WHERE uid = $1', [uId])
+        const queryFav= await addFavDBClient.query('SELECT * from FavoriteMeals WHERE uid = $1', [uId])
 
         const data=queryFav["rows"]
 

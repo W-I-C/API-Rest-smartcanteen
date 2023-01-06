@@ -18,8 +18,9 @@ export class RemoveMealsCartService {
     async execute( cartMealId:string,uId:string) {
 
         
-        const removeMeal= createClient();
-        const verifyUser= await removeMeal.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2', [uId, false])
+        const removeMealDBClient= createClient();
+        
+        const verifyUser= await removeMealDBClient.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2', [uId, false])
         
         const cartMealExists = await checkCartMealExists(cartMealId)
         if(!cartMealExists) {
@@ -27,9 +28,9 @@ export class RemoveMealsCartService {
         }
         
         if(verifyUser.rowCount>0){
-            const query= await removeMeal.query('DELETE FROM cartMeals WHERE cartMealId=$1',[cartMealId])
+            const query= await removeMealDBClient.query('DELETE FROM cartMeals WHERE cartMealId=$1',[cartMealId])
 
-            const querySelect= await removeMeal.query('SELECT * from cart WHERE uId=$1',[uId])
+            const querySelect= await removeMealDBClient.query('SELECT * from cart WHERE uId=$1',[uId])
             
             const data=querySelect["rows"]
             
