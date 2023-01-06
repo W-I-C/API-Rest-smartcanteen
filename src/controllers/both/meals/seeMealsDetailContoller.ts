@@ -10,23 +10,24 @@ import { SeeMealsDetailService } from "../../../services/both/meals/SeeMealsDeta
  */
 
 export class SeeMealsDetailController {
+    /**
+* Allows to get a meal that the authenticated user has choose
+*
+* {@link seeMealsDetailService}
+* @param request request receive.
+* @param response response.
+*/
     async handle(request: Request, response: Response) {
-         /**
-     * Allows to get a meal that the authenticated user has choose
-     *
-     * {@link seeMealsDetailService}
-     * @param request request receive.
-     * @param response response.
-     */
-        const uId=response.locals.uid;
-        const mealId=request.params.mealid;
-        
+
+        const uId = response.locals.uid;
+        const mealId = request.params.mealid;
+
         try {
             const seeMealsDetailService = new SeeMealsDetailService();
-            const resp = await seeMealsDetailService.execute(uId,mealId);
+            const resp = await seeMealsDetailService.execute(uId, mealId);
 
             response.status(resp.status).send(resp.data);
-        } catch(e) {
+        } catch (e) {
             response.status(500).json(e.message)
         }
     }
