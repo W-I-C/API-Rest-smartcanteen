@@ -5,10 +5,14 @@ export class LoginService {
   async execute(email: string, password: string) {
     // obter dados do user
     const loginDBClient = createClient();
-    const query = await loginDBClient.query(`SELECT uid,userrole.name FROM users 
+    const query = await loginDBClient.query(`SELECT uid,userrole.name, password FROM users 
                                               JOIN userrole On userrole.roleid = users.roleid
-                                              WHERE email=$1 AND password = $2
-                                              `, [email, password])
+                                              WHERE email=$1 
+                                              `, [email])
+                                              
+    const querypassword=query["rows"][0]["password"]
+
+
 
     // dados a carregar no token
     if (query['rowCount'] == 1) {
