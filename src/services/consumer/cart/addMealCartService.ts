@@ -17,8 +17,6 @@ export class AddMealCartService {
      * @param amount quantity of meal to be added to cart
      */
     async execute( mealId:string,uId:string,amount:number) {
-
-        // TODO: verificar se a meal canbemade
     
         const favMeal= createClient();
         let date= new Date();

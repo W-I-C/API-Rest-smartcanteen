@@ -21,7 +21,6 @@ export class CancelTradingService {
     const getTicketQuery = await cancelTicketTradeDBClient.query(`SELECT * FROM tickets WHERE ticketid = $1 AND isdeleted = $2`, [ticketId, false]);
     const getTicketTrades = await cancelTicketTradeDBClient.query(`SELECT * FROM tickettrade WHERE ticketid = $1 AND receptordecision = $2`, [ticketId, 1]);
 
-
     const userName = await getUserName(uId)
 
     if (getTicketQuery['rows'].length == 0) {

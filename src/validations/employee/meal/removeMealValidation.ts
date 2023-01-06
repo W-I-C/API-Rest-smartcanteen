@@ -36,7 +36,6 @@ export async function checkMealCartExists(mealId: string) {
  * @param cartMealId id of the meal that is present in a cart
  */
 export async function checkCartMealExists(cartMealId: string) {
-    console.log(cartMealId)
     const checkMealExistsDBClient = createClient();
     const query = await checkMealExistsDBClient.query(`SELECT cartmealid FROM cartmeals
                                                         WHERE cartmealid = $1`, [cartMealId]);
