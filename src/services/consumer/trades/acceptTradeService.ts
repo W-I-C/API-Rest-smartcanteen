@@ -1,5 +1,5 @@
 /**
- * @module AcceptTradeService
+ * @module acceptTradeService
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
