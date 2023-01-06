@@ -4,8 +4,6 @@
 import { Request, Response } from "express";
 import { RemoveTicketService } from "../../../services/consumer/ticket/removeTicketService";
 
-// TODO: passar para put e meter o isDeleted no histórico a true - nós vemos mas o utilizador não
-// TODO: para as trocas a mesma coisa
 /**
  * Class responsible for receiving and calling the service methods that allow the user to remove a order
  */

@@ -23,9 +23,8 @@ export class SeeMealsService {
   async execute(barId:string,uId:string) {
 
       const seeMeals =createClient();
-    console.log("123")
+
       const barExists = await checkBarExists(uId)
-      console.log(barExists)
       if(!barExists) {
           throw new Error('Bar not exist')
       }

@@ -31,7 +31,6 @@ export class AcceptTradeService {
             description = "The trade proposal was accepted"
         }
         
-        console.log(tradeExists, userIsReceiver)
         if(tradeExists && userIsReceiver) {
 
             const queryOwner = await acceptTradeDBClient.query(`SELECT uid FROM tickets WHERE ticketid = $1`, [ticketId])

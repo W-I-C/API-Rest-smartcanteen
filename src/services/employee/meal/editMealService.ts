@@ -53,7 +53,6 @@ export class EditMealService {
                                     WHERE mealid = $1`, [mealId])
 
         allowedChanges.forEach( async (currentvalue:IMealAllowedChange,index,array)=>{
-            console.log(currentvalue.canbedecremented,currentvalue.incrementlimit, currentvalue.decrementlimit)
             await editMealDBClient.query(`INSERT INTO allowedchanges (mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit) 
                                         VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`, [mealId, currentvalue.ingname, currentvalue.ingdosage, currentvalue.isremoveonly, currentvalue.canbedecremented, currentvalue.canbedecremented, currentvalue.incrementlimit, currentvalue.decrementlimit])
         })

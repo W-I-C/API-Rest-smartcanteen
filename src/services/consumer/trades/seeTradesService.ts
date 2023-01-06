@@ -17,9 +17,6 @@ export class SeeTradesService {
     async execute(uId: string,campusid:string) {
         const selectTicket = createClient();
 
-       
-        
-        
         const verifyUser = await selectTicket.query(`SELECT * FROM campus
                                                         JOIN bar on bar.campusid=campus.campusid
                                                         JOIN tickets on tickets.barid=bar.barid
