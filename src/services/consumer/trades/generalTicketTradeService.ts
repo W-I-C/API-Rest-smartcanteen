@@ -17,15 +17,9 @@ export class GeneralTicketTradeService {
    */
   async execute(uId: string, ticketId: string) {
 
-    const directTicketTradeDBClient = createClient();
-    const getTicketQuery = await directTicketTradeDBClient.query(`SELECT * FROM tickets WHERE ticketid = $1 AND isdeleted = $2`, [ticketId, false]);
-    const getTicketTrades = await directTicketTradeDBClient.query(`SELECT * FROM tickettrade WHERE ticketid = $1 AND receptordecision = $2`, [ticketId, 1]);
-
-
-    const userName = await getUserName(uId)
-    if (userName === undefined) {
-      throw new Error('User does not exist')
-    }
+    const renameTicketTradeDBClient = createClient();
+    const getTicketQuery = await renameTicketTradeDBClient.query(`SELECT * FROM tickets WHERE ticketid = $1 AND isdeleted = $2`, [ticketId, false]);
+    const getTicketTrades = await renameTicketTradeDBClient.query(`SELECT * FROM tickettrade WHERE ticketid = $1 AND receptordecision = $2`, [ticketId, 1]);
 
     if (getTicketQuery['rows'].length == 0) {
       throw new Error('Order does not exist!')
@@ -47,7 +41,7 @@ export class GeneralTicketTradeService {
       throw new Error('Not your Order!')
     }
 
-    await directTicketTradeDBClient.query(`UPDATE tickets SET isTrading=$1 WHERE ticketid=$2`, [true, ticketId])
+    await renameTicketTradeDBClient.query(`UPDATE tickets SET isTrading=$1 WHERE ticketid=$2`, [true, ticketId])
     return { data: { msg: 'Trade exposed successfully' }, status: 200 }
   }
 }
