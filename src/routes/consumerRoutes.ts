@@ -50,7 +50,7 @@ consumerRouter.get("/trades", validateToken, validateRefreshToken, isConsumer, s
 consumerRouter.delete("/tickets/:ticketId", validateToken, validateRefreshToken, isConsumer, removeTicketController.handle);
 consumerRouter.get("/tickets", validateToken, validateRefreshToken, isConsumer, seeTicketsHistoryController.handle);
 consumerRouter.put("/trades/:ticketId", validateToken, validateRefreshToken, isConsumer, acceptTradeController.handle);
-consumerRouter.get("/trades/available", validateToken, validateRefreshToken, isConsumer, seeTradesController.handle);
+consumerRouter.get("/trades/available/:campusid", validateToken, validateRefreshToken, isConsumer, seeTradesController.handle);
 consumerRouter.get("/notifications", validateToken, validateRefreshToken, isConsumer, getNotificationsController.handle);
 consumerRouter.put("/trades/:ticketId/direct/:receiverId", validateToken, validateRefreshToken, isConsumer, directTicketTradeController.handle);
 consumerRouter.put("/trades/:ticketId/general", validateToken, validateRefreshToken, isConsumer, generalTicketTradeController.handle);
