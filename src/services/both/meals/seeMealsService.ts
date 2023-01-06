@@ -24,11 +24,11 @@ export class SeeMealsService {
         const seeMeals =createClient();
         
         
-        const query= await seeMeals.query('SELECT * from Meals WHERE barId=($1)',[barId])
+        const query= await seeMeals.query('SELECT mealid from Meals WHERE barId=($1)',[barId])
         
         
-      const data=query["rows"]
-
+       const data=query["rows"]
+        console.log(query)
         return { data, status: 200 }
    
     }

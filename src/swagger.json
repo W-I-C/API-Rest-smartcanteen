@@ -205,7 +205,7 @@
         }
       }
     },
-    "/cart/{mealId}": {
+    "/consumer/cart/{mealId}": {
       "post": {
         "summary": "Add meal to cart",
         "description": "Add a meal to cart ",
@@ -330,9 +330,9 @@
         "security": [{ "basicAuth": [] }],
         "parameters": [
           {
-            "name": "mealId",
+            "name": "cartMealId",
             "in": "path",
-            "description": "meal id",
+            "description": "cart meal id",
             "required": true,
             "schema": { "properties": { "barId": { "type": "string" } } }
           }
@@ -355,7 +355,7 @@
         }
       }
     },
-    "/cart/meals": {
+    "/consumer/cart/meals": {
       "get": {
         "summary": "get meals from cart",
         "description": "get meals from cart ",
