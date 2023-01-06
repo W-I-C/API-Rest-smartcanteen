@@ -11,7 +11,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LogoutController = void 0;
 const logoutService_1 = require("../../../services/both/auth/logoutService");
+/**
+ * Class responsible for receiving and calling the service methods that allows to logout
+ */
 class LogoutController {
+    /**
+   * Allows to logout, redirecting afterwards to the associated service
+   *
+   * {@link logoutService}
+   * @param request request receive.
+   * @param response response.
+   */
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const uid = response.locals.uid;

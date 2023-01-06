@@ -12,7 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NewSessionTokenController = void 0;
 const jsonwebtoken_1 = require("jsonwebtoken");
 const newSessionTokenService_1 = require("../../../services/both/auth/newSessionTokenService");
+/**
+ * Class responsible for receiving and calling the service methods that allows to get a new session token
+ */
 class NewSessionTokenController {
+    /**
+   * Allows to get a new session token, redirecting afterwards to the associated service
+   *
+   * {@link newSessionTokenService}
+   * @param request request receive.
+   * @param response response.
+   */
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const auth = request.headers.authorization;

@@ -26,8 +26,8 @@ class SeeMealsDetailService {
         */
     execute(uId, mealId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const mealsDetail = (0, db_1.createClient)();
-            const query = yield mealsDetail.query('SELECT name,preparationTime,description,canTakeAway,price from Meals WHERE mealid=$1', [mealId]);
+            const mealsDetailDBClient = (0, db_1.createClient)();
+            const query = yield mealsDetailDBClient.query('SELECT name,preparationTime,description,canTakeAway,price from Meals WHERE mealid=$1', [mealId]);
             const data = query["rows"];
             return { data, status: 200 };
         });

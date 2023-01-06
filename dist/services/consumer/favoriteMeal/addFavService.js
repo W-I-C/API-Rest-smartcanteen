@@ -26,7 +26,7 @@ class AddFavService {
        */
     execute({ mealId, uId }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const favMeal = (0, db_1.createClient)();
+            const addFavDBClient = (0, db_1.createClient)();
             const mealIdExists = yield (0, addFavValidation_1.checkMealExists)(mealId);
             if (!mealIdExists) {
                 throw new Error('Meal does not exists');
@@ -36,8 +36,8 @@ class AddFavService {
             if (userBar != mealBar) {
                 throw new Error('Bars are not the same');
             }
-            const query = yield favMeal.query('INSERT INTO FavoriteMeals (uId, mealId) VALUES ($1,$2)', [uId, mealId]);
-            const queryFav = yield favMeal.query('SELECT * from FavoriteMeals WHERE uid = $1', [uId]);
+            const query = yield addFavDBClient.query('INSERT INTO FavoriteMeals (uId, mealId) VALUES ($1,$2)', [uId, mealId]);
+            const queryFav = yield addFavDBClient.query('SELECT * from FavoriteMeals WHERE uid = $1', [uId]);
             const data = queryFav["rows"];
             return { data, status: 200 };
         });

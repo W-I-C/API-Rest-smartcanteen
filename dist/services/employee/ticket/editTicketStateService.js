@@ -52,11 +52,11 @@ class EditTicketStateService {
             if (ticketStateId == deliveredState) {
                 throw new Error('The ticket has already been delivered');
             }
-            const editMealDBClient = (0, db_1.createClient)();
-            yield editMealDBClient.query(`UPDATE tickets
+            const editTicketStateDBClient = (0, db_1.createClient)();
+            yield editTicketStateDBClient.query(`UPDATE tickets
                                     SET stateid = $1
                                     WHERE ticketid = $2`, [stateNameTicket, ticketId]);
-            const query = yield editMealDBClient.query(`SELECT ticketid, stateid
+            const query = yield editTicketStateDBClient.query(`SELECT ticketid, stateid
                                                                 FROM tickets
                                                                 WHERE ticketid = $1`, [ticketId]);
             let editedMeal = query["rows"][0];

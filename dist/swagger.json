@@ -2355,6 +2355,102 @@
                     }
                 }
             }
+        },
+        "/register": {
+            "post": {
+                "summary": "Register user",
+                "description": "Allows an user to regiter",
+                "tags": ["Authentication"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "roleid": { "type": "string" },
+                                    "preferredcampus": { "type": "string" },
+                                    "preferredbar": { "type": "string" },
+                                    "email": { "type": "string" },
+                                    "name": { "type": "string" },
+                                    "password": { "type": "string" },
+                                    "schoolno": { "type": "string" },
+                                    "birthdate": { "type": "string" },
+                                    "imgurl": { "type": "string" }
+                                }
+                            },
+                            "examples": {
+                                "Register Consumer": {
+                                    "value": {
+                                        "roleid": "68271d1d-a6ab-46a3-a498-e2dda2850083",
+                                        "preferredcampus": "3b30ea61-1565-4fdc-8329-24b70511452b",
+                                        "preferredbar": "ec3b5a78-16c4-4cfc-b7b5-efc64ddc0c70",
+                                        "email": "consumer2@consumer.com",
+                                        "name": "consumer2",
+                                        "password": "Teste#",
+                                        "schoolno": 1222,
+                                        "birthdate": "1999-10-10",
+                                        "imgurl": null
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "ERROR",
+                        "content": {
+                            "application/json": {
+                                "schema": { "properties": { "msg": { "type": "string" } } },
+                                "examples": {
+                                    "Register without body": {
+                                        "value": { "msg": "Missing Arguments!" }
+                                    },
+                                    "Register with existing email": {
+                                        "value": { "msg": "Email already registered!" }
+                                    },
+                                    "Register with existing schoolno": {
+                                        "value": { "msg": "School number already registered!" }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": { "properties": { "msg": { "type": "string" } } },
+                                "examples": {
+                                    "Unauthorized Request": {
+                                        "value": {
+                                            "Error": "Unauthorized Request"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "msg": {
+                                        "value": "User Registered Successfully"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {

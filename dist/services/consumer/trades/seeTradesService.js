@@ -25,8 +25,8 @@ class SeeTradesService {
     */
     execute(uId, campusid) {
         return __awaiter(this, void 0, void 0, function* () {
-            const selectTicket = (0, db_1.createClient)();
-            const verifyUser = yield selectTicket.query(`SELECT * FROM campus
+            const seeTradesAvailableDBClient = (0, db_1.createClient)();
+            const verifyUser = yield seeTradesAvailableDBClient.query(`SELECT * FROM campus
                                                         JOIN bar on bar.campusid=campus.campusid
                                                         JOIN tickets on tickets.barid=bar.barid
                                                         LEFT JOIN tickettrade on tickets.ticketid=tickettrade.ticketid
