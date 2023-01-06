@@ -14,16 +14,20 @@ export class SeeTradesService {
      * Method that allows to see all the tickets that are available to trade in the campus of the user
      * @param uId authenticated user id
      */
-    async execute(uId: string) {
+    async execute(uId: string,campusid:string) {
         const selectTicket = createClient();
 
-        // TODO: filtrar pelo campus e meter nos tests - mostrar todos as trades do  bar - ver se a troca já foi aceite?
-        const campusUser = getUserCampus(uId)
+       
         
-        // TODO: ir buscar todos os bares do campus
-        // TODO: join com ticket trades para ver se tem troca direta
         
-        const verifyUser = await selectTicket.query('SELECT * from tickets WHERE istrading=$1 AND ispickedup=$2 AND ', [true, false])
+        const verifyUser = await selectTicket.query(`SELECT * FROM campus
+                                                        JOIN bar on bar.campusid=campus.campusid
+                                                        JOIN tickets on tickets.barid=bar.barid
+                                                        LEFT JOIN tickettrade on tickets.ticketid=tickettrade.ticketid
+                                                        WHERE campus.campusid=$1 
+                                                        AND tickets.istrading = true 
+                                                        AND tickets.isdirecttrade=false
+                                                        AND tickettrade.receptordecision is NULL`,[campusid])
 
         const data = verifyUser["rows"]
 
