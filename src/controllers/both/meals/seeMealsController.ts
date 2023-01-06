@@ -10,7 +10,7 @@ import { SeeMealsService } from "../../../services/both/meals/seeMealsService";
  */
 export class SeeMealsController {
     async handle(request: Request, response: Response) {
-        const barId = request.params.barId;
+        const barId = request.params.barid;
         const uId=response.locals.uid;
         try {
             if(uId === undefined || barId === undefined) {
