@@ -392,7 +392,7 @@
           }
         ],
         "responses": {
-          "500": { 
+          "500": {
             "description": "ERROR",
             "content": {
               "application/json": {
@@ -1514,6 +1514,78 @@
                         "receptordecision": 1
                       }
                     ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Cancel ticket trading",
+        "description": "A consumer can cancel his ticket from trading",
+        "tags": ["Trades"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "Ticket Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Cancel trading an order that doesnt exist": {
+                    "value": { "msg": "Order does not exist!" }
+                  },
+                  "Cancel trading an order that isnt yours": {
+                    "value": { "msg": "Not your Order!" }
+                  },
+                  "Cancel trading an order that isnt trading": {
+                    "value": { "msg": "Order not trading!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "msg": {
+                    "value": "Trade exposed successfully"
                   }
                 }
               }
