@@ -1,6 +1,6 @@
 import { createClient } from "../../../config/db";
 import { createRefreshToken, createSessionToken } from "../../../helpers/jwtHelpers";
-
+import{compare} from "bcrypt"
 export class LoginService {
   async execute(email: string, password: string) {
     // obter dados do user
@@ -12,7 +12,10 @@ export class LoginService {
                                               
     const querypassword=query["rows"][0]["password"]
 
-
+    const comp= compare(password,querypassword)
+    if(!comp){
+      throw new Error("authentication error")
+    }
 
     // dados a carregar no token
     if (query['rowCount'] == 1) {
