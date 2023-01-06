@@ -20,6 +20,7 @@ import { GetNotificationsController } from "../controllers/consumer/notification
 import { DirectTicketTradeController } from "../controllers/consumer/trades/directTicketTradeController";
 import { GeneralTicketTradeController } from "../controllers/consumer/trades/generalTicketTradeController";
 import { CancelTradingController } from "../controllers/consumer/trades/cancelTradingController";
+import { CompleteCartController } from "../controllers/consumer/cart/completeCartController";
 
 const addFavController = new AddFavController();
 const removeFavController = new RemoveFavController();
@@ -37,6 +38,7 @@ const getNotificationsController = new GetNotificationsController()
 const directTicketTradeController = new DirectTicketTradeController()
 const generalTicketTradeController = new GeneralTicketTradeController()
 const cancelTradingController = new CancelTradingController()
+const completeCartController = new CompleteCartController()
 
 //adicionar aos favoritos refeição
 consumerRouter.post("/favoriteMeals/:mealId", validateToken, validateRefreshToken, isConsumer, addFavController.handle);
@@ -55,5 +57,7 @@ consumerRouter.get("/notifications", validateToken, validateRefreshToken, isCons
 consumerRouter.put("/trades/:ticketId/direct/:receiverId", validateToken, validateRefreshToken, isConsumer, directTicketTradeController.handle);
 consumerRouter.put("/trades/:ticketId/general", validateToken, validateRefreshToken, isConsumer, generalTicketTradeController.handle);
 consumerRouter.delete("/trades/:ticketId/", validateToken, validateRefreshToken, isConsumer, cancelTradingController.handle);
+consumerRouter.post("/cart/:cartId/complete", validateToken, validateRefreshToken, isConsumer, completeCartController.handle);
+
 
 export { consumerRouter }
