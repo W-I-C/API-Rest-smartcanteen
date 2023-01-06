@@ -15,14 +15,13 @@ export class SeeTicketsHistoryService {
     async execute(uId: string) {
         const seeTicketsHistoryDBClient = createClient();
 
-        const query = await seeTicketsHistoryDBClient.query(`SELECT ticketid, nencomenda, ticketamount, total, states.name
+        const query = await seeTicketsHistoryDBClient.query(`SELECT tickets.ticketid, nencomenda, ticketamount, total, states.name
                                                             FROM tickets
                                                             JOIN states ON tickets.stateid = states.stateid
-                                                            WHERE tickets.uid = $1 AND tickets.isdeleted = $2`, [uId, false]) 
+                                                            LEFT JOIN tickettrade ON tickets.ticketid = tickettrade.ticketid
+                                                            WHERE tickets.uid = $1 AND tickets.isdeleted = $2 AND tickettrade.isdeleted = $3 AND tickettrade.receptordecision = $4 OR tickettrade.receptordecision = $5`, [uId, false, false, 0, null]) 
         
         const data = query["rows"]
-
-        // TODO: falta ir ao ticket trades ver se há proposta e se houver ver se já foi aceite
                                             
         return { data, status: 200 }
     }
