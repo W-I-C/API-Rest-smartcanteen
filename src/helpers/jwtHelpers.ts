@@ -19,8 +19,8 @@ export async function createRefreshToken(uid: string) {
 
   const token = sign({}, jwtRefreshKey, { subject: uid, expiresIn: '1y' })
 
-  // TODO: Encriptar Refresh token
+  
   const refreshTokenDBClient = createClient();
-  // TODO: Verificar se dá erro no insert
+  
   const insertRefreshTokenQuery = await refreshTokenDBClient.query(`UPDATE users SET "refreshtoken" = $1 WHERE uid = $2`, [token, uid])
 }

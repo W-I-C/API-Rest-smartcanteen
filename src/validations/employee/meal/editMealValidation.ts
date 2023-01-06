@@ -17,6 +17,26 @@ export async function checkMealExists(mealId: string) {
     return query['rows'].length != 0
 }
 
+export async function checkCartMealsExists(cartId: string) {
+    const checkMealExistsDBClient = createClient();
+    const query = await checkMealExistsDBClient.query(`SELECT cartmealid FROM cartmeals
+                                                        WHERE cartid = $1`, [cartId]);
+
+                                                        
+    return query['rows'].length != 0
+}
+
+export async function checkBarFromMealsExists(mealId: string) {
+    const checkMealExistsDBClient = createClient();
+    const query = await checkMealExistsDBClient.query(`SELECT barid FROM meals
+                                                        WHERE mealid = $1`, [mealId]);
+
+                                                        
+    return query['rows'].length != 0
+}
+
+
+
 /**
  * A meal is on the bar menu. For the employee to be able to edit this meal, 
  * it is necessary to check if the bar of the meal is the same as the employee's bar.
