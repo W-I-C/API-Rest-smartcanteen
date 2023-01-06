@@ -9,7 +9,7 @@ import { RemoveFavService } from "../../../services/consumer/favoriteMeal/remove
  */
 export class RemoveFavController {
     /**
-   * Allows you to remove a meal from the favorites, redirected afterwards to the associated service
+   * Allows you to remove a meal from the favorites, redirecting afterwards to the associated service
    *
    * {@link removeFavService}
    * @param request request receive.
@@ -20,7 +20,7 @@ export class RemoveFavController {
         const favMealId = request.params.favoriteMealId;
 
         try {
-            if(uId === undefined || favMealId === undefined) {
+            if (uId === undefined || favMealId === undefined) {
                 throw new Error("Invalid request");
             }
 
@@ -28,7 +28,7 @@ export class RemoveFavController {
             const resp = await removeFavService.execute(uId, favMealId);
 
             response.status(resp.status).json(resp.data);
-        } catch(e) {
+        } catch (e) {
             response.status(500).json(e.message)
         }
     }

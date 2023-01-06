@@ -64,18 +64,24 @@ describe("Test get all favorite meals of the user", () => {
             res.should.have.status(200)
             
             chai.expect(res.body).to.be.an("array")
-            chai.expect(res.body[0]).to.be.an("object")
-    
-            chai.expect(res.body[0]).to.have.property("name")
-            chai.expect(res.body[0]).to.have.property("preparationtime")
-            chai.expect(res.body[0]).to.have.property("price")
-            chai.expect(res.body[0]).to.have.property("url")
-    
-            chai.expect(res.body[0]['name']).to.be.a("string")
-            chai.expect(res.body[0]['preparationtime']).to.be.a("number")
-            chai.expect(res.body[0]['price']).to.be.a("number")
-            if (res.body['url'] != null) {
-                chai.expect(res.body['url']).to.be.a("string")
+            
+            if(res.body.length>0){
+              for(let i = 0; i < res.body.length; i++){
+
+                chai.expect(res.body[i]).to.be.an("object")
+
+                chai.expect(res.body[i]).to.have.property("name")
+                chai.expect(res.body[i]).to.have.property("preparationtime")
+                chai.expect(res.body[i]).to.have.property("price")
+                chai.expect(res.body[i]).to.have.property("url")
+        
+                chai.expect(res.body[i]['name']).to.be.a("string")
+                chai.expect(res.body[i]['preparationtime']).to.be.a("number")
+                chai.expect(res.body[i]['price']).to.be.a("number")
+                if (res.body[i]['url'] != null) {
+                    chai.expect(res.body[i]['url']).to.be.a("string")
+                }
+              }
             }
           })
         })

@@ -1,0 +1,31 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.employeeRouter = void 0;
+const express_1 = __importDefault(require("express"));
+const validateToken_1 = require("../middlewares/validateToken");
+const validateRefreshToken_1 = require("../middlewares/validateRefreshToken");
+const employeeRouter = express_1.default.Router();
+exports.employeeRouter = employeeRouter;
+const createMealController_1 = require("../controllers/employee/meal/createMealController");
+const editMealController_1 = require("../controllers/employee/meal/editMealController");
+const removeMealController_1 = require("../controllers/employee/meal/removeMealController");
+const seeUndeliveredTicketsController_1 = require("../controllers/employee/ticket/seeUndeliveredTicketsController");
+const seeDetailsMealTicketController_1 = require("../controllers/employee/ticket/seeDetailsMealTicketController");
+const isEmployee_1 = require("../middlewares/isEmployee");
+const canBeMadeController_1 = require("../controllers/employee/meal/canBeMadeController");
+const createMealController = new createMealController_1.CreateMealController();
+const editMealController = new editMealController_1.EditMealController();
+const removeMealController = new removeMealController_1.RemoveMealController();
+const seeUndeliveredTicketsController = new seeUndeliveredTicketsController_1.SeeUndeliveredTicketsController();
+const seeDetailsMealTicketController = new seeDetailsMealTicketController_1.SeeDetailsMealTicketController();
+const canBeMadeController = new canBeMadeController_1.CanBeMadeController();
+employeeRouter.post("/meal/:barId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, createMealController.handle);
+employeeRouter.put("/meal/:mealId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, editMealController.handle);
+employeeRouter.delete("/meal/:mealId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, removeMealController.handle);
+employeeRouter.get("/tickets", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, seeUndeliveredTicketsController.handle);
+employeeRouter.get("/detail/ticket/:ticketId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, seeDetailsMealTicketController.handle);
+employeeRouter.put("/meal/:mealId/canBeMade", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, canBeMadeController.handle);
+//# sourceMappingURL=employeeRoutes.js.map

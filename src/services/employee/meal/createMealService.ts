@@ -5,6 +5,8 @@ require('dotenv').config();
 import { createClient } from "../../../config/db";
 import { IMeal } from "../../../models/IMeal";
 import { IMealAllowedChange } from "../../../models/IMealAllowedChanges";
+import { checkBarExists } from "../../../validations/both/meals/seeMealsValidation";
+import { getEmployeeBar } from "../../../validations/employee/meal/editMealValidation";
 
 /**
  * Class responsible for the service that serves to create meals in bar
@@ -29,14 +31,23 @@ export class CreateMealService {
         const createMeal= createClient();
 
         const mealExists= createClient();
-
-        //TODO falta verificar se o funcionario está no bar em que quer inserir
+        
+        const barExists = await checkBarExists(barId)
+        if(!barExists) {
+          throw new Error('Bar dont exist');
+        }
+        
+        const userBar = await getEmployeeBar(uId)
+        if(userBar != barId) {
+          throw new Error('Bars are not the same');
+        }
 
         const mealExist=await mealExists.query('SELECT * from Meals WHERE name=$1 AND barId=$2',[name,barId])
 
         if (mealExist.rowCount > 0) {
-            throw new Error('Refeição já existe');
-          }
+          throw new Error('Meal already exists');
+        }
+
         const createMeals= await createMeal.query('INSERT INTO Meals (name, preparationTime,description,canTakeaway,price,barId) VALUES ($1,$2,$3,$4,$5,$6)', [name,preparationTime,description,canTakeaway,price,barId])
         const selectId= await createMeal.query('SELECT mealId from Meals WHERE name=$1 AND barId=$2', [name,barId])
         

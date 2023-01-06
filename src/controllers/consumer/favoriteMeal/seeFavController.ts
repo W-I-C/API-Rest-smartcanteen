@@ -9,7 +9,7 @@ import { SeeFavService } from "../../../services/consumer/favoriteMeal/seeFavSer
  */
 export class SeeFavController {
     /**
-     * Allows to get all meals that the authenticated user has already added to favorites, redirected afterwards to the associated service
+     * Allows to get all meals that the authenticated user has already added to favorites, redirecting afterwards to the associated service
      *
      * {@link seeFavService}
      * @param request request receive.
@@ -17,9 +17,9 @@ export class SeeFavController {
      */
     async handle(request: Request, response: Response) {
         const uId = response.locals.uid;
-        
+
         try {
-            if(uId === undefined) {
+            if (uId === undefined) {
                 throw new Error("Invalid request");
             }
 
@@ -27,7 +27,7 @@ export class SeeFavController {
             const resp = await seeFavService.execute(uId);
 
             response.status(resp.status).json(resp.data);
-        } catch(e) {
+        } catch (e) {
             response.status(500).json(e.message)
         }
     }

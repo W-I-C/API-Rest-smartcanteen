@@ -12,7 +12,7 @@ import { createClient } from "../../../config/db";
 export async function checkTicketExists(ticketId: string) {
     const checkTicketExistsDBClient = createClient();
     const query = await checkTicketExistsDBClient.query(`SELECT ticketid FROM tickets
-                                                        WHERE ticketid = $1`, [ticketId]);
+                                                        WHERE ticketid = $1 AND ispickedup = $2 AND isdeleted = $3`, [ticketId, false, false]);
                                           
     return query['rows'].length != 0
 }

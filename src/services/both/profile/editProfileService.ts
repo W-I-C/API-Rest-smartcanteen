@@ -15,10 +15,10 @@ export class EditProfileService {
      */
     async execute({uId, preferredCampus, preferredBar, imgUrl}:IEditProfileService){
         const editProfileDBClient = createClient();
-
+        
         const editProfileVallidator = new EditProfileValidator();
         const resp = await editProfileVallidator.validate(preferredCampus, preferredBar);
-
+        
         const campusBar = await getCampusBar(preferredBar)
 
         if(resp && campusBar == preferredCampus) {
@@ -31,12 +31,11 @@ export class EditProfileService {
                                                                 WHERE users.uid = $1`, [uId])
             
             const data = query_edited["rows"][0]
-            console.log(data)
 
             return { data, status: 200 }
         }
         else {
-            return { msg: "Invalid Data", status: 404 }
+            return { msg: "Invalid Data", status: 500 }
         }  
     }
 }

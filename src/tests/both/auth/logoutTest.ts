@@ -61,7 +61,6 @@ describe("Test logout", () => {
         .get(baseUrl + '/logout')
         .set("Authorization", token)
         .then(res => {
-          console.log(res.body)
           res.should.have.status(200)
           // verificar se é um object
           chai.expect(res.body).to.be.a("string")

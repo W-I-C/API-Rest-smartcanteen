@@ -9,7 +9,7 @@ import { AcceptTradeService } from "../../../services/consumer/trades/acceptTrad
  */
 export class AcceptTradeController {
   /**
-   * Allows to edit the data regarding the acceptance of the trade, redirected afterwards to the associated service
+   * Allows to edit the data regarding the acceptance of the trade, redirecting afterwards to the associated service
    *
    * {@link acceptTradeService}
    * @param request request receive.
@@ -19,14 +19,14 @@ export class AcceptTradeController {
     const uId = response.locals.uid;
     const ticketId = request.params.ticketId
     let { receptorDecision } = request.body
-    
+
     try {
-      if (uId === undefined || ticketId === undefined || receptorDecision === undefined) {
+      if (uId === undefined || ticketId === undefined || receptorDecision === undefined || typeof receptorDecision != "number") {
         throw new Error("Invalid request");
       }
-      
+
       const acceptTradeService = new AcceptTradeService();
-      const resp = await acceptTradeService.execute({uId, ticketId, receptorDecision});
+      const resp = await acceptTradeService.execute({ uId, ticketId, receptorDecision });
 
       response.status(resp.status).json(resp.data);
     } catch (e) {

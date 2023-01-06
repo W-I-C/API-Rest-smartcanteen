@@ -11,6 +11,7 @@ import { createClient } from "../../../config/db";
  */
 export class EditProfileValidator {
     async validate(campusId: string, barId: string) {
+
         const checkCampusExistsDBClient = createClient();
         const queryCampusExists = await checkCampusExistsDBClient.query(`SELECT campusid FROM campus
                                                             WHERE campusid = $1`, [campusId]);

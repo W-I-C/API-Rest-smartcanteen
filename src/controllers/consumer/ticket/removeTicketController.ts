@@ -11,7 +11,7 @@ import { RemoveTicketService } from "../../../services/consumer/ticket/removeTic
  */
 export class RemoveTicketController {
     /**
-   * Allows you to remove a order, redirected afterwards to the associated service
+   * Allows you to remove a order, redirecting afterwards to the associated service
    *
    * {@link removeTicketService}
    * @param request request receive.
@@ -22,15 +22,15 @@ export class RemoveTicketController {
         const ticketId = request.params.ticketId;
 
         try {
-            if(uId === undefined || ticketId === undefined) {
+            if (uId === undefined || ticketId === undefined) {
                 throw new Error("Invalid request");
             }
 
             const removeTicketService = new RemoveTicketService();
             const resp = await removeTicketService.execute(uId, ticketId);
 
-            response.status(resp.status).json(resp.msg);
-        } catch(e) {
+            response.status(resp.status).json(resp.data);
+        } catch (e) {
             response.status(500).json(e.message)
         }
     }

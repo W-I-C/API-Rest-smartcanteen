@@ -20,11 +20,9 @@ export class RemoveMealsCartController {
      */
         const uId=response.locals.uid;
         const cartMealId = request.params.cartMealId;
-      
-
 
         try {
-            if(cartMealId === undefined)
+            if(uId === undefined || cartMealId === undefined)
             {
                 throw new Error("Invalid request");
             }

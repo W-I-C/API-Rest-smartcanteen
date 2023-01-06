@@ -15,22 +15,12 @@ export class SeeMealsCartService {
      */
         
     async execute(uId:string) {
-  
+        
         const verifyUser=createClient();
-        
-        
-   
+
         const queryUser=await verifyUser.query('SELECT * from Cart WHERE uId=$1 AND iscompleted=$2',[uId,false])
 
         const data=queryUser["rows"]
         return { data, status: 200 }
-   
-   
-    }
-
-        
-
- 
-   
-    
+    }  
 }
