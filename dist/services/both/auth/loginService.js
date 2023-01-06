@@ -10,10 +10,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginService = void 0;
+/**
+ * @module loginService
+ */
 const db_1 = require("../../../config/db");
 const jwtHelpers_1 = require("../../../helpers/jwtHelpers");
 const bcrypt_1 = require("bcrypt");
+/**
+ * class responsible for logging in
+ */
 class LoginService {
+    /**
+     * Method that allows you to logout
+     * @param email email
+     * @param password password
+    */
     execute(email, password) {
         return __awaiter(this, void 0, void 0, function* () {
             // obter dados do user

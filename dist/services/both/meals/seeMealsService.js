@@ -30,7 +30,7 @@ class SeeMealsService {
      */
     execute(barId, uId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const seeMeals = (0, db_1.createClient)();
+            const seeMealsDBClient = (0, db_1.createClient)();
             const barExists = yield (0, seeMealsValidation_1.checkBarExists)(uId);
             if (!barExists) {
                 throw new Error('Bar not exist');
@@ -39,7 +39,7 @@ class SeeMealsService {
             if (userBar != barId) {
                 throw new Error('Bars are not the same');
             }
-            const query = yield seeMeals.query('SELECT * from Meals WHERE barId = $1 AND isdeleted = $2', [barId, false]);
+            const query = yield seeMealsDBClient.query('SELECT * from Meals WHERE barId = $1 AND isdeleted = $2', [barId, false]);
             const data = query["rows"];
             return { data, status: 200 };
         });

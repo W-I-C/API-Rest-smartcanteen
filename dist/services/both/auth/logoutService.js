@@ -10,8 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LogoutService = void 0;
+/**
+ * @module logoutService
+ */
 const db_1 = require("../../../config/db");
+/**
+ * class responsible for logging out
+ */
 class LogoutService {
+    /**
+   * Method that allows you to logout
+   * @param uid role id
+   * @param sessionToken psession token
+   */
     execute(uid, sessionToken) {
         return __awaiter(this, void 0, void 0, function* () {
             // obter dados do user
