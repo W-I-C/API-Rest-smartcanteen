@@ -15,7 +15,7 @@ export class AcceptTradeService {
      * Method that allows editing the data regarding the acceptance of the trade
      */
     async execute({uId, ticketId, receptorDecision}:IAcceptTradeService){
-
+        
         const acceptTradeDBClient = createClient();
 
         const tradeExists = await checkTradeExists(ticketId)
@@ -30,17 +30,17 @@ export class AcceptTradeService {
         } else {
             description = "The trade proposal was accepted"
         }
-
-        const queryOwner = await acceptTradeDBClient.query(`SELECT uid
-                                                    FROM tickets 
-                                                    WHERE ticketid = $1`, [ticketId])
-
-        const ticketOwner = queryOwner["rows"][0]["uid"]
-
+        
+        console.log(tradeExists, userIsReceiver)
         if(tradeExists && userIsReceiver) {
+
+            const queryOwner = await acceptTradeDBClient.query(`SELECT uid FROM tickets WHERE ticketid = $1`, [ticketId])
+        
+            const ticketOwner = queryOwner["rows"][0]["uid"]
+
             await acceptTradeDBClient.query(`UPDATE tickettrade
-                                                        SET isconfirmed = $1, confirmationdate = $2, receptordecision = $3   
-                                                        WHERE uid = $4 AND ticketid = $5`, [isConfirmed, confirmationDate, receptorDecision, uId, ticketId])
+                                            SET isconfirmed = $1, confirmationdate = $2, receptordecision = $3   
+                                            WHERE uid = $4 AND ticketid = $5`, [isConfirmed, confirmationDate, receptorDecision, uId, ticketId])
                                                         
             const query = await acceptTradeDBClient.query(`SELECT isconfirmed, confirmationdate, receptordecision
                                                     FROM tickettrade 

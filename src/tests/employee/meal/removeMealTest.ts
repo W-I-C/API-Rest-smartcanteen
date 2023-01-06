@@ -8,7 +8,7 @@ const should = chai.should();
 const baseUrl = "/api/v1/employee"
 const server = "localhost:3000"
 const invalidToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTAwMjQ1MzgsImV4cCI6MTY1MDAyNTQzOCwic3ViIjoiMDAwZDFlMTQtNjE3ZS00MjNlLThhMWEtZjYzZDRmYTVhZjZhIn0.b0U-__cRpH8YBsAtZEtClr0fAj4t9IOwDAcI2R3j-qk'
-const mealId = '1f19215b-720b-4764-9528-86dd6bf0e795'
+const mealId = 'e88d03d7-be1a-4f6a-bb25-6bd6c3b5fff1'
 
 // this variable will store the token that results from the correct login
 let token=''
@@ -67,11 +67,23 @@ describe("Test remove one meal of the bar that employee works", () => {
         })
       })
 
-    describe('- User try to remove a meal that dont belongs to the same bar', () => {
+    describe('- Employee try to remove a meal that dont belongs to the same bar', () => {
         it('Should return invalid bar error', () => {
           return chai
           .request(server)
           .delete(baseUrl+'/meal/04720b43-2c3b-4c78-baef-fcada0a40baa')
+          .set("Authorization", token)
+          .then(res => {
+            res.should.have.status(500)
+          })
+        })
+      })
+
+    describe('- Employee try to remove a meal that is on a cart', () => {
+        it('Should return invalid bar error', () => {
+          return chai
+          .request(server)
+          .delete(baseUrl+'/meal/1f19215b-720b-4764-9528-86dd6bf0e795')
           .set("Authorization", token)
           .then(res => {
             res.should.have.status(500)

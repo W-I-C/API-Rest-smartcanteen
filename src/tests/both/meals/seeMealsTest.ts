@@ -54,7 +54,7 @@ describe("Test see meals", () => {
       })
     })
 
-    describe('- see meals from a bar', () => {
+    describe('- See meals from a bar', () => {
         it('Should return meals from bar', () => {
           return chai
           .request(server)

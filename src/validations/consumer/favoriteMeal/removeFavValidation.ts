@@ -1,3 +1,6 @@
+/**
+ * @module removeFavValidation
+ */
 import { createClient } from "../../../config/db";
 
 /**

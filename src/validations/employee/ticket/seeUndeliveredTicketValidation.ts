@@ -1,3 +1,6 @@
+/**
+ * @module seeUndeliveredTicketValidation
+ */
 import { createClient } from "../../../config/db";
 
 /**
