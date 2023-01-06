@@ -35,7 +35,8 @@
     "test_canteen_statistics": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/employee/general/getBarStatisticsTest.ts'",
     "test_direct_trade": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/directTicketTradeTest.ts'",
     "test_general_trade": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/generalTicketTradeTest.ts'",
-    "test_cancel_trading": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/cancelTradingTest.ts'"
+    "test_cancel_trading": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/cancelTradingTest.ts'",
+    "test_complete_cart": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/cart/completeCartTest.ts'"
   },
   "keywords": [],
   "author": "",
