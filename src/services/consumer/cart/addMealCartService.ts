@@ -19,10 +19,10 @@ export class AddMealCartService {
      */
     async execute( mealId:string,uId:string,amount:number, changes:Array<IMealChange>) {
     
-        const favMeal= createClient();
+        const addMealCartDBClient= createClient();
         let date= new Date();
        //TODO : por a rota a funcionar
-        const query = await favMeal.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2',[uId,false])
+        const query = await addMealCartDBClient.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2',[uId,false])
         const cartUser=query["rows"][0]["cartId"] 
 
         const mealExists = await checkMealExists(mealId)
@@ -36,24 +36,24 @@ export class AddMealCartService {
         if (query.rowCount <= 0) {
             
             
-            const queryCreateCart=await favMeal.query('INSERT INTO cart (uId,date,isCompleted) VALUES ($1,$2,$3)',[uId,date,false]) 
+            const queryCreateCart=await addMealCartDBClient.query('INSERT INTO cart (uId,date,isCompleted) VALUES ($1,$2,$3)',[uId,date,false]) 
            
-            const cartQuery=await favMeal.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2',[uId,false])
+            const cartQuery=await addMealCartDBClient.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2',[uId,false])
 
             const newcartId=cartQuery["rows"][0]["cartid"]
 
            
-            const queryPrice=await favMeal.query('SELECT price from Meals WHERE mealId=$1',[mealId])
+            const queryPrice=await addMealCartDBClient.query('SELECT price from Meals WHERE mealId=$1',[mealId])
 
-            const queryChange=await favMeal.query('SELECT * from allowedChanges WHERE mealid=$1', [mealId])
+            const queryChange=await addMealCartDBClient.query('SELECT * from allowedChanges WHERE mealid=$1', [mealId])
             const value=queryChange["rows"]
 
             if(value.length>=0){
                 const mealPrice= queryPrice["rows"][0]["price"]
             
             
-                const query= await favMeal.query('INSERT INTO cartmeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,newcartId,amount,mealPrice])
-                const selectinfomeals=await favMeal.query('SELECT * FROM cartmeals WHERE  (mealId,cartId,amount,mealPrice)',[])
+                const query= await addMealCartDBClient.query('INSERT INTO cartmeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,newcartId,amount,mealPrice])
+                const selectinfomeals=await addMealCartDBClient.query('SELECT * FROM cartmeals WHERE  (mealId,cartId,amount,mealPrice)',[])
                 const data=query["rows"]
                 
                 return { data, status: 200 }
@@ -63,7 +63,7 @@ export class AddMealCartService {
             const mealPrice= queryPrice["rows"][0]["price"]
             
             
-            const query= await favMeal.query('INSERT INTO CartMeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,newcartId,amount,mealPrice])
+            const query= await addMealCartDBClient.query('INSERT INTO CartMeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,newcartId,amount,mealPrice])
         
             const data=query["rows"]
             
@@ -73,20 +73,20 @@ export class AddMealCartService {
         }else{
 
             const cartId=cartUser["rows"][0]["cartid"]
-            const queryPrice=await favMeal.query('SELECT price from Meals WHERE mealId=$1',[mealId])
+            const queryPrice=await addMealCartDBClient.query('SELECT price from Meals WHERE mealId=$1',[mealId])
             const mealPrice= queryPrice["rows"][0]["price"]
 
             if(!mealsCart){
    
-                const query= await favMeal.query('INSERT INTO CartMeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,cartId,amount,mealPrice])
+                const query= await addMealCartDBClient.query('INSERT INTO CartMeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,cartId,amount,mealPrice])
                 
-                const queryCart=await favMeal.query('SELECT mealid,amount,mealprice from cartmeals WHERE cartid=$1',[cartId])
+                const queryCart=await addMealCartDBClient.query('SELECT mealid,amount,mealprice from cartmeals WHERE cartid=$1',[cartId])
                 const data=queryCart["rows"]
                 
             
                 return { data, status: 200 }
             }else{
-                const queryBar=await favMeal.query('SELECT * FROM cartmeals WHERE cartid=$1',[cartUser])
+                const queryBar=await addMealCartDBClient.query('SELECT * FROM cartmeals WHERE cartid=$1',[cartUser])
                 const selectMealUser=queryBar["rows"][0]["mealId"]
 
                 const barMeal= getMealBar(selectMealUser)
@@ -96,9 +96,9 @@ export class AddMealCartService {
                     throw new Error("Bars are not the same")
                 } else {
                     
-                    const query= await favMeal.query('INSERT INTO CartMeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,cartId,amount,mealPrice])
+                    const query= await addMealCartDBClient.query('INSERT INTO CartMeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,cartId,amount,mealPrice])
                     
-                    const queryCart=await favMeal.query('SELECT mealid,amount,mealprice from cartmeals WHERE cartid=$1',[cartId])
+                    const queryCart=await addMealCartDBClient.query('SELECT mealid,amount,mealprice from cartmeals WHERE cartid=$1',[cartId])
                     const data=queryCart["rows"]
                     
                 
