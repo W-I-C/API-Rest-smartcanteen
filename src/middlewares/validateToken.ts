@@ -35,8 +35,6 @@ export async function validateToken(request: Request, response: Response, next: 
       response.status(401).send({ Error: "Unauthorized Request" })
     }
   }
-
-
 }
 
 

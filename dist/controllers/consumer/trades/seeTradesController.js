@@ -25,12 +25,13 @@ class SeeTradesController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             const uId = response.locals.uid;
+            const campusid = request.params.campusid;
             try {
                 if (uId === undefined) {
                     throw new Error("Invalid request");
                 }
                 const seeTradesService = new seeTradesService_1.SeeTradesService();
-                const resp = yield seeTradesService.execute();
+                const resp = yield seeTradesService.execute(uId, campusid);
                 response.status(resp.status).json(resp.data);
             }
             catch (e) {

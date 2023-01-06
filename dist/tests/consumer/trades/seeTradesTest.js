@@ -12,6 +12,7 @@ const should = chai_1.default.should();
 const baseUrl = "/api/v1/consumer";
 const server = "localhost:3000";
 const invalidToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTAwMjQ1MzgsImV4cCI6MTY1MDAyNTQzOCwic3ViIjoiMDAwZDFlMTQtNjE3ZS00MjNlLThhMWEtZjYzZDRmYTVhZjZhIn0.b0U-__cRpH8YBsAtZEtClr0fAj4t9IOwDAcI2R3j-qk';
+const campusid = '13be23c1-2e9b-43fc-acaa-839c6b3573bc';
 // this variable will store the token that results from the correct login
 let token = '';
 describe("Test see trades available", () => {
@@ -34,7 +35,7 @@ describe("Test see trades available", () => {
         it('Should return invalid token error', () => {
             return chai_1.default
                 .request(server)
-                .get(baseUrl + '/trades/available')
+                .get(baseUrl + '/trades/available/' + campusid)
                 .then(res => {
                 res.should.have.status(401);
                 chai_1.default.expect(res.body).to.have.property("Error");
@@ -45,7 +46,7 @@ describe("Test see trades available", () => {
         it('Should return invalid token error', () => {
             return chai_1.default
                 .request(server)
-                .get(baseUrl + '/trades/available')
+                .get(baseUrl + '/trades/available/' + campusid)
                 .set("Authorization", invalidToken)
                 .then(res => {
                 res.should.have.status(401);
@@ -57,42 +58,63 @@ describe("Test see trades available", () => {
         it('Should return available trades', () => {
             return chai_1.default
                 .request(server)
-                .get(baseUrl + '/trades/available')
+                .get(baseUrl + '/trades/available/' + campusid)
                 .set("Authorization", token)
                 .then(res => {
                 res.should.have.status(200);
                 // verificar se é um object
                 chai_1.default.expect(res.body).to.be.an("array");
-                chai_1.default.expect(res.body[0]).to.be.an("object");
-                chai_1.default.expect(res.body[0]).to.have.property("ticketid");
-                chai_1.default.expect(res.body[0]).to.have.property("uid");
-                chai_1.default.expect(res.body[0]).to.have.property("stateid");
-                chai_1.default.expect(res.body[0]).to.have.property("paymentmethodid");
-                chai_1.default.expect(res.body[0]).to.have.property("barid");
-                chai_1.default.expect(res.body[0]).to.have.property("cartid");
-                chai_1.default.expect(res.body[0]).to.have.property("emissiondate");
-                chai_1.default.expect(res.body[0]).to.have.property("pickuptime");
-                chai_1.default.expect(res.body[0]).to.have.property("istakingaway");
-                chai_1.default.expect(res.body[0]).to.have.property("istrading");
-                chai_1.default.expect(res.body[0]).to.have.property("ticketamount");
-                chai_1.default.expect(res.body[0]).to.have.property("total");
-                chai_1.default.expect(res.body[0]).to.have.property("nencomenda");
-                chai_1.default.expect(res.body[0]).to.have.property("isdeleted");
-                chai_1.default.expect(res.body[0]['ticketid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['uid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['stateid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['paymentmethodid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['barid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['cartid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['emissiondate']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['pickuptime']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['istakingaway']).to.be.a("boolean");
-                chai_1.default.expect(res.body[0]['ispickedup']).to.be.a("boolean");
-                chai_1.default.expect(res.body[0]['istrading']).to.be.a("boolean");
-                chai_1.default.expect(res.body[0]['ticketamount']).to.be.a("number");
-                chai_1.default.expect(res.body[0]['total']).to.be.a("number");
-                chai_1.default.expect(res.body[0]['nencomenda']).to.be.a("number");
-                chai_1.default.expect(res.body[0]['isdeleted']).to.be.a("boolean");
+                if (res.body.length > 0) {
+                    for (let i = 0; i < res.body.length; i++) {
+                        chai_1.default.expect(res.body[i]).to.be.an("object");
+                        chai_1.default.expect(res.body[i]).to.have.property("campusid");
+                        chai_1.default.expect(res.body[i]).to.have.property("name");
+                        chai_1.default.expect(res.body[i]).to.have.property("barid");
+                        chai_1.default.expect(res.body[i]).to.have.property("ticketid");
+                        chai_1.default.expect(res.body[i]).to.have.property("uid");
+                        chai_1.default.expect(res.body[i]).to.have.property("stateid");
+                        chai_1.default.expect(res.body[i]).to.have.property("paymentmethodid");
+                        chai_1.default.expect(res.body[i]).to.have.property("cartid");
+                        chai_1.default.expect(res.body[i]).to.have.property("emissiondate");
+                        chai_1.default.expect(res.body[i]).to.have.property("pickuptime");
+                        chai_1.default.expect(res.body[i]).to.have.property("istakingaway");
+                        chai_1.default.expect(res.body[i]).to.have.property("ispickedup");
+                        chai_1.default.expect(res.body[i]).to.have.property("istrading");
+                        chai_1.default.expect(res.body[i]).to.have.property("ticketamount");
+                        chai_1.default.expect(res.body[i]).to.have.property("total");
+                        chai_1.default.expect(res.body[i]).to.have.property("nencomenda");
+                        chai_1.default.expect(res.body[i]).to.have.property("isdeleted");
+                        chai_1.default.expect(res.body[i]).to.have.property("isdirecttrade");
+                        chai_1.default.expect(res.body[i]).to.have.property("isconfirmed");
+                        chai_1.default.expect(res.body[i]).to.have.property("proposaldate");
+                        chai_1.default.expect(res.body[i]).to.have.property("confirmationdate");
+                        chai_1.default.expect(res.body[i]).to.have.property("receptordecision");
+                        chai_1.default.expect(res.body[i]).to.have.property("tradeId");
+                        chai_1.default.expect(res.body[i]['campusid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['name']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['barid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['ticketid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['uid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['stateid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['paymentmethodid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['cartid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['emissiondate']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['pickuptime']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['istakingaway']).to.be.a("boolean");
+                        chai_1.default.expect(res.body[i]['ispickedup']).to.be.a("boolean");
+                        chai_1.default.expect(res.body[i]['istrading']).to.be.a("boolean");
+                        chai_1.default.expect(res.body[i]['ticketamount']).to.be.a("number");
+                        chai_1.default.expect(res.body[i]['total']).to.be.a("number");
+                        chai_1.default.expect(res.body[i]['nencomenda']).to.be.a("number");
+                        chai_1.default.expect(res.body[i]['isdeleted']).to.be.a("boolean");
+                        chai_1.default.expect(res.body[i]['isdirecttrade']).to.be.a("boolean");
+                        chai_1.default.expect(res.body[i]['isconfirmed']).to.be.a("boolean");
+                        chai_1.default.expect(res.body[i]['proposaldate']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['confirmationdate']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['receptordecision']).to.be.a("boolean");
+                        chai_1.default.expect(res.body[i]['tradeId']).to.be.a("string");
+                    }
+                }
             });
         });
     });

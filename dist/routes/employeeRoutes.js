@@ -13,19 +13,22 @@ const createMealController_1 = require("../controllers/employee/meal/createMealC
 const editMealController_1 = require("../controllers/employee/meal/editMealController");
 const removeMealController_1 = require("../controllers/employee/meal/removeMealController");
 const seeUndeliveredTicketsController_1 = require("../controllers/employee/ticket/seeUndeliveredTicketsController");
-const seeDetailsMealTicketController_1 = require("../controllers/employee/ticket/seeDetailsMealTicketController");
 const isEmployee_1 = require("../middlewares/isEmployee");
 const canBeMadeController_1 = require("../controllers/employee/meal/canBeMadeController");
+const editTicketStateController_1 = require("../controllers/employee/ticket/editTicketStateController");
+const getBarStatisticsController_1 = require("../controllers/employee/general/getBarStatisticsController");
 const createMealController = new createMealController_1.CreateMealController();
 const editMealController = new editMealController_1.EditMealController();
 const removeMealController = new removeMealController_1.RemoveMealController();
 const seeUndeliveredTicketsController = new seeUndeliveredTicketsController_1.SeeUndeliveredTicketsController();
-const seeDetailsMealTicketController = new seeDetailsMealTicketController_1.SeeDetailsMealTicketController();
 const canBeMadeController = new canBeMadeController_1.CanBeMadeController();
+const editTicketStateController = new editTicketStateController_1.EditTicketStateController();
+const getBarStatisticsController = new getBarStatisticsController_1.GetBarStatisticsController();
 employeeRouter.post("/meal/:barId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, createMealController.handle);
 employeeRouter.put("/meal/:mealId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, editMealController.handle);
 employeeRouter.delete("/meal/:mealId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, removeMealController.handle);
 employeeRouter.get("/tickets", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, seeUndeliveredTicketsController.handle);
-employeeRouter.get("/detail/ticket/:ticketId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, seeDetailsMealTicketController.handle);
 employeeRouter.put("/meal/:mealId/canBeMade", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, canBeMadeController.handle);
+employeeRouter.put("/tickets/:ticketId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, editTicketStateController.handle);
+employeeRouter.get("/bar/:barId/statistics", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isEmployee_1.isEmployee, getBarStatisticsController.handle);
 //# sourceMappingURL=employeeRoutes.js.map

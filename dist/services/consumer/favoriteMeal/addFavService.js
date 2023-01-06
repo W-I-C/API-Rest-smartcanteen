@@ -16,6 +16,7 @@ exports.AddFavService = void 0;
 require('dotenv').config();
 const db_1 = require("../../../config/db");
 const addFavValidation_1 = require("../../../validations/consumer/favoriteMeal/addFavValidation");
+const editMealValidation_1 = require("../../../validations/employee/meal/editMealValidation");
 /**
  * Class responsible for the service that serves to add a meal to favoritemeal
  */
@@ -25,15 +26,18 @@ class AddFavService {
        */
     execute({ mealId, uId }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const favMeal = (0, db_1.createClient)();
+            const addFavDBClient = (0, db_1.createClient)();
             const mealIdExists = yield (0, addFavValidation_1.checkMealExists)(mealId);
             if (!mealIdExists) {
                 throw new Error('Meal does not exists');
             }
-            // TODO: ver se o bar da meal e o bar do user é igual
-            const query = yield favMeal.query('INSERT INTO FavoriteMeals (uId, mealId) VALUES ($1,$2)', [uId, mealId]);
-            // TODO: verificação para ver se o isDeleted é false - acrescentar aos testes de código
-            const queryFav = yield favMeal.query('SELECT * from FavoriteMeals');
+            const userBar = yield (0, editMealValidation_1.getEmployeeBar)(uId);
+            const mealBar = yield (0, editMealValidation_1.getMealBar)(mealId);
+            if (userBar != mealBar) {
+                throw new Error('Bars are not the same');
+            }
+            const query = yield addFavDBClient.query('INSERT INTO FavoriteMeals (uId, mealId) VALUES ($1,$2)', [uId, mealId]);
+            const queryFav = yield addFavDBClient.query('SELECT * from FavoriteMeals WHERE uid = $1', [uId]);
             const data = queryFav["rows"];
             return { data, status: 200 };
         });

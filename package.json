@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node dist/app.js",
     "build": "tsc",
+    "publish": "npx gh-pages -b gh-pages -d docs",
     "postinstall": "npm run build",
     "dev": "nodemon ./src/app.ts",
     "lint": "eslint . --ext .ts",
@@ -36,7 +37,8 @@
     "test_direct_trade": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/directTicketTradeTest.ts'",
     "test_general_trade": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/generalTicketTradeTest.ts'",
     "test_cancel_trading": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/trades/cancelTradingTest.ts'",
-    "test_complete_cart": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/cart/completeCartTest.ts'"
+    "test_complete_cart": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/consumer/cart/completeCartTest.ts'",
+    "test_register": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register './src/tests/both/auth/registerTest.ts'"
   },
   "keywords": [],
   "author": "",
@@ -51,10 +53,11 @@
     "chai-things": "^0.2.0",
     "eslint": "^8.29.0",
     "mocha": "^10.2.0",
-    "typedoc": "^0.23.22",
+    "typedoc": "^0.23.23",
     "typescript": "^4.9.4"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.13",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/pg": "^8.6.5",

@@ -9,7 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getEmployeeBar = exports.getMealBar = exports.checkMealCartExists = exports.checkMealExists = void 0;
+exports.getEmployeeBar = exports.getMealBar = exports.checkCartMealExists = exports.checkMealCartExists = exports.checkMealExists = void 0;
+/**
+ * @module removeMealValidation
+ */
 const db_1 = require("../../../config/db");
 /**
  * For the bar employee to remove a meal that already exists on the menu, we first need to check if it already exists
@@ -39,6 +42,20 @@ function checkMealCartExists(mealId) {
     });
 }
 exports.checkMealCartExists = checkMealCartExists;
+/**
+ * Allows to check if the cartmealid exists
+ *
+ * @param cartMealId id of the meal that is present in a cart
+ */
+function checkCartMealExists(cartMealId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const checkMealExistsDBClient = (0, db_1.createClient)();
+        const query = yield checkMealExistsDBClient.query(`SELECT cartmealid FROM cartmeals
+                                                        WHERE cartmealid = $1`, [cartMealId]);
+        return query['rows'].length != 0;
+    });
+}
+exports.checkCartMealExists = checkCartMealExists;
 /**
  * A meal is on the bar menu. For the employee to be able to remove this meal,
  * it is necessary to check if the bar of the meal is the same as the employee's bar.

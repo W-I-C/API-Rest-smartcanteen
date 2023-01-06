@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SeeMealsService = void 0;
 require('dotenv').config();
 const db_1 = require("../../../config/db");
+const seeMealsValidation_1 = require("../../../validations/both/meals/seeMealsValidation");
+const editMealValidation_1 = require("../../../validations/employee/meal/editMealValidation");
 /**
  * @param uId authenticated user id
  * @param barId id of the bar to see the meals
@@ -24,12 +26,20 @@ const db_1 = require("../../../config/db");
  */
 class SeeMealsService {
     /**
-    * Method that allows you to see a meals from bar
-    */
+     * Method that allows you to see a meals from bar
+     */
     execute(barId, uId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const seeMeals = (0, db_1.createClient)();
-            const query = yield seeMeals.query('SELECT * from Meals WHERE barId=($1)', [barId]);
+            const seeMealsDBClient = (0, db_1.createClient)();
+            const barExists = yield (0, seeMealsValidation_1.checkBarExists)(uId);
+            if (!barExists) {
+                throw new Error('Bar not exist');
+            }
+            const userBar = yield (0, editMealValidation_1.getEmployeeBar)(uId);
+            if (userBar != barId) {
+                throw new Error('Bars are not the same');
+            }
+            const query = yield seeMealsDBClient.query('SELECT * from Meals WHERE barId = $1 AND isdeleted = $2', [barId, false]);
             const data = query["rows"];
             return { data, status: 200 };
         });

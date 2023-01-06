@@ -6,7 +6,6 @@ require('dotenv').config();
 import { createClient } from "../../../config/db";
 import { getNotStartedStatusId } from "../../../helpers/dbHelpers";
 import { ICart } from "../../../models/ICart";
-import { checkCartMealExists } from "../../../validations/employee/meal/removeMealValidation";
 
 /**
  * class responsible for removing a meal from the cart

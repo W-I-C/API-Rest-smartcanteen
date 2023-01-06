@@ -36,8 +36,8 @@ class RemoveMealService {
                 throw new Error('Bars are not the same');
             }
             const removeMealDBClient = (0, db_1.createClient)();
-            const mealCart = (0, removeMealValidation_1.checkMealCartExists)(mealId);
-            if (mealCart) {
+            const mealCart = yield (0, removeMealValidation_1.checkMealCartExists)(mealId);
+            if (!mealCart == true) {
                 yield removeMealDBClient.query(`UPDATE meals
                                         SET isdeleted = $1
                                         WHERE mealid = $2`, [true, mealId]);
@@ -45,7 +45,6 @@ class RemoveMealService {
             else {
                 throw new Error('Impossible to remove the meal');
             }
-            // TODO: mandar uma notificação ao utilizador - acrescentar aos testes de código as novas verificações
             return { msg: "Meal successfully removed", status: 200 };
         });
     }

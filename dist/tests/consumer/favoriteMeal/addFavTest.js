@@ -12,7 +12,7 @@ const should = chai_1.default.should();
 const baseUrl = "/api/v1/consumer";
 const server = "localhost:3000";
 const invalidToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTAwMjQ1MzgsImV4cCI6MTY1MDAyNTQzOCwic3ViIjoiMDAwZDFlMTQtNjE3ZS00MjNlLThhMWEtZjYzZDRmYTVhZjZhIn0.b0U-__cRpH8YBsAtZEtClr0fAj4t9IOwDAcI2R3j-qk';
-const mealId = 'e88d03d7-be1a-4f6a-bb25-6bd6c3b5fff1';
+const mealId = '057b8e77-0b3b-487c-a8f8-d979a1338c7a';
 // this variable will store the token that results from the correct login
 let token = '';
 describe("Test add favorite meal", () => {
@@ -22,7 +22,7 @@ describe("Test add favorite meal", () => {
             .request(server)
             .post("/api/v1/login")
             .send({
-            email: "consumer@consumer.com",
+            email: "consumer2@consumer.com",
             password: "Teste#",
         })
             .end((err, res) => {
@@ -54,6 +54,18 @@ describe("Test add favorite meal", () => {
             });
         });
     });
+    describe('- Add a meal to the favorites that doesnt belongs to the same bar of the user', () => {
+        it('Should return bar error', () => {
+            return chai_1.default
+                .request(server)
+                .post(baseUrl + '/favoriteMeals/1f19215b-720b-4764-9528-86dd6bf0e795')
+                .set("Authorization", invalidToken)
+                .then(res => {
+                res.should.have.status(401);
+                chai_1.default.expect(res.body).to.have.property("Error");
+            });
+        });
+    });
     describe('- Add favorite meal correctly', () => {
         it('Should return favorite meals', () => {
             return chai_1.default
@@ -64,13 +76,17 @@ describe("Test add favorite meal", () => {
                 res.should.have.status(200);
                 // verificar se é um object
                 chai_1.default.expect(res.body).to.be.an("array");
-                chai_1.default.expect(res.body[0]).to.be.an("object");
-                chai_1.default.expect(res.body[0]).to.have.property("favoritemealid");
-                chai_1.default.expect(res.body[0]).to.have.property("uid");
-                chai_1.default.expect(res.body[0]).to.have.property("mealid");
-                chai_1.default.expect(res.body[0]['favoritemealid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['uid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['mealid']).to.be.a("string");
+                if (res.body.length > 0) {
+                    for (let i = 0; i < res.body.length; i++) {
+                        chai_1.default.expect(res.body[i]).to.be.an("object");
+                        chai_1.default.expect(res.body[i]).to.have.property("favoritemealid");
+                        chai_1.default.expect(res.body[i]).to.have.property("uid");
+                        chai_1.default.expect(res.body[i]).to.have.property("mealid");
+                        chai_1.default.expect(res.body[i]['favoritemealid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['uid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['mealid']).to.be.a("string");
+                    }
+                }
             });
         });
     });

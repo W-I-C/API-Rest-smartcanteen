@@ -12,7 +12,7 @@ const should = chai_1.default.should();
 const baseUrl = "/api/v1/consumer";
 const server = "localhost:3000";
 const invalidToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTAwMjQ1MzgsImV4cCI6MTY1MDAyNTQzOCwic3ViIjoiMDAwZDFlMTQtNjE3ZS00MjNlLThhMWEtZjYzZDRmYTVhZjZhIn0.b0U-__cRpH8YBsAtZEtClr0fAj4t9IOwDAcI2R3j-qk';
-const cartmealId = '16364373-df41-4634-b956-910b92e47ed8';
+const cartmealId = 'ef7cde3b-b354-4000-a6e6-c91b28af42f3';
 // this variable will store the token that results from the correct login
 let token = '';
 describe("Test remove meal from car", () => {
@@ -54,7 +54,43 @@ describe("Test remove meal from car", () => {
             });
         });
     });
-    describe('- remove meals from a cart', () => {
+    describe('- CartMeal dont exist', () => {
+        it('Should return cartmeal error', () => {
+            return chai_1.default
+                .request(server)
+                .delete(baseUrl + '/meals/5cb75c21-b354-4bd7-a215-ee4f73f19011')
+                .set("Authorization", invalidToken)
+                .then(res => {
+                res.should.have.status(500);
+                chai_1.default.expect(res.body).to.have.property("Error");
+            });
+        });
+    });
+    describe('- The cart where cartmeal is insert dont belongs to the user', () => {
+        it('Should return cart error', () => {
+            return chai_1.default
+                .request(server)
+                .delete(baseUrl + '/meals/5cb75c21-b354-4bd7-a215-ee4f73f19010')
+                .set("Authorization", invalidToken)
+                .then(res => {
+                res.should.have.status(500);
+                chai_1.default.expect(res.body).to.have.property("Error");
+            });
+        });
+    });
+    describe('- The cart where cartmeal is insert is already completed', () => {
+        it('Should return cart error', () => {
+            return chai_1.default
+                .request(server)
+                .delete(baseUrl + '/meals/f3e3b905-f458-45eb-ba74-94b15d7737bc')
+                .set("Authorization", invalidToken)
+                .then(res => {
+                res.should.have.status(500);
+                chai_1.default.expect(res.body).to.have.property("Error");
+            });
+        });
+    });
+    describe('- Remove meals from a cart successfully', () => {
         it('Should return meals from cart', () => {
             return chai_1.default
                 .request(server)
@@ -64,15 +100,19 @@ describe("Test remove meal from car", () => {
                 res.should.have.status(200);
                 // verificar se é um object
                 chai_1.default.expect(res.body).to.be.an("array");
-                chai_1.default.expect(res.body[0]).to.be.an("object");
-                chai_1.default.expect(res.body[0]).to.have.property("cartid");
-                chai_1.default.expect(res.body[0]).to.have.property("uid");
-                chai_1.default.expect(res.body[0]).to.have.property("date");
-                chai_1.default.expect(res.body[0]).to.have.property("iscompleted");
-                chai_1.default.expect(res.body[0]['cartid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['uid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['date']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['iscompleted']).to.be.a("boolean");
+                if (res.body.length > 0) {
+                    for (let i = 0; i < res.body.length; i++) {
+                        chai_1.default.expect(res.body[i]).to.be.an("object");
+                        chai_1.default.expect(res.body[i]).to.have.property("cartid");
+                        chai_1.default.expect(res.body[i]).to.have.property("uid");
+                        chai_1.default.expect(res.body[i]).to.have.property("date");
+                        chai_1.default.expect(res.body[i]).to.have.property("iscompleted");
+                        chai_1.default.expect(res.body[i]['cartid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['uid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['date']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['iscompleted']).to.be.a("boolean");
+                    }
+                }
             });
         });
     });

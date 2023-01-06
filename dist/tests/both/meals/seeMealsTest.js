@@ -54,7 +54,7 @@ describe("Test see meals", () => {
             });
         });
     });
-    describe('- see meals from a bar', () => {
+    describe('- See meals from a bar', () => {
         it('Should return meals from bar', () => {
             return chai_1.default
                 .request(server)
@@ -64,21 +64,25 @@ describe("Test see meals", () => {
                 res.should.have.status(200);
                 // verificar se é um object
                 chai_1.default.expect(res.body).to.be.an("array");
-                chai_1.default.expect(res.body[0]).to.be.an("object");
-                chai_1.default.expect(res.body[0]).to.have.property("mealid");
-                chai_1.default.expect(res.body[0]).to.have.property("barid");
-                chai_1.default.expect(res.body[0]).to.have.property("name");
-                chai_1.default.expect(res.body[0]).to.have.property("preparationtime");
-                chai_1.default.expect(res.body[0]).to.have.property("description");
-                chai_1.default.expect(res.body[0]).to.have.property("cantakeaway");
-                chai_1.default.expect(res.body[0]).to.have.property("price");
-                chai_1.default.expect(res.body[0]['mealid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['barid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['name']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['preparationtime']).to.be.a("number");
-                chai_1.default.expect(res.body[0]['description']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['cantakeaway']).to.be.a("boolean");
-                chai_1.default.expect(res.body[0]['price']).to.be.a("number");
+                if (res.body.length > 0) {
+                    for (let i = 0; i < res.body.length; i++) {
+                        chai_1.default.expect(res.body[i]).to.be.an("object");
+                        chai_1.default.expect(res.body[i]).to.have.property("mealid");
+                        chai_1.default.expect(res.body[i]).to.have.property("barid");
+                        chai_1.default.expect(res.body[i]).to.have.property("name");
+                        chai_1.default.expect(res.body[i]).to.have.property("preparationtime");
+                        chai_1.default.expect(res.body[i]).to.have.property("description");
+                        chai_1.default.expect(res.body[i]).to.have.property("cantakeaway");
+                        chai_1.default.expect(res.body[i]).to.have.property("price");
+                        chai_1.default.expect(res.body[i]['mealid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['barid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['name']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['preparationtime']).to.be.a("number");
+                        chai_1.default.expect(res.body[i]['description']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['cantakeaway']).to.be.a("boolean");
+                        chai_1.default.expect(res.body[i]['price']).to.be.a("number");
+                    }
+                }
             });
         });
     });

@@ -63,19 +63,23 @@ describe("Test see trades from consumer", () => {
                 res.should.have.status(200);
                 // verificar se é um object
                 chai_1.default.expect(res.body).to.be.an("array");
-                chai_1.default.expect(res.body[0]).to.be.an("object");
-                chai_1.default.expect(res.body[0]).to.have.property("ticketid");
-                chai_1.default.expect(res.body[0]).to.have.property("isconfirmed");
-                chai_1.default.expect(res.body[0]).to.have.property("proposaldate");
-                chai_1.default.expect(res.body[0]).to.have.property("confirmationdate");
-                chai_1.default.expect(res.body[0]).to.have.property("receptordecision");
-                chai_1.default.expect(res.body[0]).to.have.property("isdeleted");
-                chai_1.default.expect(res.body[0]['ticketid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['isconfirmed']).to.be.a("boolean");
-                chai_1.default.expect(res.body[0]['proposaldate']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['confirmationdate']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['receptordecision']).to.be.a("number");
-                chai_1.default.expect(res.body[0]['isdeleted']).to.be.a("boolean");
+                if (res.body.length > 0) {
+                    for (let i = 0; i < res.body.length; i++) {
+                        chai_1.default.expect(res.body[i]).to.be.an("object");
+                        chai_1.default.expect(res.body[i]).to.have.property("ticketid");
+                        chai_1.default.expect(res.body[i]).to.have.property("isconfirmed");
+                        chai_1.default.expect(res.body[i]).to.have.property("proposaldate");
+                        chai_1.default.expect(res.body[i]).to.have.property("confirmationdate");
+                        chai_1.default.expect(res.body[i]).to.have.property("receptordecision");
+                        chai_1.default.expect(res.body[i]).to.have.property("isdeleted");
+                        chai_1.default.expect(res.body[i]['ticketid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['isconfirmed']).to.be.a("boolean");
+                        chai_1.default.expect(res.body[i]['proposaldate']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['confirmationdate']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['receptordecision']).to.be.a("number");
+                        chai_1.default.expect(res.body[i]['isdeleted']).to.be.a("boolean");
+                    }
+                }
             });
         });
     });

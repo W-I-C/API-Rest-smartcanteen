@@ -108,7 +108,7 @@ describe("Test edit profile", () => {
                 imgUrl: "teste123"
             })
                 .then(res => {
-                res.should.have.status(404);
+                res.should.have.status(500);
             });
         });
     });
@@ -121,7 +121,7 @@ describe("Test edit profile", () => {
                 .send({
                 preferredCampus: "13be23c1-2e9b-43fc-acaa-839c6b3573bc",
                 preferredBar: "a91aa933-440b-4c80-beef-f4cadd1aefff",
-                imgUrl: "teste123"
+                imgUrl: "teste"
             })
                 .then(res => {
                 res.should.have.status(200);

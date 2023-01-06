@@ -11,7 +11,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginController = void 0;
 const loginService_1 = require("../../../services/both/auth/loginService");
+/**
+ * Class responsible for receiving and calling the service methods that allows to login
+ */
 class LoginController {
+    /**
+     * Allows to login, redirecting afterwards to the associated service
+     *
+     * {@link loginService}
+     * @param request request receive.
+     * @param response response.
+     */
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             let { email, password } = request.body;

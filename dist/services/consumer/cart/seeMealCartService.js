@@ -24,8 +24,8 @@ class SeeMealsCartService {
      */
     execute(uId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const verifyUser = (0, db_1.createClient)();
-            const queryUser = yield verifyUser.query('SELECT * from Cart WHERE uId=$1 AND iscompleted=$2', [uId, false]);
+            const seeMealsCartDBClient = (0, db_1.createClient)();
+            const queryUser = yield seeMealsCartDBClient.query('SELECT * from Cart WHERE uId=$1 AND iscompleted=$2', [uId, false]);
             const data = queryUser["rows"];
             return { data, status: 200 };
         });

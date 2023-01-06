@@ -3,7 +3,7 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-import { getNotStartedStatusId, getUserName, getUserRole } from "../../../helpers/dbHelpers";
+import { getUserName, getUserRole } from "../../../helpers/dbHelpers";
 
 /**
  * Class responsible for the service that serves to make a direct trade

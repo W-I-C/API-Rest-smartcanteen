@@ -9,29 +9,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SeeDetailsMealTicketController = void 0;
-const seeDetailsMealTicketService_1 = require("../../../services/employee/ticket/seeDetailsMealTicketService");
+exports.GeneralTicketTradeController = void 0;
+const generalTicketTradeService_1 = require("../../../services/consumer/trades/generalTicketTradeService");
 /**
- * Class responsible for receiving and calling the service methods that allow the employee to get details from order
+ * Class responsible for receiving and calling the service methods that allows you to expose an order for general trading
  */
-class SeeDetailsMealTicketController {
+class GeneralTicketTradeController {
     /**
-   * Allows to get a meals detail from order
-   *
-   * {@link createmealService}
-   * @param request request receive.
-   * @param response response.
-   */
+     * Allows to expose order for genral trading, redirecting afterwards to the associated service
+     *
+     * {@link generalTicketTradeService}
+     *
+     * @param response response.
+     */
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            const ticketId = request.params.ticketId;
             const uId = response.locals.uid;
+            const ticketId = request.params.ticketId;
             try {
-                if (ticketId === undefined) {
-                    throw new Error("Some parameter is incorrect");
+                if (uId === undefined || ticketId === undefined) {
+                    throw new Error("Invalid request");
                 }
-                const seeDetailsMealTicketService = new seeDetailsMealTicketService_1.SeeDetailsMealTicketService();
-                const resp = yield seeDetailsMealTicketService.execute(ticketId);
+                const generalTicketTradeService = new generalTicketTradeService_1.GeneralTicketTradeService();
+                const resp = yield generalTicketTradeService.execute(uId, ticketId);
                 response.status(resp.status).json(resp.data);
             }
             catch (e) {
@@ -40,5 +40,5 @@ class SeeDetailsMealTicketController {
         });
     }
 }
-exports.SeeDetailsMealTicketController = SeeDetailsMealTicketController;
-//# sourceMappingURL=seeDetailsMealTicketController.js.map
+exports.GeneralTicketTradeController = GeneralTicketTradeController;
+//# sourceMappingURL=generalTicketTradeController.js.map

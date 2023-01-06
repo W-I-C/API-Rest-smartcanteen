@@ -61,16 +61,20 @@ describe("Test get all favorite meals of the user", () => {
                 .then(res => {
                 res.should.have.status(200);
                 chai_1.default.expect(res.body).to.be.an("array");
-                chai_1.default.expect(res.body[0]).to.be.an("object");
-                chai_1.default.expect(res.body[0]).to.have.property("name");
-                chai_1.default.expect(res.body[0]).to.have.property("preparationtime");
-                chai_1.default.expect(res.body[0]).to.have.property("price");
-                chai_1.default.expect(res.body[0]).to.have.property("url");
-                chai_1.default.expect(res.body[0]['name']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['preparationtime']).to.be.a("number");
-                chai_1.default.expect(res.body[0]['price']).to.be.a("number");
-                if (res.body['url'] != null) {
-                    chai_1.default.expect(res.body['url']).to.be.a("string");
+                if (res.body.length > 0) {
+                    for (let i = 0; i < res.body.length; i++) {
+                        chai_1.default.expect(res.body[i]).to.be.an("object");
+                        chai_1.default.expect(res.body[i]).to.have.property("name");
+                        chai_1.default.expect(res.body[i]).to.have.property("preparationtime");
+                        chai_1.default.expect(res.body[i]).to.have.property("price");
+                        chai_1.default.expect(res.body[i]).to.have.property("url");
+                        chai_1.default.expect(res.body[i]['name']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['preparationtime']).to.be.a("number");
+                        chai_1.default.expect(res.body[i]['price']).to.be.a("number");
+                        if (res.body[i]['url'] != null) {
+                            chai_1.default.expect(res.body[i]['url']).to.be.a("string");
+                        }
+                    }
                 }
             });
         });

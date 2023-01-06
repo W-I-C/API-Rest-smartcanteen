@@ -62,13 +62,19 @@ describe("Test get undelivered orders of the bar that the employee works", () =>
                 .then(res => {
                 res.should.have.status(200);
                 chai_1.default.expect(res.body).to.be.an("array");
-                chai_1.default.expect(res.body[0]).to.be.an("object");
-                chai_1.default.expect(res.body[0]).to.have.property("ticketid");
-                chai_1.default.expect(res.body[0]).to.have.property("name");
-                chai_1.default.expect(res.body[0]).to.have.property("statename");
-                chai_1.default.expect(res.body[0]['ticketid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['name']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['statename']).to.be.a("string");
+                if (res.body.length > 0) {
+                    for (let i = 0; i < res.body.length; i++) {
+                        chai_1.default.expect(res.body[i]).to.be.an("object");
+                        chai_1.default.expect(res.body[i]).to.have.property("ticketid");
+                        chai_1.default.expect(res.body[i]).to.have.property("nencomenda");
+                        chai_1.default.expect(res.body[i]).to.have.property("name");
+                        chai_1.default.expect(res.body[i]).to.have.property("statename");
+                        chai_1.default.expect(res.body[i]['ticketid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['nencomenda']).to.be.a("number");
+                        chai_1.default.expect(res.body[i]['name']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['statename']).to.be.a("string");
+                    }
+                }
             });
         });
     });

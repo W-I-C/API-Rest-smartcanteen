@@ -25,7 +25,7 @@ function checkTradeExists(ticketId) {
     return __awaiter(this, void 0, void 0, function* () {
         const checkTradeExistsDBClient = (0, db_1.createClient)();
         const query = yield checkTradeExistsDBClient.query(`SELECT ticketid FROM tickettrade
-                                                        WHERE ticketid = $1`, [ticketId]);
+                                                        WHERE ticketid = $1 AND isdeleted = $2`, [ticketId, false]);
         return query['rows'].length != 0;
     });
 }
