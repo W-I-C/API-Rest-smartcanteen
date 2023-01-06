@@ -15,6 +15,7 @@ exports.RemoveMealsCartService = void 0;
  */
 require('dotenv').config();
 const db_1 = require("../../../config/db");
+const removeMealValidation_1 = require("../../../validations/employee/meal/removeMealValidation");
 /**
  * class responsible for removing a meal from the cart
  */
@@ -27,7 +28,11 @@ class RemoveMealsCartService {
     execute(cartMealId, uId) {
         return __awaiter(this, void 0, void 0, function* () {
             const removeMeal = (0, db_1.createClient)();
-            const verifyUser = yield removeMeal.query('SELECT cartId from cart WHERE uId=$1', [uId]);
+            const verifyUser = yield removeMeal.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2', [uId, false]);
+            const cartMealExists = yield (0, removeMealValidation_1.checkCartMealExists)(cartMealId);
+            if (!cartMealExists) {
+                throw new Error("CartMeal dont exist");
+            }
             if (verifyUser.rowCount > 0) {
                 const query = yield removeMeal.query('DELETE FROM cartMeals WHERE cartMealId=$1', [cartMealId]);
                 const querySelect = yield removeMeal.query('SELECT * from cart WHERE uId=$1', [uId]);
@@ -35,7 +40,7 @@ class RemoveMealsCartService {
                 return { data, status: 200 };
             }
             else {
-                throw new Error('o user não pertence a este carrinho');
+                throw new Error('The cart dont belongs to this user');
             }
         });
     }

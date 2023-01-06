@@ -35,7 +35,10 @@ class EditMealController {
                     description === undefined ||
                     canTakeaway === undefined ||
                     price === undefined ||
-                    allowedChanges === undefined) {
+                    allowedChanges === undefined ||
+                    typeof preparationTime != "number" ||
+                    typeof canTakeaway != "boolean" ||
+                    typeof price != "number") {
                     throw new Error("Invalid request");
                 }
                 const editMealService = new editMealService_1.EditMealService();

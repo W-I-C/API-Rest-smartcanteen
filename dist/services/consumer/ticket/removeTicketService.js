@@ -15,7 +15,7 @@ exports.RemoveTicketService = void 0;
  */
 require('dotenv').config();
 const db_1 = require("../../../config/db");
-const removeTicketValidation_1 = require("../../../validations/consumer/ticket/removeTicketValidation");
+const dbHelpers_1 = require("../../../helpers/dbHelpers");
 /**
  * Class responsible for the service that serves to remove one order of the authenticated user
  */
@@ -28,22 +28,28 @@ class RemoveTicketService {
      */
     execute(uId, ticketId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const ticketIdExists = yield (0, removeTicketValidation_1.checkTicketExists)(ticketId);
-            if (!ticketIdExists) {
-                throw new Error('Order does not exists');
-            }
-            // TODO: ao remover tenho que remover de todas as tabelas que tenham este ticketid
-            // TODO: isDeleted em vez de removewr direto
             const removeTicketDBClient = (0, db_1.createClient)();
-            yield removeTicketDBClient.query(`DELETE FROM tickets
-                                            WHERE uid = $1 AND ticketid = $2`, [uId, ticketId]);
-            yield removeTicketDBClient.query(`DELETE FROM tickettrade
-                                        WHERE ticketid = $1`, [ticketId]);
-            yield removeTicketDBClient.query(`DELETE FROM ticketlogs
-                                        WHERE ticketid = $1`, [ticketId]);
-            yield removeTicketDBClient.query(`DELETE FROM ticketinvoice
-                                        WHERE ticketid = $1`, [ticketId]);
-            return { msg: 'Order removed sucessfuly', status: 200 };
+            const getTicketQuery = yield removeTicketDBClient.query(`SELECT * FROM tickets WHERE ticketid = $1 AND isDeleted = $2`, [ticketId, false]);
+            const getTicketTrades = yield removeTicketDBClient.query(`SELECT * FROM tickettrade 
+                                                                    WHERE ticketid = $1 AND receptordecision = $2`, [ticketId, 1]);
+            if (getTicketQuery['rows'].length == 0) {
+                throw new Error('Order does not exist!');
+            }
+            const ticket = getTicketQuery.rows[0];
+            if (getTicketTrades['rows'].length != 0) {
+                const trade = getTicketTrades['rows'][0];
+                if (trade['uid'] != uId) {
+                    throw new Error('Not your Order!');
+                }
+            }
+            else if (ticket['uid'] != uId) {
+                throw new Error('Not your Order!');
+            }
+            if (ticket['stateid'] != (yield (0, dbHelpers_1.getNotStartedStatusId)())) {
+                throw new Error('Order Already in preperation!');
+            }
+            yield removeTicketDBClient.query(`UPDATE tickets SET isdeleted=$1 WHERE ticketid=$2`, [true, ticketId]);
+            return { data: { msg: 'Order removed sucessfuly' }, status: 200 };
         });
     }
 }

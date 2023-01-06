@@ -37,11 +37,10 @@ class EditProfileService {
                                                                 FROM users
                                                                 WHERE users.uid = $1`, [uId]);
                 const data = query_edited["rows"][0];
-                console.log(data);
                 return { data, status: 200 };
             }
             else {
-                return { msg: "Invalid Data", status: 404 };
+                return { msg: "Invalid Data", status: 500 };
             }
         });
     }

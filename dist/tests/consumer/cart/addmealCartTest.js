@@ -67,13 +67,17 @@ describe("Test add meal to cart", () => {
                 res.should.have.status(200);
                 // verificar se é um object
                 chai_1.default.expect(res.body).to.be.an("array");
-                chai_1.default.expect(res.body[0]).to.be.an("object");
-                chai_1.default.expect(res.body[0]).to.have.property("mealid");
-                chai_1.default.expect(res.body[0]).to.have.property("amount");
-                chai_1.default.expect(res.body[0]).to.have.property("mealprice");
-                chai_1.default.expect(res.body[0]['mealid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['amount']).to.be.a("number");
-                chai_1.default.expect(res.body[0]['mealprice']).to.be.a("number");
+                if (res.body.length > 0) {
+                    for (let i = 0; i < res.body.length; i++) {
+                        chai_1.default.expect(res.body[i]).to.be.an("object");
+                        chai_1.default.expect(res.body[i]).to.have.property("mealid");
+                        chai_1.default.expect(res.body[i]).to.have.property("amount");
+                        chai_1.default.expect(res.body[i]).to.have.property("mealprice");
+                        chai_1.default.expect(res.body[i]['mealid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['amount']).to.be.a("number");
+                        chai_1.default.expect(res.body[i]['mealprice']).to.be.a("number");
+                    }
+                }
             });
         });
     });

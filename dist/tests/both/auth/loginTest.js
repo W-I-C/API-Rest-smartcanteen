@@ -54,6 +54,8 @@ describe("Test login", function () {
                 // verificar se é um object
                 chai_1.default.expect(res.body).to.be.an("object");
                 chai_1.default.expect(res.body).to.have.property("token");
+                chai_1.default.expect(res.body).to.have.property("role");
+                chai_1.default.expect(res.body).property("token").to.be.a("string");
                 chai_1.default.expect(res.body).property("token").to.be.a("string");
             });
         });

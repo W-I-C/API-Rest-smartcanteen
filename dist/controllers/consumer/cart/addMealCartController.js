@@ -26,15 +26,16 @@ class AddMealCartController {
         return __awaiter(this, void 0, void 0, function* () {
             const uId = response.locals.uid;
             const mealId = request.params.mealId;
-            let { amount } = request.body;
+            let { amount, changes } = request.body;
             try {
                 if (uId === undefined ||
                     mealId === undefined ||
-                    amount === undefined) {
+                    amount === undefined ||
+                    typeof amount != "number") {
                     throw new Error("Invalid request");
                 }
                 const addMealCartService = new addMealCartService_1.AddMealCartService();
-                const resp = yield addMealCartService.execute(mealId, uId, amount);
+                const resp = yield addMealCartService.execute(mealId, uId, amount, changes);
                 response.status(resp.status).json(resp.data);
             }
             catch (e) {

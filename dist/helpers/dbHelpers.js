@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRefreshToken = void 0;
+exports.getUserRole = exports.getUserName = exports.getDeliveredStatusId = exports.getNotStartedStatusId = exports.getRefreshToken = void 0;
 const db_1 = require("../config/db");
 function getRefreshToken(uid) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -22,4 +22,36 @@ function getRefreshToken(uid) {
     });
 }
 exports.getRefreshToken = getRefreshToken;
+function getNotStartedStatusId() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const getNotStartedStatusIdDBClient = (0, db_1.createClient)();
+        const query = yield getNotStartedStatusIdDBClient.query(`SELECT stateid FROM states WHERE name=$1`, ['Não Iniciado']);
+        return query['rows'][0]['stateid'];
+    });
+}
+exports.getNotStartedStatusId = getNotStartedStatusId;
+function getDeliveredStatusId() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const getNotStartedStatusIdDBClient = (0, db_1.createClient)();
+        const query = yield getNotStartedStatusIdDBClient.query(`SELECT stateid FROM states WHERE name=$1`, ['Entregue']);
+        return query['rows'][0]['stateid'];
+    });
+}
+exports.getDeliveredStatusId = getDeliveredStatusId;
+function getUserName(uid) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const getUserNameDBClient = (0, db_1.createClient)();
+        const query = yield getUserNameDBClient.query(`SELECT name FROM users WHERE uid=$1`, [uid]);
+        return query['rows'][0]['name'];
+    });
+}
+exports.getUserName = getUserName;
+function getUserRole(uid) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const getUserRoleDBClient = (0, db_1.createClient)();
+        const query = yield getUserRoleDBClient.query('SELECT userrole.name FROM users JOIN userrole On userrole.roleid = users.roleid WHERE uid=$1', [uid]);
+        return query['rows'][0]['name'];
+    });
+}
+exports.getUserRole = getUserRole;
 //# sourceMappingURL=dbHelpers.js.map

@@ -26,9 +26,7 @@ function createRefreshToken(uid) {
         // get jwt secret key
         let jwtRefreshKey = process.env.JWT_REFRESH_TOKEN_KEY;
         const token = (0, jsonwebtoken_1.sign)({}, jwtRefreshKey, { subject: uid, expiresIn: '1y' });
-        // TODO: Encriptar Refresh token
         const refreshTokenDBClient = (0, db_1.createClient)();
-        // TODO: Verificar se dá erro no insert
         const insertRefreshTokenQuery = yield refreshTokenDBClient.query(`UPDATE users SET "refreshtoken" = $1 WHERE uid = $2`, [token, uid]);
     });
 }

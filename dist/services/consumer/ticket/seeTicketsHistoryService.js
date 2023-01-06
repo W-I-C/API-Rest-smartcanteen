@@ -26,10 +26,11 @@ class SeeTicketsHistoryService {
     execute(uId) {
         return __awaiter(this, void 0, void 0, function* () {
             const seeTicketsHistoryDBClient = (0, db_1.createClient)();
-            const query = yield seeTicketsHistoryDBClient.query(`SELECT ticketid, nencomenda, ticketamount, total, states.name
+            const query = yield seeTicketsHistoryDBClient.query(`SELECT tickets.ticketid, nencomenda, ticketamount, total, states.name
                                                             FROM tickets
                                                             JOIN states ON tickets.stateid = states.stateid
-                                                            WHERE tickets.uid = $1`, [uId]);
+                                                            LEFT JOIN tickettrade ON tickets.ticketid = tickettrade.ticketid
+                                                            WHERE tickets.uid = $1 AND tickets.isdeleted = $2 AND tickettrade.isdeleted = $3 AND tickettrade.receptordecision = $4 OR tickettrade.receptordecision = $5`, [uId, false, false, 0, null]);
             const data = query["rows"];
             return { data, status: 200 };
         });

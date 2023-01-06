@@ -11,8 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RemoveTicketController = void 0;
 const removeTicketService_1 = require("../../../services/consumer/ticket/removeTicketService");
-// TODO: passar para put e meter o isDeleted no histórico a true - nós vemos mas o utilizador não
-// TODO: para as trocas a mesma coisa
 /**
  * Class responsible for receiving and calling the service methods that allow the user to remove a order
  */
@@ -34,7 +32,7 @@ class RemoveTicketController {
                 }
                 const removeTicketService = new removeTicketService_1.RemoveTicketService();
                 const resp = yield removeTicketService.execute(uId, ticketId);
-                response.status(resp.status).json(resp.msg);
+                response.status(resp.status).json(resp.data);
             }
             catch (e) {
                 response.status(500).json(e.message);

@@ -24,7 +24,7 @@ function checkTicketExists(ticketId) {
     return __awaiter(this, void 0, void 0, function* () {
         const checkTicketExistsDBClient = (0, db_1.createClient)();
         const query = yield checkTicketExistsDBClient.query(`SELECT ticketid FROM tickets
-                                                        WHERE ticketid = $1`, [ticketId]);
+                                                        WHERE ticketid = $1 AND ispickedup = $2 AND isdeleted = $3`, [ticketId, false, false]);
         return query['rows'].length != 0;
     });
 }

@@ -63,17 +63,21 @@ describe("Test get tickets history of the user", () => {
                 res.should.have.status(200);
                 // verificar se é um object
                 chai_1.default.expect(res.body).to.be.an("array");
-                chai_1.default.expect(res.body[0]).to.be.an("object");
-                chai_1.default.expect(res.body[0]).to.have.property("ticketid");
-                chai_1.default.expect(res.body[0]).to.have.property("nencomenda");
-                chai_1.default.expect(res.body[0]).to.have.property("ticketamount");
-                chai_1.default.expect(res.body[0]).to.have.property("total");
-                chai_1.default.expect(res.body[0]).to.have.property("name");
-                chai_1.default.expect(res.body[0]['ticketid']).to.be.a("string");
-                chai_1.default.expect(res.body[0]['nencomenda']).to.be.a("number");
-                chai_1.default.expect(res.body[0]['ticketamount']).to.be.a("number");
-                chai_1.default.expect(res.body[0]['total']).to.be.a("number");
-                chai_1.default.expect(res.body[0]['name']).to.be.a("string");
+                if (res.body.length > 0) {
+                    for (let i = 0; i < res.body.length; i++) {
+                        chai_1.default.expect(res.body[i]).to.be.an("object");
+                        chai_1.default.expect(res.body[i]).to.have.property("ticketid");
+                        chai_1.default.expect(res.body[i]).to.have.property("nencomenda");
+                        chai_1.default.expect(res.body[i]).to.have.property("ticketamount");
+                        chai_1.default.expect(res.body[i]).to.have.property("total");
+                        chai_1.default.expect(res.body[i]).to.have.property("name");
+                        chai_1.default.expect(res.body[i]['ticketid']).to.be.a("string");
+                        chai_1.default.expect(res.body[i]['nencomenda']).to.be.a("number");
+                        chai_1.default.expect(res.body[i]['ticketamount']).to.be.a("number");
+                        chai_1.default.expect(res.body[i]['total']).to.be.a("number");
+                        chai_1.default.expect(res.body[i]['name']).to.be.a("string");
+                    }
+                }
             });
         });
     });

@@ -26,7 +26,7 @@ class SeeTradesHistoryService {
     execute(uId) {
         return __awaiter(this, void 0, void 0, function* () {
             const selectTicket = (0, db_1.createClient)();
-            const verifyUser = yield selectTicket.query('SELECT ticketid,isconfirmed,proposaldate,confirmationdate,receptordecision,isdeleted from ticketTrade WHERE uId=$1', [uId]);
+            const verifyUser = yield selectTicket.query('SELECT ticketid,isconfirmed,proposaldate,confirmationdate,receptordecision,isdeleted FROM ticketTrade WHERE uId=$1 AND isdeleted = $2', [uId, false]);
             const data = verifyUser["rows"];
             return { data, status: 200 };
         });

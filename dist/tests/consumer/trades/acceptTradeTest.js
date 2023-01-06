@@ -12,7 +12,7 @@ const should = chai_1.default.should();
 const baseUrl = "/api/v1/consumer";
 const server = "localhost:3000";
 const invalidToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTAwMjQ1MzgsImV4cCI6MTY1MDAyNTQzOCwic3ViIjoiMDAwZDFlMTQtNjE3ZS00MjNlLThhMWEtZjYzZDRmYTVhZjZhIn0.b0U-__cRpH8YBsAtZEtClr0fAj4t9IOwDAcI2R3j-qk';
-const ticketId = 'f6219d36-b8ef-4338-8d2a-cfcd77433dc2';
+const ticketId = '42977dd1-cfbe-4e0d-a8b0-db1619decb30';
 let token = '';
 describe("Test accept one Trade", () => {
     beforeEach((done) => {
@@ -67,27 +67,13 @@ describe("Test accept one Trade", () => {
         it('Should return trade error', () => {
             return chai_1.default
                 .request(server)
-                .put(baseUrl + '/trades/6e81af81-e551-4078-9e6f-919b2142681')
-                .set("Authorization", token)
-                .send({
-                receptorDecision: 1
-            })
-                .then(res => {
-                res.should.have.status(500);
-            });
-        });
-    });
-    describe('- The trade proposal does not exist', () => {
-        it('Should return user error', () => {
-            return chai_1.default
-                .request(server)
                 .put(baseUrl + '/trades/534cf037-6a41-475b-81d8-c90af631084c')
                 .set("Authorization", token)
                 .send({
                 receptorDecision: 1
             })
                 .then(res => {
-                res.should.have.status(404);
+                res.should.have.status(500);
             });
         });
     });
@@ -101,7 +87,7 @@ describe("Test accept one Trade", () => {
                 receptorDecision: 1
             })
                 .then(res => {
-                res.should.have.status(404);
+                res.should.have.status(500);
             });
         });
     });

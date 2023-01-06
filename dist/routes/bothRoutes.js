@@ -14,6 +14,7 @@ const validateRefreshToken_1 = require("../middlewares/validateRefreshToken");
 const logoutController_1 = require("../controllers/both/auth/logoutController");
 const seeMealsController_1 = require("../controllers/both/meals/seeMealsController");
 const seeMealsDetailContoller_1 = require("../controllers/both/meals/seeMealsDetailContoller");
+const seeDetailsMealTicketController_1 = require("../controllers/both/tickets/seeDetailsMealTicketController");
 const bothRouter = express_1.default.Router();
 exports.bothRouter = bothRouter;
 const seeProfileController = new seeProfileController_1.SeeProfileController();
@@ -23,6 +24,7 @@ const newSessionToken = new newSessionTokenController_1.NewSessionTokenControlle
 const logoutController = new logoutController_1.LogoutController();
 const seeMealsController = new seeMealsController_1.SeeMealsController();
 const seeMealsDetailController = new seeMealsDetailContoller_1.SeeMealsDetailController();
+const seeDetailsMealTicketController = new seeDetailsMealTicketController_1.SeeDetailsMealTicketController();
 bothRouter.get("/profile", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, seeProfileController.handle);
 bothRouter.put("/profile", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, editProfileController.handle);
 bothRouter.post("/login", loginController.handle);
@@ -31,4 +33,5 @@ bothRouter.get("/logout", validateToken_1.validateToken, validateRefreshToken_1.
 bothRouter.get("/meals/:mealid", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, seeMealsDetailController.handle);
 // ver as refeições num bar
 bothRouter.get("/meals/:barId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, seeMealsController.handle);
+bothRouter.get("/detail/ticket/:ticketId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, seeDetailsMealTicketController.handle);
 //# sourceMappingURL=bothRoutes.js.map

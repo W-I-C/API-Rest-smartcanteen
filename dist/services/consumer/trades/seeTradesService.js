@@ -19,10 +19,21 @@ const db_1 = require("../../../config/db");
  * Class responsible for the service that allows you to see the available trades
  */
 class SeeTradesService {
-    execute() {
+    /**
+    * Method that allows to see all the tickets that are available to trade in the campus of the user
+    * @param uId authenticated user id
+    */
+    execute(uId, campusid) {
         return __awaiter(this, void 0, void 0, function* () {
             const selectTicket = (0, db_1.createClient)();
-            const verifyUser = yield selectTicket.query('SELECT * from tickets WHERE istrading=$1 AND ispickedup=$2', [true, false]);
+            const verifyUser = yield selectTicket.query(`SELECT * FROM campus
+                                                        JOIN bar on bar.campusid=campus.campusid
+                                                        JOIN tickets on tickets.barid=bar.barid
+                                                        LEFT JOIN tickettrade on tickets.ticketid=tickettrade.ticketid
+                                                        WHERE campus.campusid=$1 
+                                                        AND tickets.istrading = true 
+                                                        AND tickets.isdirecttrade=false
+                                                        AND tickettrade.receptordecision is NULL`, [campusid]);
             const data = verifyUser["rows"];
             return { data, status: 200 };
         });
