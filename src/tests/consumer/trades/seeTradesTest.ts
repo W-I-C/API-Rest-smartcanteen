@@ -33,7 +33,7 @@ describe("Test see trades available", () => {
       it('Should return invalid token error', () => {
         return chai
         .request(server)
-        .get(baseUrl+'/trades/available'+campusid)
+        .get(baseUrl+'/trades/available/'+campusid)
         .then(res => {
           res.should.have.status(401)
           chai.expect(res.body).to.have.property("Error")
@@ -45,7 +45,7 @@ describe("Test see trades available", () => {
       it('Should return invalid token error', () => {
         return chai
         .request(server)
-        .get(baseUrl+'/trades/available'+ campusid)
+        .get(baseUrl+'/trades/available/'+ campusid)
         .set("Authorization", invalidToken)
         .then(res => {
           res.should.have.status(401)
@@ -58,7 +58,7 @@ describe("Test see trades available", () => {
         it('Should return available trades', () => {
           return chai
           .request(server)
-          .get(baseUrl+'/trades/available'+campusid)
+          .get(baseUrl+'/trades/available/'+campusid)
           .set("Authorization", token)
           .then(res => {
           
