@@ -1107,7 +1107,7 @@
                   }
                 }
               }
-            } 
+            }
           },
           "401": {
             "description": "Unauthorized",
@@ -1840,13 +1840,13 @@
                   "value": {
                     "stateName": "Entregue"
                   }
-               	}
+                }
               }
             }
-	        }
+          }
         },
         "responses": {
-          "500": {     
+          "500": {
             "description": "ERROR",
             "content": {
               "application/json": {
@@ -1890,18 +1890,18 @@
             "description": "OK",
             "content": {
               "application/json": {
-                "schema": { 
-                  "properties": { 
-                    "ticketid": { "type": "string" }, 
-                    "stateid": { "type": "string" } 
-                  } 
+                "schema": {
+                  "properties": {
+                    "ticketid": { "type": "string" },
+                    "stateid": { "type": "string" }
+                  }
                 },
                 "examples": {
                   "Edit ticket state": {
                     "value": {
-                        "ticketid": "42977dd1-cfbe-4e0d-a8b0-db1619decb30",
-                        "stateid": "5669f7ec-4991-4dee-a1f4-9b944580ac33"
-                      }
+                      "ticketid": "42977dd1-cfbe-4e0d-a8b0-db1619decb30",
+                      "stateid": "5669f7ec-4991-4dee-a1f4-9b944580ac33"
+                    }
                   }
                 }
               }
@@ -1909,7 +1909,7 @@
           }
         }
       }
-	  },
+    },
     "/employee/bar/{barId}/statistics": {
       "get": {
         "summary": "Get bar statistics",
@@ -1969,7 +1969,7 @@
             "description": "OK",
             "content": {
               "application/json": {
-              	"schema": {
+                "schema": {
                   "properties": {
                     "totalTickets": {
                       "type": "integer"
@@ -2094,8 +2094,87 @@
           }
         }
       }
+    },
+    "/consumer/trades/{ticketId}/general": {
+      "put": {
+        "summary": "Expose order for general trading",
+        "description": "A consumer can expose his order for general trading",
+        "tags": ["Trades"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "Ticket Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Trade an order with a user that doesnt exist": {
+                    "value": { "msg": "User does not exist!" }
+                  },
+                  "Trade an order that doesnt exist": {
+                    "value": { "msg": "Order does not exist!" }
+                  },
+                  "Trade an order that isnt yours": {
+                    "value": { "msg": "Not your Order!" }
+                  },
+                  "Trade with the same user again": {
+                    "value": {
+                      "msg": "Order already trading!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "msg": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "msg": {
+                    "value": "Trade exposed successfully"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
-  },                 
+  },
   "components": {
     "securitySchemes": {
       "basicAuth": {
