@@ -17,10 +17,14 @@ export class LoginController {
    */
   async handle(request: Request, response: Response) {
     let { email, password } = request.body
+    try {
+      const loginService = new LoginService()
+      const resp = await loginService.execute(email, password)
+      response.status(resp.status).json(resp.data);
+    } catch (e) {
+      response.status(401).json(e.message);
+    }
 
-    const loginService = new LoginService()
-    const resp = await loginService.execute(email, password)
 
-    response.status(resp.status).json(resp.data);
   }
 }

@@ -27,6 +27,7 @@ const directTicketTradeController_1 = require("../controllers/consumer/trades/di
 const generalTicketTradeController_1 = require("../controllers/consumer/trades/generalTicketTradeController");
 const cancelTradingController_1 = require("../controllers/consumer/trades/cancelTradingController");
 const completeCartController_1 = require("../controllers/consumer/cart/completeCartController");
+const seeMyTradesController_1 = require("../controllers/consumer/trades/seeMyTradesController");
 const addFavController = new addFavController_1.AddFavController();
 const removeFavController = new removeFavController_1.RemoveFavController();
 const seeFavController = new seeFavController_1.SeeFavController();
@@ -44,6 +45,7 @@ const directTicketTradeController = new directTicketTradeController_1.DirectTick
 const generalTicketTradeController = new generalTicketTradeController_1.GeneralTicketTradeController();
 const cancelTradingController = new cancelTradingController_1.CancelTradingController();
 const completeCartController = new completeCartController_1.CompleteCartController();
+const seeMyTradesController = new seeMyTradesController_1.SeeMyTradesController();
 //adicionar aos favoritos refeição
 consumerRouter.post("/favoriteMeals/:mealId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isConsumer_1.isConsumer, addFavController.handle);
 consumerRouter.delete("/favoriteMeals/:favoriteMealId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isConsumer_1.isConsumer, removeFavController.handle);
@@ -62,4 +64,5 @@ consumerRouter.put("/trades/:ticketId/direct/:receiverId", validateToken_1.valid
 consumerRouter.put("/trades/:ticketId/general", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isConsumer_1.isConsumer, generalTicketTradeController.handle);
 consumerRouter.delete("/trades/:ticketId/", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isConsumer_1.isConsumer, cancelTradingController.handle);
 consumerRouter.post("/cart/:cartId/complete", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isConsumer_1.isConsumer, completeCartController.handle);
+consumerRouter.get("/mytrades", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, isConsumer_1.isConsumer, seeMyTradesController.handle);
 //# sourceMappingURL=consumerRoutes.js.map
