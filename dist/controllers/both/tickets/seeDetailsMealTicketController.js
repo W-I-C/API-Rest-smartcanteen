@@ -18,7 +18,7 @@ class SeeDetailsMealTicketController {
     /**
    * Allows to get a meals detail from order
    *
-   * {@link createmealService}
+   * {@link seeDetailMealService}
    * @param request request receive.
    * @param response response.
    */
