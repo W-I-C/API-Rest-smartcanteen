@@ -15,15 +15,15 @@ const SeeMealsDetailService_1 = require("../../../services/both/meals/SeeMealsDe
  * Class responsible for receiving and calling the service methods that allow the user to see the details of a meal he has choose
  */
 class SeeMealsDetailController {
+    /**
+* Allows to get a meal that the authenticated user has choose
+*
+* {@link seeMealsDetailService}
+* @param request request receive.
+* @param response response.
+*/
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
-            /**
-        * Allows to get a meal that the authenticated user has choose
-        *
-        * {@link seeMealsDetailService}
-        * @param request request receive.
-        * @param response response.
-        */
             const uId = response.locals.uid;
             const mealId = request.params.mealid;
             try {
