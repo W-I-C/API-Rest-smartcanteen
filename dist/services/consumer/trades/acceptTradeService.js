@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AcceptTradeService = void 0;
 /**
- * @module AcceptTradeService
+ * @module acceptTradeService
  */
 require('dotenv').config();
 const db_1 = require("../../../config/db");
