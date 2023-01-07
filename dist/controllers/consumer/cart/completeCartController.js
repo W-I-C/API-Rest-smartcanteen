@@ -18,7 +18,7 @@ class CompleteCartController {
     /**
    * Allows to complete cart, redirecting afterwards to the associated service
    *
-   * {@link CompleteCartService}
+   * {@link completeCartService}
    * @param request request receive.
    * @param response response.
    */
