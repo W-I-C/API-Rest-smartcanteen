@@ -4,7 +4,7 @@
  */
 import { createClient } from "../../../config/db";
 import { createRefreshToken, createSessionToken } from "../../../helpers/jwtHelpers";
-import { compare } from "bcrypt"
+import { compare, hash } from "bcrypt"
 
 /**
  * class responsible for logging in
