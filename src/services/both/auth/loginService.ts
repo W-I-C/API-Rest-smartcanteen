@@ -25,7 +25,7 @@ export class LoginService {
 
     const querypassword = query["rows"][0]["password"]
 
-    const comp = compare(password, querypassword)
+    const comp = await compare(password, querypassword)
     if (!comp) {
       throw new Error("authentication error")
     }
