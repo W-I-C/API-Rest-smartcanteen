@@ -25,9 +25,14 @@ class LoginController {
     handle(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
             let { email, password } = request.body;
-            const loginService = new loginService_1.LoginService();
-            const resp = yield loginService.execute(email, password);
-            response.status(resp.status).json(resp.data);
+            try {
+                const loginService = new loginService_1.LoginService();
+                const resp = yield loginService.execute(email, password);
+                response.status(resp.status).json(resp.data);
+            }
+            catch (e) {
+                response.status(401).json(e.message);
+            }
         });
     }
 }
