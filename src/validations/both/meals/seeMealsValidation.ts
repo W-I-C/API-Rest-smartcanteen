@@ -12,7 +12,7 @@ export async function getUserRole(uId: string) {
     const getUserRoleDBClient = createClient();
     const query = await getUserRoleDBClient.query(`SELECT roleid FROM users
                                                         WHERE uid = $1`, [uId]);
-                                          
+
     return query['rows'][0]["roleid"]
 }
 
@@ -23,10 +23,11 @@ export async function getUserRole(uId: string) {
  */
 export async function checkBarExists(barId: string) {
     const getUserRoleDBClient = createClient();
-    
-    const query = await getUserRoleDBClient.query(`SELECT barid FROM bar
+
+    const query = await getUserRoleDBClient.query(`SELECT * FROM bar
                                                         WHERE barid = $1`, [barId]);
-           
+
+
     return query['rows'].length != 0
 }
 
