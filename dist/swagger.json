@@ -376,7 +376,7 @@
                 }
             }
         },
-        "/meals/{barId}": {
+        "/bar/{barId}/meals": {
             "get": {
                 "summary": "See meals from a bar",
                 "description": "See meals from a bar ",

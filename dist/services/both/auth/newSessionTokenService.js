@@ -38,7 +38,7 @@ class NewSessionTokenService {
                     const verified = (0, jsonwebtoken_1.verify)(refreshToken, process.env.JWT_REFRESH_TOKEN_KEY);
                     if (verified) {
                         const newSessionToken = (0, jwtHelpers_1.createSessionToken)(uid, role);
-                        return { status: 200, data: { token: newSessionToken } };
+                        return { status: 200, data: { token: newSessionToken, role: role } };
                     }
                     else {
                         return { status: 401, data: { Error: "Unauthorized Request" } };
