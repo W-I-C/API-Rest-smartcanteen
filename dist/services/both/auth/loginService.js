@@ -34,7 +34,7 @@ class LoginService {
                                               WHERE email=$1 
                                               `, [email]);
             const querypassword = query["rows"][0]["password"];
-            const comp = (0, bcrypt_1.compare)(password, querypassword);
+            const comp = yield (0, bcrypt_1.compare)(password, querypassword);
             if (!comp) {
                 throw new Error("authentication error");
             }
