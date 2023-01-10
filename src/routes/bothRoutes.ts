@@ -35,7 +35,7 @@ bothRouter.get("/meals/:mealid", validateToken, validateRefreshToken, seeMealsDe
 
 
 // ver as refeições num bar
-bothRouter.get("/meals/:barId", validateToken, validateRefreshToken, seeMealsController.handle);
+bothRouter.get("/bar/:barId/meals", validateToken, validateRefreshToken, seeMealsController.handle);
 
 bothRouter.get("/detail/ticket/:ticketId", validateToken, validateRefreshToken, seeDetailsMealTicketController.handle);
 
