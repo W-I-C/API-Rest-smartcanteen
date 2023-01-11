@@ -29,6 +29,8 @@ export class SeeMealsCartService {
                             
 
         const data=queryUser["rows"]
+
+        await seeMealsCartDBClient.end()
         
         return { data, status: 200 }
     }  

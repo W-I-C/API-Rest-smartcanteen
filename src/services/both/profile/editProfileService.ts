@@ -32,9 +32,14 @@ export class EditProfileService {
             
             const data = query_edited["rows"][0]
 
+            await editProfileDBClient.end()
+
             return { data, status: 200 }
         }
         else {
+
+            await editProfileDBClient.end()
+            
             return { msg: "Invalid Data", status: 500 }
         }  
     }

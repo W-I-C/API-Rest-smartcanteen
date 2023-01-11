@@ -33,9 +33,14 @@ export class RemoveMealsCartService {
             const querySelect= await removeMealDBClient.query('SELECT * from cart WHERE uId=$1',[uId])
             
             const data=querySelect["rows"]
+
+            await removeMealDBClient.end()
             
             return { data, status: 200 }
         }else{
+
+            await removeMealDBClient.end()
+
             throw new Error('The cart dont belongs to this user');    
         }
     }

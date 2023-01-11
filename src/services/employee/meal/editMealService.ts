@@ -67,7 +67,9 @@ export class EditMealService {
                                                                 FROM allowedchanges
                                                                 WHERE mealid = $1`, [mealId])
 
-        editedMeal["allowedChanges"] = queryAllowedChanges["rows"]    
+        editedMeal["allowedChanges"] = queryAllowedChanges["rows"]   
+        
+        await editMealDBClient.end()
 
         return { editedMeal , status: 200 }
     }

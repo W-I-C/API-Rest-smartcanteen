@@ -19,9 +19,7 @@ export class CanBeMadeService {
 
     const canBeMadeDBClient = createClient();
 
-    const mealExistsDBClient = createClient();
-
-    const mealExistQuery = await mealExistsDBClient.query('SELECT * from Meals WHERE mealid=$1', [mealId])
+    const mealExistQuery = await canBeMadeDBClient.query('SELECT * from Meals WHERE mealid=$1', [mealId])
 
     if (mealExistQuery.rowCount == 0) {
       return { data: { msg: "Meal doens't exist" }, status: 500 }
@@ -33,6 +31,7 @@ export class CanBeMadeService {
 
     await canBeMadeDBClient.query('UPDATE meals SET canbemade=$1 WHERE mealid=$2', [status, mealId])
 
+    await canBeMadeDBClient.end()
 
     return { data: { msg: "Meal updated" }, status: 200 }
 

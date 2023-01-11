@@ -28,6 +28,8 @@ export class SeeMyTradesService {
                                                     JOIN users on users.uid = tickets.uid
                                                     WHERE campus.campusid = $1 AND generaltrades.previousowner = $2 AND tickets.isdeleted = $3`,[campusId, uId, false])
         
+        await SeeMyTradesDBClient.end()
+
         const data=query["rows"]
 
         return { data, status: 200 }

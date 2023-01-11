@@ -13,7 +13,8 @@ export async function checkMealExists(mealId: string) {
     const query = await checkMealExistsDBClient.query(`SELECT mealid FROM meals
                                                         WHERE mealid = $1 AND isdeleted = $2`, [mealId, false]);
 
-                                                        
+    await checkMealExistsDBClient.end() 
+
     return query['rows'].length != 0
 }
 
@@ -27,6 +28,8 @@ export async function checkMealCartExists(mealId: string) {
     const query = await checkMealExistsDBClient.query(`SELECT mealid FROM cartmeals
                                                         WHERE mealid = $1`, [mealId]);
         
+    await checkMealExistsDBClient.end()
+
     return query['rows'].length != 0
 }
 
@@ -40,6 +43,8 @@ export async function checkCartMealExists(cartMealId: string) {
     const query = await checkMealExistsDBClient.query(`SELECT cartmealid FROM cartmeals
                                                         WHERE cartmealid = $1`, [cartMealId]);
         
+    await checkMealExistsDBClient.end() 
+
     return query['rows'].length != 0
 }
 
@@ -54,6 +59,8 @@ export async function getMealBar(mealId: string) {
     const getMealBarDBClient = createClient();
     const query = await getMealBarDBClient.query(`SELECT barid FROM meals
                                                     WHERE mealid = $1`, [mealId]);
+    
+    await getMealBarDBClient.end()
 
     return query['rows'][0]["barid"]
 }
@@ -69,6 +76,7 @@ export async function getEmployeeBar(uId: string) {
     const query = await checkMealExistsDBClient.query(`SELECT preferredbar FROM users
                                                         WHERE uid = $1`, [uId]);
 
-                                                        
+    await checkMealExistsDBClient.end()
+                                   
     return query['rows'][0]["preferredbar"]
 }

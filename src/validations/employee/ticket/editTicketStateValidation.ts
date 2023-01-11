@@ -13,7 +13,9 @@ export async function getTicketBar(ticketId: string) {
     const checkTicketBarDBClient = createClient();
     const query = await checkTicketBarDBClient.query(`SELECT barid FROM tickets
                                                         WHERE ticketid = $1`, [ticketId]);
-                                           
+    
+    await checkTicketBarDBClient.end()    
+
     return query['rows'][0]["barid"]
 }
 
@@ -27,7 +29,9 @@ export async function getTicketState(ticketId: string) {
     const getTicketStateDBClient = createClient();
     const query = await getTicketStateDBClient.query(`SELECT stateid FROM tickets
                                                         WHERE ticketid = $1`, [ticketId]);
-                                           
+            
+    await getTicketStateDBClient.end()
+
     return query['rows'][0]["stateid"]
 }
 
@@ -41,7 +45,9 @@ export async function getStateId(stateName: string) {
     const getStateIdDBClient = createClient();
     const query = await getStateIdDBClient.query(`SELECT stateid FROM states
                                                 WHERE name = $1`, [stateName]);
-                  
+    
+    await getStateIdDBClient.end()  
+
     return query['rows'][0]["stateid"]
 }
 
@@ -54,6 +60,8 @@ export async function checkStateNameExists(stateName: string) {
     const checkStateNameDBClient = createClient();
     const query = await checkStateNameDBClient.query(`SELECT stateid FROM states
                                                 WHERE name = $1`, [stateName]);
-                  
+                
+    await checkStateNameDBClient.end()
+
     return query['rows'].length != 0
 }

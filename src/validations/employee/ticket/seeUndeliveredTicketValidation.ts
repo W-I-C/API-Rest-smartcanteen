@@ -14,6 +14,7 @@ export async function getEmployeeBar(uId: string) {
     const query = await checkMealExistsDBClient.query(`SELECT preferredbar FROM users
                                                         WHERE uid = $1`, [uId]);
 
-                                                        
+    await checkMealExistsDBClient.end()
+                                       
     return query['rows'][0]["preferredbar"]
 }

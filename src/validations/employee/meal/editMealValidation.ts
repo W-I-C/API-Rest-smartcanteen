@@ -13,7 +13,8 @@ export async function checkMealExists(mealId: string) {
     const query = await checkMealExistsDBClient.query(`SELECT mealid FROM meals
                                                         WHERE mealid = $1 AND isdeleted = $2`, [mealId, false]);
 
-                                                        
+    await checkMealExistsDBClient.end()   
+
     return query['rows'].length != 0
 }
 
@@ -22,7 +23,8 @@ export async function checkCartMealsExists(cartId: string) {
     const query = await checkMealExistsDBClient.query(`SELECT cartmealid FROM cartmeals
                                                         WHERE cartid = $1`, [cartId]);
 
-                                                        
+    await checkMealExistsDBClient.end()         
+
     return query['rows'].length != 0
 }
 
@@ -31,7 +33,8 @@ export async function checkBarFromMealsExists(mealId: string) {
     const query = await checkMealExistsDBClient.query(`SELECT barid FROM meals
                                                         WHERE mealid = $1`, [mealId]);
 
-                                                        
+    await checkMealExistsDBClient.end()       
+
     return query['rows'].length != 0
 }
 
@@ -49,6 +52,8 @@ export async function getMealBar(mealId: string) {
     const query = await getMealBarDBClient.query(`SELECT barid FROM meals
                                                     WHERE mealid = $1`, [mealId]);
 
+    await getMealBarDBClient.end() 
+
     return query['rows'][0]["barid"]
 }
 
@@ -63,7 +68,8 @@ export async function getEmployeeBar(uId: string) {
     const query = await checkMealExistsDBClient.query(`SELECT preferredbar FROM users
                                                         WHERE uid = $1`, [uId]);
 
-                                                        
+    await checkMealExistsDBClient.end()       
+
     return query['rows'][0]["preferredbar"]
 }
 
@@ -79,7 +85,9 @@ export async function checkMealExistsBar(name: string, barId: string) {
     const MealExists = createClient();
     const query = await MealExists.query(`SELECT * FROM meals 
                                         WHERE name=$1 AND barId=$2 AND isdeleted = $3`,[name, barId, false])
-                                           
+    
+    await MealExists.end()     
+                        
     return query['rows'].length != 0
 }
 

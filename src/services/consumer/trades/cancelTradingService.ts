@@ -70,6 +70,8 @@ export class CancelTradingService {
 
     const data = verifyUser["rows"]
 
+    await cancelTicketTradeDBClient.end()
+
     return { data: data, status: 200 }
   }
 }
