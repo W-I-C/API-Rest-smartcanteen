@@ -78,6 +78,7 @@ describe("Direct Ticket Trade", () => {
         .request(server)
         .put(baseUrl + '/trades/' + ticketId + '/general')
         .set("Authorization", token)
+        .send({ isFree: false })
         .then(res => {
           res.should.have.status(200)
 
@@ -96,6 +97,7 @@ describe("Direct Ticket Trade", () => {
         .request(server)
         .put(baseUrl + '/trades/' + notMyTicketId + '/general')
         .set("Authorization", token)
+        .send({ isFree: false })
         .then(res => {
           res.should.have.status(500)
         })
