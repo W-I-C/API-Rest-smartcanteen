@@ -22,6 +22,7 @@ export class SeeMealsService {
      */
     async execute(barId: string, uId: string, role: string) {
         const seeMealsDBClient = createClient();
+        
 
         const barExists = await checkBarExists(barId)
         if (!barExists) {
@@ -36,7 +37,6 @@ export class SeeMealsService {
             }
         }
         const query = await seeMealsDBClient.query('SELECT * from Meals WHERE barId = $1 AND isdeleted = $2', [barId, false])
-
 
 
         const data = query["rows"]

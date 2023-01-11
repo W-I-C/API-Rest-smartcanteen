@@ -4,6 +4,7 @@
 require('dotenv').config();
 import { createClient } from "../../../config/db";
 import { getDeliveredStatusId, getNotStartedStatusId } from "../../../helpers/dbHelpers";
+import { getUserCampus } from "../../../validations/consumer/trades/seeTradesValidation";
 
 /**
  * Class responsible for the service that serves to remove one order of the authenticated user
@@ -28,12 +29,7 @@ export class RemoveTicketService {
 
         const ticket = getTicketQuery.rows[0]
 
-        if (getTicketTrades['rows'].length != 0) {
-            const trade = getTicketTrades['rows'][0]
-            if (trade['uid'] != uId) {
-                throw new Error('Not your Order!')
-            }
-        } else if (ticket['uid'] != uId) {
+        if (ticket['uid'] != uId) {
             throw new Error('Not your Order!')
         }
 
@@ -43,6 +39,18 @@ export class RemoveTicketService {
 
         await removeTicketDBClient.query(`UPDATE tickets SET isdeleted=$1 WHERE ticketid=$2`, [true, ticketId])
 
-        return { data: { msg: 'Order removed sucessfuly' }, status: 200 }
+
+        const campusId = await getUserCampus(uId)
+        const query = await removeTicketDBClient.query(`SELECT bar.name as barname,tickets.ticketid,users.name as ownername,states.name as statename,tickets.cartid,tickets.emissiondate,tickets.pickuptime,tickets.ticketamount, tickets.total,tickets.nencomenda, tickets.isfree
+                                                            FROM campus
+                                                            JOIN bar on bar.campusid = campus.campusid
+                                                            JOIN tickets on tickets.barid = bar.barid
+                                                            JOIN users on users.uid = tickets.uid
+                                                            JOIN states ON tickets.stateid = states.stateid
+                                                            WHERE campus.campusid=$1 AND tickets.uid = $2 AND tickets.isdeleted = $3`, [campusId, uId, false])
+
+        const data = query["rows"]
+
+        return { data: data, status: 200 }
     }
 }

@@ -18,14 +18,16 @@ export class SeeTradesService {
         const campusId = await getUserCampus(uId)
 
 
-        const verifyUser = await selectTicket.query(`SELECT bar.name as barname,tickets.ticketid,users.name as ownername,states.name as statename,tickets.cartid,tickets.emissiondate,tickets.pickuptime,tickets.ticketamount, tickets.total,tickets.nencomenda FROM campus
-                                                        JOIN bar on bar.campusid=campus.campusid
-                                                        JOIN tickets on tickets.barid=bar.barid
-                                                        JOIN states on states.stateid=tickets.stateid
+        const verifyUser = await selectTicket.query(`SELECT bar.name as barname,tickets.ticketid,users.name as ownername,states.name as statename,tickets.cartid,tickets.emissiondate,tickets.pickuptime,tickets.ticketamount, tickets.total,tickets.nencomenda, tickets.isfree FROM campus
+                                                        JOIN bar on bar.campusid = campus.campusid
+                                                        JOIN tickets on tickets.barid = bar.barid
+                                                        JOIN states on states.stateid = tickets.stateid
                                                         JOIN users on users.uid = tickets.uid
                                                         WHERE campus.campusid=$1
+                                                        AND tickets.uid <> $2
                                                         AND tickets.istrading = true 
-                                                        AND tickets.isdirecttrade=false`, [campusId])
+                                                        AND tickets.isdirecttrade =false
+                                                        AND Date(tickets.emissiondate) = CURRENT_DATE`, [campusId, uId])
 
         const data = verifyUser["rows"]
 
