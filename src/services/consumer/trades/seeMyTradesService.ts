@@ -1,29 +1,32 @@
 require('dotenv').config();
 import { createClient } from "../../../config/db";
+import { getUserCampus } from "../../../validations/consumer/trades/seeTradesValidation";
 
 export class SeeMyTradesService {
 
     async execute(uId:string) { 
        
         const SeeMyTradesDBClient= createClient();
-      
-        // const query=await SeeMyTradesDBClient.query(`SELECT tickets.ticketid, tickets.nencomenda, tickets.ticketamount, tickets.total, states.name
-        //                                         FROM tickettrade 
-        //                                         JOIN tickets ON tickettrade.ticketid = tickets.ticketid
-        //                                         JOIN states ON tickets.stateid = states.stateid
-        //                                         WHERE tickettrade.uid = $1 AND tickettrade.isdeleted = $2 AND tickettrade.isconfirmed = $3 AND tickettrade.receptordecision = $4`,[uId, false, true, 1])
 
-        const query=await SeeMyTradesDBClient.query(`SELECT tickets.ticketid, tickets.nencomenda, tickets.ticketamount, tickets.total, states.name
-                                                    FROM tickettrade 
-                                                    JOIN tickets ON tickettrade.ticketid = tickets.ticketid
+        const campusId = await getUserCampus(uId)
+
+        const query=await SeeMyTradesDBClient.query(`SELECT bar.name as barname,tickets.ticketid,users.name as ownername,states.name as statename,tickets.cartid,tickets.emissiondate,tickets.pickuptime,tickets.ticketamount, tickets.total,tickets.nencomenda
+                                                    FROM campus 
+                                                    JOIN bar on bar.campusid=campus.campusid
+                                                    JOIN tickets on tickets.barid=bar.barid
+                                                    JOIN tickettrade ON tickets.ticketid = tickettrade.ticketid
                                                     JOIN states ON tickets.stateid = states.stateid
-                                                    WHERE tickettrade.previousowner = $1 AND tickets.isdeleted = $2
+                                                    JOIN users on users.uid = tickets.uid
+                                                    WHERE campus.campusid = $1 AND tickettrade.previousowner = $2 AND tickets.isdeleted = $3
                                                     UNION
-                                                    SELECT tickets.ticketid, tickets.nencomenda, tickets.ticketamount, tickets.total, states.name
-                                                    FROM generaltrades 
-                                                    JOIN tickets ON generaltrades.ticketid = tickets.ticketid
+                                                    SELECT bar.name as barname,tickets.ticketid,users.name as ownername,states.name as statename,tickets.cartid,tickets.emissiondate,tickets.pickuptime,tickets.ticketamount, tickets.total,tickets.nencomenda
+                                                    FROM campus 
+                                                    JOIN bar on bar.campusid=campus.campusid
+                                                    JOIN tickets on tickets.barid=bar.barid
+                                                    JOIN generaltrades ON tickets.ticketid = generaltrades.ticketid
                                                     JOIN states ON tickets.stateid = states.stateid
-                                                    WHERE generaltrades.previousowner = $1 AND tickets.isdeleted = $2`,[uId, false])
+                                                    JOIN users on users.uid = tickets.uid
+                                                    WHERE campus.campusid = $1 AND generaltrades.previousowner = $2 AND tickets.isdeleted = $3`,[campusId, uId, false])
         
         const data=query["rows"]
 
