@@ -18,9 +18,18 @@ export class SeeMealsCartService {
         
         const seeMealsCartDBClient=createClient();
 
-        const queryUser=await seeMealsCartDBClient.query('SELECT * from Cart WHERE uId=$1 AND iscompleted=$2',[uId,false])
+        
+
+        const queryUser=await seeMealsCartDBClient.query(`SELECT meals.name, meals.price, cartmeals.amount
+                                                            FROM cart
+                                                            JOIN cartmeals ON cart.cartid = cartmeals.cartid
+                                                            JOIN meals ON cartmeals.mealid = meals.mealid
+                                                            WHERE cart.uId = $1 AND cart.iscompleted = $2`,[uId,false])
+       
+                            
 
         const data=queryUser["rows"]
+        
         return { data, status: 200 }
     }  
 }
