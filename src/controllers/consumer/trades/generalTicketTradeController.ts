@@ -19,6 +19,7 @@ export class GeneralTicketTradeController {
   async handle(request: Request, response: Response) {
     const uId = response.locals.uid;
     const ticketId = request.params.ticketId
+    let { isFree } = request.body
 
     try {
       if (uId === undefined || ticketId === undefined) {
@@ -26,7 +27,7 @@ export class GeneralTicketTradeController {
       }
 
       const generalTicketTradeService = new GeneralTicketTradeService();
-      const resp = await generalTicketTradeService.execute(uId, ticketId);
+      const resp = await generalTicketTradeService.execute(uId, ticketId, isFree);
 
       response.status(resp.status).json(resp.data);
     } catch (e) {
