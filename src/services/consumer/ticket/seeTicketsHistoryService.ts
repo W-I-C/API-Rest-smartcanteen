@@ -18,8 +18,7 @@ export class SeeTicketsHistoryService {
         const query = await seeTicketsHistoryDBClient.query(`SELECT tickets.ticketid, nencomenda, ticketamount, total, states.name
                                                             FROM tickets
                                                             JOIN states ON tickets.stateid = states.stateid
-                                                            LEFT JOIN tickettrade ON tickets.ticketid = tickettrade.ticketid
-                                                            WHERE tickets.uid = $1 AND tickets.isdeleted = $2 AND tickettrade.isdeleted = $3 AND tickettrade.receptordecision = $4 OR tickettrade.receptordecision = $5`, [uId, false, false, 0, null]) 
+                                                            WHERE tickets.uid = $1 AND tickets.isdeleted = $2`, [uId, false]) 
         
         const data = query["rows"]
                                             
