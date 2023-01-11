@@ -1325,23 +1325,12 @@
         }
       }
     },
-    "/consumer/trades/available/{campusid}": {
+    "/consumer/trades/available": {
       "get": {
         "summary": "Get all trades available",
         "description": "Get all the trades available",
         "tags": ["Trades"],
         "security": [{ "basicAuth": [] }],
-        "parameters": [
-          {
-            "name": "campusid",
-            "in": "path",
-            "description": "campus id",
-            "required": true,
-            "schema": {
-              "properties": { "campusid": { "type": "string" } }
-            }
-          }
-        ],
         "responses": {
           "500": { "description": "ERROR" },
           "401": {
