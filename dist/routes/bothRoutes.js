@@ -35,6 +35,6 @@ bothRouter.get("/newSessionToken", newSessionToken.handle);
 bothRouter.get("/logout", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, logoutController.handle);
 bothRouter.get("/meals/:mealid", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, seeMealsDetailController.handle);
 // ver as refeições num bar
-bothRouter.get("/meals/:barId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, seeMealsController.handle);
+bothRouter.get("/bar/:barId/meals", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, seeMealsController.handle);
 bothRouter.get("/detail/ticket/:ticketId", validateToken_1.validateToken, validateRefreshToken_1.validateRefreshToken, seeDetailsMealTicketController.handle);
 //# sourceMappingURL=bothRoutes.js.map
