@@ -3,7 +3,7 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-import { getNotStartedStatusId } from "../../../helpers/dbHelpers";
+import { getDeliveredStatusId, getNotStartedStatusId } from "../../../helpers/dbHelpers";
 
 /**
  * Class responsible for the service that serves to remove one order of the authenticated user
@@ -37,7 +37,7 @@ export class RemoveTicketService {
             throw new Error('Not your Order!')
         }
 
-        if (ticket['stateid'] != (await getNotStartedStatusId())) {
+        if (ticket['stateid'] != (await getNotStartedStatusId()) && ticket['stateid'] != (await getDeliveredStatusId())) {
             throw new Error('Order Already in preperation!')
         }
 
