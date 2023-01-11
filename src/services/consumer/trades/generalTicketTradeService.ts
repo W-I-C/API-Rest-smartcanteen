@@ -14,7 +14,7 @@ export class GeneralTicketTradeService {
    * @param uId authenticated user id
    * @param ticketId id of the order
    */
-  async execute(uId: string, ticketId: string) {
+  async execute(uId: string, ticketId: string, isFree: boolean) {
 
     const renameTicketTradeDBClient = createClient();
     const getTicketQuery = await renameTicketTradeDBClient.query(`SELECT * FROM tickets WHERE ticketid = $1 AND isdeleted = $2`, [ticketId, false]);
@@ -30,17 +30,11 @@ export class GeneralTicketTradeService {
       throw new Error('Order already trading!')
     }
 
-
-    if (getTicketTrades['rows'].length != 0) {
-      const trade = getTicketTrades['rows'][0]
-      if (trade['uid'] != uId) {
-        throw new Error('Not your Order!')
-      }
-    } else if (ticket['uid'] != uId) {
+    if (ticket['uid'] != uId) {
       throw new Error('Not your Order!')
     }
 
-    await renameTicketTradeDBClient.query(`UPDATE tickets SET isTrading=$1 WHERE ticketid=$2`, [true, ticketId])
+    await renameTicketTradeDBClient.query(`UPDATE tickets SET isTrading=$1 , isfree=$2 WHERE ticketid=$3`, [true, isFree, ticketId])
     return { data: { msg: 'Trade exposed successfully' }, status: 200 }
   }
 }

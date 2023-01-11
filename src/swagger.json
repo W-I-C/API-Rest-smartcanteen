@@ -1325,23 +1325,12 @@
         }
       }
     },
-    "/consumer/trades/available/{campusid}": {
+    "/consumer/trades/available": {
       "get": {
         "summary": "Get all trades available",
         "description": "Get all the trades available",
         "tags": ["Trades"],
         "security": [{ "basicAuth": [] }],
-        "parameters": [
-          {
-            "name": "campusid",
-            "in": "path",
-            "description": "campus id",
-            "required": true,
-            "schema": {
-              "properties": { "campusid": { "type": "string" } }
-            }
-          }
-        ],
         "responses": {
           "500": { "description": "ERROR" },
           "401": {
@@ -2115,6 +2104,24 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "isFree": { "type": "boolean" }
+                }
+              },
+              "examples": {
+                "Edit ticket state": {
+                  "value": {
+                    "isFree": false
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "500": {
             "description": "ERROR",
@@ -2200,6 +2207,24 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "isFree": { "type": "boolean" }
+                }
+              },
+              "examples": {
+                "Edit ticket state": {
+                  "value": {
+                    "isFree": false
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "500": {
             "description": "ERROR",
@@ -2505,6 +2530,123 @@
                 },
                 "examples": {
                   "Bars": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consumer/general/trades/{ticketId}": {
+      "get": {
+        "summary": "Accept General Trade",
+        "description": "Allows an user to accept a general trade",
+        "tags": ["Trades"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "Ticket Id",
+            "required": true,
+            "schema": {
+              "properties": { "ticketId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Register without body": {
+                    "value": { "msg": "Missing Arguments!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Success": {
+                    "value": {
+                      "Error": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/consumer/mytrades": {
+      "get": {
+        "summary": "See my trades history",
+        "description": "Allows an user to asee his trades history",
+        "tags": ["Trades"],
+        "security": [{ "basicAuth": [] }],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Register without body": {
+                    "value": { "msg": "Missing Arguments!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Success": {
+                    "value": {
+                      "Error": "Success"
+                    }
+                  }
                 }
               }
             }

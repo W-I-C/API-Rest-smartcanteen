@@ -22,6 +22,7 @@ import { GeneralTicketTradeController } from "../controllers/consumer/trades/gen
 import { CancelTradingController } from "../controllers/consumer/trades/cancelTradingController";
 import { CompleteCartController } from "../controllers/consumer/cart/completeCartController";
 import { SeeMyTradesController } from "../controllers/consumer/trades/seeMyTradesController";
+import { AcceptTradeGeneralController } from "../controllers/consumer/trades/acceptTradeGeneralController";
 
 const addFavController = new AddFavController();
 const removeFavController = new RemoveFavController();
@@ -41,6 +42,7 @@ const generalTicketTradeController = new GeneralTicketTradeController()
 const cancelTradingController = new CancelTradingController()
 const completeCartController = new CompleteCartController()
 const seeMyTradesController = new SeeMyTradesController()
+const acceptTradeGeneralController = new AcceptTradeGeneralController()
 
 //adicionar aos favoritos refeição
 consumerRouter.post("/favoriteMeals/:mealId", validateToken, validateRefreshToken, isConsumer, addFavController.handle);
@@ -54,13 +56,14 @@ consumerRouter.get("/trades", validateToken, validateRefreshToken, isConsumer, s
 consumerRouter.delete("/tickets/:ticketId", validateToken, validateRefreshToken, isConsumer, removeTicketController.handle);
 consumerRouter.get("/tickets", validateToken, validateRefreshToken, isConsumer, seeTicketsHistoryController.handle);
 consumerRouter.put("/trades/:ticketId", validateToken, validateRefreshToken, isConsumer, acceptTradeController.handle);
-consumerRouter.get("/trades/available/:campusid", validateToken, validateRefreshToken, isConsumer, seeTradesController.handle);
+consumerRouter.get("/trades/available", validateToken, validateRefreshToken, isConsumer, seeTradesController.handle);
 consumerRouter.get("/notifications", validateToken, validateRefreshToken, isConsumer, getNotificationsController.handle);
 consumerRouter.put("/trades/:ticketId/direct/:receiverId", validateToken, validateRefreshToken, isConsumer, directTicketTradeController.handle);
 consumerRouter.put("/trades/:ticketId/general", validateToken, validateRefreshToken, isConsumer, generalTicketTradeController.handle);
 consumerRouter.delete("/trades/:ticketId/", validateToken, validateRefreshToken, isConsumer, cancelTradingController.handle);
 consumerRouter.post("/cart/:cartId/complete", validateToken, validateRefreshToken, isConsumer, completeCartController.handle);
 consumerRouter.get("/mytrades", validateToken, validateRefreshToken, isConsumer, seeMyTradesController.handle);
+consumerRouter.get("/general/trades/:ticketId", validateToken, validateRefreshToken, isConsumer, acceptTradeGeneralController.handle);
 
 
 export { consumerRouter }

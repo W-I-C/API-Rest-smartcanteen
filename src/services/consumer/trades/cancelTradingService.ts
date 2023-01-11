@@ -3,7 +3,8 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-import { getUserName } from "../../../helpers/dbHelpers";
+import { getDeliveredStatusId, getUserName } from "../../../helpers/dbHelpers";
+import { getUserCampus } from "../../../validations/consumer/trades/seeTradesValidation";
 
 /**
  * Class responsible for the service that serves to cancel trading for a ticket 
@@ -33,13 +34,12 @@ export class CancelTradingService {
       throw new Error('Order not trading!')
     }
 
-    if (getTicketTrades['rows'].length != 0) {
-      const trade = getTicketTrades['rows'][0]
-      if (trade['uid'] != uId) {
-        throw new Error('Not your Order!')
-      }
-    } else if (ticket['uid'] != uId) {
+    if (ticket['uid'] != uId) {
       throw new Error('Not your Order!')
+    }
+
+    if (ticket['stateid'] === (await getDeliveredStatusId())) {
+      throw new Error('Cannot trade an order that is already delivered')
     }
 
     await cancelTicketTradeDBClient.query(`UPDATE tickets SET istrading=$1, isdirecttrade=$2 WHERE ticketid=$3`, [false, false, ticketId])
@@ -54,6 +54,22 @@ export class CancelTradingService {
       });
     }
 
-    return { data: { msg: 'Trade canceled successfully' }, status: 200 }
+    const campusId = await getUserCampus(uId)
+
+    const verifyUser = await cancelTicketTradeDBClient.query(
+      `SELECT bar.name as barname,tickets.ticketid,users.name as ownername,states.name as statename,tickets.cartid,tickets.emissiondate,tickets.pickuptime,tickets.ticketamount, tickets.total,tickets.nencomenda, tickets.isFree FROM campus
+        JOIN bar on bar.campusid = campus.campusid
+        JOIN tickets on tickets.barid = bar.barid
+        JOIN states on states.stateid = tickets.stateid
+        JOIN users on users.uid = tickets.uid
+        WHERE campus.campusid=$1
+        AND tickets.uid <> $2
+        AND tickets.istrading = true 
+        AND tickets.isdirecttrade =false
+        AND Date(tickets.emissiondate) = CURRENT_DATE`, [campusId, uId])
+
+    const data = verifyUser["rows"]
+
+    return { data: data, status: 200 }
   }
 }

@@ -80,6 +80,7 @@ describe("Direct Ticket Trade", () => {
         .request(server)
         .put(baseUrl + '/trades/' + ticketId + '/direct/' + invalidReceiverId)
         .set("Authorization", token)
+        .send({ isFree: false })
         .then(res => {
           res.should.have.status(500)
         })
@@ -92,6 +93,7 @@ describe("Direct Ticket Trade", () => {
         .request(server)
         .put(baseUrl + '/trades/' + ticketId + '/direct/' + employeeId)
         .set("Authorization", token)
+        .send({ isFree: false })
         .then(res => {
           res.should.have.status(500)
         })
@@ -104,6 +106,7 @@ describe("Direct Ticket Trade", () => {
         .request(server)
         .put(baseUrl + '/trades/' + ticketId + '/direct/' + receiverId)
         .set("Authorization", token)
+        .send({ isFree: false })
         .then(res => {
           res.should.have.status(200)
 
@@ -121,6 +124,7 @@ describe("Direct Ticket Trade", () => {
         .request(server)
         .put(baseUrl + '/trades/' + ticketId + '/direct/' + receiverId)
         .set("Authorization", token)
+        .send({ isFree: false })
         .then(res => {
           res.should.have.status(500)
         })
@@ -132,6 +136,7 @@ describe("Direct Ticket Trade", () => {
         .request(server)
         .put(baseUrl + '/trades/' + notMyTicketId + '/direct/' + receiverId)
         .set("Authorization", token)
+        .send({ isFree: false })
         .then(res => {
           res.should.have.status(500)
         })

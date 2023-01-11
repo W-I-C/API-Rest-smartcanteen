@@ -17,7 +17,7 @@ export class DirectTicketTradeService {
    * @param ticketId id of the order
    * @param receiverid id of the user that the trade is going to go
    */
-  async execute(uId: string, receiverid: string, ticketId: string) {
+  async execute(uId: string, receiverid: string, ticketId: string, isFree: boolean) {
 
     const directTicketTradeDBClient = createClient();
     const getTicketQuery = await directTicketTradeDBClient.query(`SELECT * FROM tickets WHERE ticketid = $1 AND isdeleted = $2`, [ticketId, false]);
@@ -41,15 +41,9 @@ export class DirectTicketTradeService {
 
     const ticket = getTicketQuery.rows[0]
 
-    if (getTicketTrades['rows'].length != 0) {
-      const trade = getTicketTrades['rows'][0]
-      if (trade['uid'] != uId) {
-        throw new Error('Not your Order!')
-      }
-    } else if (ticket['uid'] != uId) {
+    if (ticket['uid'] != uId) {
       throw new Error('Not your Order!')
     }
-
 
     const getTradesTicketToReceiver = await directTicketTradeDBClient.query(`SELECT * FROM tickettrade 
     WHERE ticketid = $1 AND uid = $2`, [ticketId, receiverid]);
@@ -60,10 +54,10 @@ export class DirectTicketTradeService {
 
     const description = `${userName} sent you a trade proposal`
 
-    await directTicketTradeDBClient.query(`UPDATE tickets SET istrading=$1 WHERE ticketid=$2`, [true, ticketId])
+    await directTicketTradeDBClient.query(`UPDATE tickets SET istrading=$1, isfree=$2 WHERE ticketid=$2`, [true, isFree, ticketId])
     const date = new Date()
     await directTicketTradeDBClient.query(`INSERT INTO notifications(date,receiverid, senderid,description,istradeproposal) VALUES ($1,$2,$3,$4,$5)`, [date, receiverid, uId, description, true])
-    await directTicketTradeDBClient.query(`INSERT INTO tickettrade(ticketid,uid,proposaldate) VALUES ($1,$2,$3)`, [ticketId, receiverid, date])
+    await directTicketTradeDBClient.query(`INSERT INTO tickettrade(ticketid,uid,proposaldate,previousowner) VALUES ($1,$2,$3,$4)`, [ticketId, receiverid, date, uId])
     return { data: { msg: 'Trade proposal done successfully' }, status: 200 }
   }
 }
