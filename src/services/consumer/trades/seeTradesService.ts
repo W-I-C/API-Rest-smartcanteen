@@ -23,11 +23,9 @@ export class SeeTradesService {
                                                         JOIN tickets on tickets.barid=bar.barid
                                                         JOIN states on states.stateid=tickets.stateid
                                                         JOIN users on users.uid = tickets.uid
-                                                        LEFT JOIN tickettrade on tickets.ticketid=tickettrade.ticketid
                                                         WHERE campus.campusid=$1
                                                         AND tickets.istrading = true 
-                                                        AND tickets.isdirecttrade=false
-                                                        AND tickettrade.receptordecision <> 1`, [campusId])
+                                                        AND tickets.isdirecttrade=false`, [campusId])
 
         const data = verifyUser["rows"]
 
