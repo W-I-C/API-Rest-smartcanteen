@@ -30,13 +30,7 @@ export class GeneralTicketTradeService {
       throw new Error('Order already trading!')
     }
 
-
-    if (getTicketTrades['rows'].length != 0) {
-      const trade = getTicketTrades['rows'][0]
-      if (trade['uid'] != uId) {
-        throw new Error('Not your Order!')
-      }
-    } else if (ticket['uid'] != uId) {
+    if (ticket['uid'] != uId) {
       throw new Error('Not your Order!')
     }
 

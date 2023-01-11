@@ -40,6 +40,11 @@ export class AcceptTradeService {
                                             SET isconfirmed = $1, confirmationdate = $2, receptordecision = $3   
                                             WHERE uid = $4 AND ticketid = $5`, [isConfirmed, confirmationDate, receptorDecision, uId, ticketId])
 
+            if(receptorDecision == 1){
+                await acceptTradeDBClient.query(`UPDATE tickets SET uId = $1, isdirecttrade = $2
+                                        WHERE ticketid = $3`, [uId, false, ticketId])  
+            }
+
             const query = await acceptTradeDBClient.query(`SELECT isconfirmed, confirmationdate, receptordecision
                                                     FROM tickettrade 
                                                     WHERE uid = $1 AND ticketid = $2`, [uId, ticketId])
