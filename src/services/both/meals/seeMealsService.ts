@@ -37,7 +37,6 @@ export class SeeMealsService {
         const query = await seeMealsDBClient.query('SELECT * from Meals WHERE barId = $1 AND isdeleted = $2', [barId, false])
 
 
-
         const data = query["rows"]
 
         return { data, status: 200 }
