@@ -2104,6 +2104,24 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "isFree": { "type": "boolean" }
+                }
+              },
+              "examples": {
+                "Edit ticket state": {
+                  "value": {
+                    "isFree": false
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "500": {
             "description": "ERROR",
@@ -2189,6 +2207,24 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "isFree": { "type": "boolean" }
+                }
+              },
+              "examples": {
+                "Edit ticket state": {
+                  "value": {
+                    "isFree": false
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "500": {
             "description": "ERROR",

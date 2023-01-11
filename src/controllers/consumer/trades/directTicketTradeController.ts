@@ -20,14 +20,15 @@ export class DirectTicketTradeController {
     const uId = response.locals.uid;
     const ticketId = request.params.ticketId
     const receiverid = request.params.receiverId
+    let { isFree } = request.body
 
     try {
-      if (uId === undefined || ticketId === undefined || receiverid === undefined) {
+      if (uId === undefined || ticketId === undefined || receiverid === undefined || isFree === undefined) {
         throw new Error("Invalid request");
       }
 
       const directTicketTradeService = new DirectTicketTradeService();
-      const resp = await directTicketTradeService.execute(uId, receiverid, ticketId);
+      const resp = await directTicketTradeService.execute(uId, receiverid, ticketId, isFree);
 
       response.status(resp.status).json(resp.data);
     } catch (e) {
