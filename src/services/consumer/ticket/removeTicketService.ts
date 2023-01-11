@@ -4,6 +4,7 @@
 require('dotenv').config();
 import { createClient } from "../../../config/db";
 import { getDeliveredStatusId, getNotStartedStatusId } from "../../../helpers/dbHelpers";
+import { getUserCampus } from "../../../validations/consumer/trades/seeTradesValidation";
 
 /**
  * Class responsible for the service that serves to remove one order of the authenticated user
@@ -38,10 +39,15 @@ export class RemoveTicketService {
 
         await removeTicketDBClient.query(`UPDATE tickets SET isdeleted=$1 WHERE ticketid=$2`, [true, ticketId])
 
-        const query = await removeTicketDBClient.query(`SELECT tickets.ticketid, nencomenda, ticketamount, total, states.name
-                FROM tickets
-                JOIN states ON tickets.stateid = states.stateid
-                WHERE tickets.uid = $1 AND tickets.isdeleted = $2`, [uId, false])
+
+        const campusId = await getUserCampus(uId)
+        const query = await removeTicketDBClient.query(`SELECT bar.name as barname,tickets.ticketid,users.name as ownername,states.name as statename,tickets.cartid,tickets.emissiondate,tickets.pickuptime,tickets.ticketamount, tickets.total,tickets.nencomenda, tickets.isfree
+                                                            FROM campus
+                                                            JOIN bar on bar.campusid = campus.campusid
+                                                            JOIN tickets on tickets.barid = bar.barid
+                                                            JOIN users on users.uid = tickets.uid
+                                                            JOIN states ON tickets.stateid = states.stateid
+                                                            WHERE campus.campusid=$1 AND tickets.uid = $2 AND tickets.isdeleted = $3`, [uId, campusId, false])
 
         const data = query["rows"]
 
