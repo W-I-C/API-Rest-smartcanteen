@@ -2451,6 +2451,66 @@
           }
         }
       }
+    },
+    "/campus/bars": {
+      "get": {
+        "summary": "Get bars in preferred campus",
+        "description": "Allows an user to get bars in preferred campus",
+        "tags": ["Campus"],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Register without body": {
+                    "value": { "msg": "Missing Arguments!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "Bars": {
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "barid": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Bars": {}
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
