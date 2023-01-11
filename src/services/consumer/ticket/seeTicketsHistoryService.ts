@@ -27,6 +27,8 @@ export class SeeTicketsHistoryService {
 
         const data = query["rows"]
 
+        await seeTicketsHistoryDBClient.end()
+
         return { data, status: 200 }
     }
 }

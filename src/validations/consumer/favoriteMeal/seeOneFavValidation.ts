@@ -13,7 +13,8 @@ export async function checkFavMealExists(favMealId: string) {
     const query = await checkMealExistsDBClient.query(`SELECT * FROM favoritemeals
                                                         WHERE favoritemealid = $1`, [favMealId]);
 
-                                                        
+    await checkMealExistsDBClient.end()     
+
     return query['rows'].length != 0
 }
 
@@ -27,6 +28,7 @@ export async function getUserFavMeal(favMealId: string) {
     const query = await checkMealExistsDBClient.query(`SELECT uid FROM favoritemeals
                                                         WHERE favoritemealid = $1`, [favMealId]);
 
-                                                        
+    await checkMealExistsDBClient.end()
+                                    
     return query['rows'][0]["uid"]
 }

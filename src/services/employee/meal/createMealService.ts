@@ -63,6 +63,7 @@ export class CreateMealService {
         const selectAllowed=await createMealDBClient.query('SELECT changeid,mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit from allowedchanges WHERE mealid=$1',[mealId])
         meal["allowedchanges"]=selectAllowed["rows"]
        
+        await createMealDBClient.end()
         
         return { meal, status: 200 }
     

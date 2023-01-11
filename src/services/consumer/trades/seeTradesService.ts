@@ -29,6 +29,8 @@ export class SeeTradesService {
                                                         AND tickets.isdirecttrade =false
                                                         AND Date(tickets.emissiondate) = CURRENT_DATE`, [campusId, uId])
 
+        await selectTicket.end()
+
         const data = verifyUser["rows"]
 
         return { data, status: 200 }

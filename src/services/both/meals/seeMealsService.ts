@@ -41,6 +41,8 @@ export class SeeMealsService {
 
         const data = query["rows"]
 
+        await seeMealsDBClient.end()
+
         return { data, status: 200 }
     }
 }

@@ -35,6 +35,9 @@ export class GeneralTicketTradeService {
     }
 
     await renameTicketTradeDBClient.query(`UPDATE tickets SET isTrading=$1 , isfree=$2 WHERE ticketid=$3`, [true, isFree, ticketId])
+
+    await renameTicketTradeDBClient.end()
+
     return { data: { msg: 'Trade exposed successfully' }, status: 200 }
   }
 }

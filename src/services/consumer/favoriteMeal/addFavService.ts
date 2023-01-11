@@ -40,6 +40,8 @@ export class AddFavService {
 
         const data=queryFav["rows"]
 
+        await addFavDBClient.end()
+
         return { data, status: 200 }
    
     }

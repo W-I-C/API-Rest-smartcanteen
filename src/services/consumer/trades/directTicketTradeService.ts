@@ -58,6 +58,9 @@ export class DirectTicketTradeService {
     const date = new Date()
     await directTicketTradeDBClient.query(`INSERT INTO notifications(date,receiverid, senderid,description,istradeproposal) VALUES ($1,$2,$3,$4,$5)`, [date, receiverid, uId, description, true])
     await directTicketTradeDBClient.query(`INSERT INTO tickettrade(ticketid,uid,proposaldate,previousowner) VALUES ($1,$2,$3,$4)`, [ticketId, receiverid, date, uId])
+    
+    await directTicketTradeDBClient.end()
+
     return { data: { msg: 'Trade proposal done successfully' }, status: 200 }
   }
 }

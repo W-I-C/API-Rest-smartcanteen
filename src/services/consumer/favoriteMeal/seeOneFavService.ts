@@ -36,6 +36,8 @@ export class SeeOneFavService {
                                             WHERE favoritemeals.favoritemealid = $1 AND favoritemeals.uid = $2`, [favMealId, uId]) 
         
         const data = query["rows"][0]
+
+        await seeOneFavDBClient.end()
                                             
         return { data, status: 200 }
     }

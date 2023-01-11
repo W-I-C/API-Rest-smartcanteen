@@ -36,8 +36,14 @@ export class LoginService {
       const uid = query['rows'][0]['uid']
       const sessionToken = createSessionToken(uid, role)
       await createRefreshToken(uid)
+
+      await loginDBClient.end()
+
       return { status: 200, data: { token: sessionToken, role: role } }
     } else {
+
+      await loginDBClient.end()
+
       return { status: 401, data: { msg: 'Wrong Credentials!' } }
     }
   }

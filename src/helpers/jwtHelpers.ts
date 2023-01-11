@@ -23,4 +23,6 @@ export async function createRefreshToken(uid: string) {
   const refreshTokenDBClient = createClient();
   
   const insertRefreshTokenQuery = await refreshTokenDBClient.query(`UPDATE users SET "refreshtoken" = $1 WHERE uid = $2`, [token, uid])
+
+  await refreshTokenDBClient.end()
 }

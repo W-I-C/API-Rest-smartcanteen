@@ -39,6 +39,8 @@ export class GetBarStatisticsService {
       tradedTickets: Number(ticketsTradedQuery['rows'][0]['totaltradestoday'])
     }
 
+    await getBarStatisticsDBClient.end()
+
     return { data: statistics, status: 200 }
   }
 }
