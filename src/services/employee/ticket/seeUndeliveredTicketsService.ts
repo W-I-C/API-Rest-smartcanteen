@@ -30,6 +30,8 @@ export class SeeUndeliveredTicketsService {
                                                                     JOIN states ON tickets.stateid = states.stateid
                                                                     WHERE campus.campusid=$1 AND tickets.barid = $1 AND tickets.isdeleted = $2 AND tickets.ispickedup = $3 AND tickets.stateid != $4`, [campusId, barId, false, false, stateId])
 
+        await seeUndeliveredTicketsDBClient.end()
+        
         const data = query["rows"]
 
         return { data, status: 200 }

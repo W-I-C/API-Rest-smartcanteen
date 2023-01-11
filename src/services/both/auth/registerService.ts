@@ -45,6 +45,8 @@ export class RegisterService {
                                    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
       [roleid, preferredcampus, preferredbar, email, name, passwd, schoolno, birthdate, imgurl])
 
+    await registerDBClient.end()
+    
     return { status: 200, data: { msg: "User Registered Successfully" } }
   }
 }

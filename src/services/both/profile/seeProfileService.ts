@@ -23,6 +23,8 @@ export class SeeProfileService {
         
         const data = query["rows"][0]
 
+        await seeProfileDBClient.end()
+
         return { data, status: 200 }
     }
 }

@@ -59,6 +59,8 @@ export class EditTicketStateService {
                                                                 FROM tickets
                                                                 WHERE ticketid = $1`, [ticketId])
 
+        await editTicketStateDBClient.end()
+
         let editedMeal = query["rows"][0]
 
         return { editedMeal, status: 200 }

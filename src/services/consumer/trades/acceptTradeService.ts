@@ -54,9 +54,14 @@ export class AcceptTradeService {
 
             const data = query["rows"][0]
 
+            await acceptTradeDBClient.end()
+
             return { data, status: 200 }
         }
         else {
+
+            await acceptTradeDBClient.end()
+            
             return { msg: "Invalid Data", status: 500 }
         }
     }

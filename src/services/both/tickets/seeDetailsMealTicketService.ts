@@ -35,9 +35,14 @@ export class SeeDetailsMealTicketService {
         const data = detail["rows"][0];
         mealData.push(data);
       }
-  
+      
+      await seeMeals.end()
+
       return { data: mealData, status: 200 };
     } catch (error) {
+
+      await seeMeals.end()
+      
       return { error: error.message, status: 500 };
     }
   }

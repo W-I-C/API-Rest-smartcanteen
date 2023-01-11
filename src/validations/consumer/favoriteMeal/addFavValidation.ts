@@ -13,6 +13,7 @@ export async function checkMealExists(mealId: string) {
     const query = await checkMealExistsDBClient.query(`SELECT mealid FROM meals
                                                         WHERE mealid = $1 AND isdeleted = $2`, [mealId, false]);
 
-                                                        
+    await checkMealExistsDBClient.end()    
+                           
     return query['rows'].length != 0
 }

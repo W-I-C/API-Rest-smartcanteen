@@ -34,6 +34,8 @@ export class AcceptTradeGeneralService {
         await createTradeDBClient.query(`INSERT INTO notifications (date, receiverid, senderid, description)
                                         VALUES ($1, $2, $3, $4)`, [tradeDate, previousOwner, uId, description])
 
+        await createTradeDBClient.end()
+
         return { msg: "Success", status: 200 }
     }
 }

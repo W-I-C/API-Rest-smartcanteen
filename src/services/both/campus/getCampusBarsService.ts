@@ -22,6 +22,9 @@ export class GetCampusBarsService {
     const query = await mealsDetailDBClient.query('SELECT barid,name from bar WHERE campusid=$1', [campusId])
 
     const data = query["rows"]
+
+    await mealsDetailDBClient.end()
+
     return { data, status: 200 }
   }
 }
