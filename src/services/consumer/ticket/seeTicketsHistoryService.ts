@@ -23,7 +23,7 @@ export class SeeTicketsHistoryService {
                                                                 JOIN tickets on tickets.barid = bar.barid
                                                                 JOIN users on users.uid = tickets.uid
                                                                 JOIN states ON tickets.stateid = states.stateid
-                                                                WHERE campus.campusid=$1 AND tickets.uid = $2 AND tickets.isdeleted = $3`, [uId, campusId, false])
+                                                                WHERE campus.campusid=$1 AND tickets.uid = $2 AND tickets.isdeleted = $3`, [campusId, uId, false])
 
         const data = query["rows"]
 
