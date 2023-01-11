@@ -22,6 +22,7 @@ export class SeeMealsService {
      */
     async execute(barId: string, uId: string) {
         const seeMealsDBClient = createClient();
+        
 
         const barExists = await checkBarExists(uId)
         if (!barExists) {

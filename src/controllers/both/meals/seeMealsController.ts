@@ -13,7 +13,7 @@ export class SeeMealsController {
         const barId = request.params.barid;
         const uId=response.locals.uid;
         try {
-            if(uId === undefined || barId === undefined) {
+            if(barId === undefined || uId === undefined) {
                 throw new Error("Invalid request");
             }
 
