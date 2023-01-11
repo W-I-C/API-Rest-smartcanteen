@@ -18,7 +18,7 @@ export class SeeTradesController {
    */
   async handle(request: Request, response: Response) {
     const uId = response.locals.uid;
-    const campusid=request.params.campusid
+
 
     try {
       if (uId === undefined) {
@@ -26,7 +26,7 @@ export class SeeTradesController {
       }
 
       const seeTradesService = new SeeTradesService();
-      const resp = await seeTradesService.execute(uId,campusid);
+      const resp = await seeTradesService.execute(uId);
 
       response.status(resp.status).json(resp.data);
     } catch (e) {
