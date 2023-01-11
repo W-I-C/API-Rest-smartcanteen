@@ -14,19 +14,19 @@ export class SeeMyTradesService {
                                                     FROM campus 
                                                     JOIN bar on bar.campusid=campus.campusid
                                                     JOIN tickets on tickets.barid=bar.barid
-                                                    JOIN tickettrade ON tickets.ticketid = tickettrade.ticketid
+                                                    LEFT JOIN tickettrade ON tickets.ticketid = tickettrade.ticketid
                                                     JOIN states ON tickets.stateid = states.stateid
                                                     JOIN users on users.uid = tickets.uid
-                                                    WHERE campus.campusid = $1 AND tickettrade.previousowner = $2 AND tickets.isdeleted = $3
+                                                    WHERE campus.campusid = $1 AND (tickettrade.previousowner = $2 OR tickettrade.previousowner is NULL) AND (tickets.uid <> $2 OR (tickets.uid = $2 AND tickets.istrading = $4))  AND tickets.isdeleted = $3
                                                     UNION
                                                     SELECT bar.name as barname,tickets.ticketid,users.name as ownername,states.name as statename,tickets.cartid,tickets.emissiondate,tickets.pickuptime,tickets.ticketamount, tickets.total,tickets.nencomenda
                                                     FROM campus 
                                                     JOIN bar on bar.campusid=campus.campusid
                                                     JOIN tickets on tickets.barid=bar.barid
-                                                    JOIN generaltrades ON tickets.ticketid = generaltrades.ticketid
+                                                    LEFT JOIN generaltrades ON tickets.ticketid = generaltrades.ticketid
                                                     JOIN states ON tickets.stateid = states.stateid
                                                     JOIN users on users.uid = tickets.uid
-                                                    WHERE campus.campusid = $1 AND generaltrades.previousowner = $2 AND tickets.isdeleted = $3`,[campusId, uId, false])
+                                                    WHERE campus.campusid = $1 AND (generaltrades.previousowner = $2 OR generaltrades.previousowner is NULL) AND (tickets.uid <> $2 OR (tickets.uid = $2 AND tickets.istrading = $4)) AND tickets.isdeleted = $3`,[campusId, uId, false, true])
         
         await SeeMyTradesDBClient.end()
 
