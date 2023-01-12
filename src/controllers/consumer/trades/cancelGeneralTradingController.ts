@@ -1,8 +1,7 @@
-
 import { Request, Response } from "express";
-import { AcceptTradeGeneralService } from "../../../services/consumer/trades/acceptTradeGeneralService";
+import { CancelGeneralTradingService } from "../../../services/consumer/trades/cancelGeneralTradingService";
 
-export class AcceptTradeGeneralController {
+export class CancelGeneralTradingController {
   async handle(request: Request, response: Response) {
     const uId = response.locals.uid;
     const generalTradeId = request.params.generalTradeId
@@ -12,10 +11,10 @@ export class AcceptTradeGeneralController {
         throw new Error("Invalid request");
       }
 
-      const acceptTradeGeneralService = new AcceptTradeGeneralService();
-      const resp = await acceptTradeGeneralService.execute(uId, generalTradeId);
+      const cancelGeneralTradingService = new CancelGeneralTradingService();
+      const resp = await cancelGeneralTradingService.execute(uId, generalTradeId);
 
-      response.status(resp.status).json(resp.msg);
+      response.status(resp.status).json(resp.data);
     } catch (e) {
       response.status(500).json(e.message);
     }

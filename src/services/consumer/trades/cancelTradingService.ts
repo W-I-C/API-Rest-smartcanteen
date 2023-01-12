@@ -57,16 +57,17 @@ export class CancelTradingService {
     const campusId = await getUserCampus(uId)
 
     const verifyUser = await cancelTicketTradeDBClient.query(
-      `SELECT bar.name as barname,tickets.ticketid,users.name as ownername,states.name as statename,tickets.cartid,tickets.emissiondate,tickets.pickuptime,tickets.ticketamount, tickets.total,tickets.nencomenda, tickets.isFree FROM campus
-        JOIN bar on bar.campusid = campus.campusid
-        JOIN tickets on tickets.barid = bar.barid
-        JOIN states on states.stateid = tickets.stateid
-        JOIN users on users.uid = tickets.uid
-        WHERE campus.campusid=$1
-        AND tickets.uid = $2
-        AND tickets.istrading = true 
-        AND tickets.isdirecttrade =false
-        AND Date(tickets.emissiondate) = CURRENT_DATE`, [campusId, uId])
+      `SELECT tickets.ticketid, tickets.cartid, tickets.emissiondate, tickets.pickuptime, tickets.isfree, tickets.nencomenda, tickets.ticketamount, tickets.total, NULL AS receptordecision, paymentmethods.name AS paymentmethod,  states.name AS statename, ticketowner.name AS ownername, tradereceiver.name AS receivername, true AS isgeneraltrade, NULL AS generaltradeid
+      FROM tickettrade 
+      JOIN tickets ON tickettrade.ticketid = tickets.ticketid
+      JOIN bar ON bar.barid = tickets.barid
+      JOIN campus ON campus.campusid = bar.campusid
+      JOIN states ON tickets.stateid = states.stateid
+      JOIN users ticketowner ON tickets.uid = ticketowner.uid
+      JOIN users tradereceiver ON tickettrade.uid = tradereceiver.uid
+      JOIN paymentmethods ON tickettrade.paymentmethodid = paymentmethods.methodid
+      WHERE tickets.uid = $1 AND campus.campusid = $2 AND Date(tickets.emissiondate) = CURRENT_DATE
+      AND tickettrade.isdeleted = $3 AND (tickettrade.receptordecision <> 1 OR tickettrade.receptordecision is NULL)`, [uId, campusId, false])
 
     const data = verifyUser["rows"]
 

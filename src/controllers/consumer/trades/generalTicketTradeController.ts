@@ -19,15 +19,15 @@ export class GeneralTicketTradeController {
   async handle(request: Request, response: Response) {
     const uId = response.locals.uid;
     const ticketId = request.params.ticketId
-    let { isFree } = request.body
+    let { isFree, paymentMethodId } = request.body
 
     try {
-      if (uId === undefined || ticketId === undefined) {
+      if (uId === undefined || ticketId === undefined || isFree === undefined || paymentMethodId === undefined) {
         throw new Error("Invalid request");
       }
 
       const generalTicketTradeService = new GeneralTicketTradeService();
-      const resp = await generalTicketTradeService.execute(uId, ticketId, isFree);
+      const resp = await generalTicketTradeService.execute(uId, ticketId, isFree, paymentMethodId);
 
       response.status(resp.status).json(resp.data);
     } catch (e) {
