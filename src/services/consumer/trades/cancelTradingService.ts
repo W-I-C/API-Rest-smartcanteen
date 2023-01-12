@@ -30,7 +30,6 @@ export class CancelTradingService {
 
     const ticket = getTicketQuery.rows[0]
 
-    console.log(getTicketQuery.rows[0])
     if (!ticket['istrading']) {
       throw new Error('Order not trading!')
     }
