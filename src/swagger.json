@@ -1299,12 +1299,23 @@
         }
       }
     },
-    "/detail/ticket/{ticketId}": {
+    "/ticket/{ticketId}/detail": {
       "get": {
         "summary": "Get details meal of an order",
         "description": "Get details od an order",
         "tags": ["Tickets"],
         "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "Ticket id",
+            "required": true,
+            "schema": {
+              "properties": { "ticketId": { "type": "string" } }
+            }
+          }
+        ],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {

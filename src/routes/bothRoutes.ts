@@ -40,6 +40,6 @@ bothRouter.get("/campus/bars", validateToken, validateRefreshToken, getCampusBar
 // ver as refeições num bar
 bothRouter.get("/bar/:barId/meals", validateToken, validateRefreshToken, seeMealsController.handle);
 
-bothRouter.get("/detail/ticket/:ticketId", validateToken, validateRefreshToken, seeDetailsMealTicketController.handle);
+bothRouter.get("/ticket/:ticketId/detail", validateToken, validateRefreshToken, seeDetailsMealTicketController.handle);
 
 export { bothRouter };
