@@ -35,6 +35,8 @@ export class RemoveFavService {
         
         const data = query["rows"]
 
+        await removeFavDBClient.end()
+
         return { data, status: 200 }
     }
 }

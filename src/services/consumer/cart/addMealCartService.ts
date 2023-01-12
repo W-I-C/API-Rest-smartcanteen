@@ -21,7 +21,7 @@ export class AddMealCartService {
     
         const addMealCartDBClient= createClient();
         let date= new Date();
-       //TODO : por a rota a funcionar
+        //TODO : por a rota a funcionar
         const query = await addMealCartDBClient.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2',[uId,false])
         const cartUser=query["rows"][0]["cartId"] 
 
@@ -66,6 +66,8 @@ export class AddMealCartService {
             const query= await addMealCartDBClient.query('INSERT INTO CartMeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,newcartId,amount,mealPrice])
         
             const data=query["rows"]
+
+            await addMealCartDBClient.end()
             
             return { data, status: 200 }
             }
@@ -101,7 +103,8 @@ export class AddMealCartService {
                     const queryCart=await addMealCartDBClient.query('SELECT mealid,amount,mealprice from cartmeals WHERE cartid=$1',[cartId])
                     const data=queryCart["rows"]
                     
-                
+                    await addMealCartDBClient.end()
+
                     return { data, status: 200 }
                 }
 

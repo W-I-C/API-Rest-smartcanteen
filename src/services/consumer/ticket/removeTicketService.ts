@@ -51,6 +51,8 @@ export class RemoveTicketService {
 
         const data = query["rows"]
 
+        await removeTicketDBClient.end()
+
         return { data: data, status: 200 }
     }
 }

@@ -20,6 +20,8 @@ export class GetNotificiationsService {
 
     const data = query["rows"]
 
+    await getNotificationsDBClient.end()
+
     return { data, status: 200 }
   }
 }

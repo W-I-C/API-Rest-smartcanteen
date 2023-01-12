@@ -23,13 +23,10 @@ export class SeeMealsDetailService {
  
         const query=await mealsDetailDBClient.query('SELECT name,preparationTime,description,canTakeAway,price from Meals WHERE mealid=$1',[mealId])
         
-    
         const data=query["rows"]
-        return { data, status: 200 }
-   
-        
 
- 
-   
+        await mealsDetailDBClient.end()
+
+        return { data, status: 200 }
     }
 }

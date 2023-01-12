@@ -21,6 +21,8 @@ export class LogoutService {
                                               `, [uid])
     await logoutDBClient.query(`INSERT INTO blacklist(uid, token) VALUES($1,$2)`, [uid, sessionToken])
 
+    await logoutDBClient.end()
+
     return { msg: 'Logout Successful' }
   }
 }

@@ -14,6 +14,8 @@ export async function getUserCampus(uId: string) {
     const query = await getUserCampusDBClient.query(`SELECT preferredcampus 
                                                     FROM users
                                                     WHERE uid = $1`, [uId]);
-                              
+                                                    
+    await getUserCampusDBClient.end()  
+
     return query['rows'][0]["preferredcampus"]
 }

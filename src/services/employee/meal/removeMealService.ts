@@ -45,6 +45,8 @@ export class RemoveMealService {
             throw new Error('Impossible to remove the meal')
         }
 
+        await removeMealDBClient.end()
+
         return { msg: "Meal successfully removed", status: 200 }
     }
 }

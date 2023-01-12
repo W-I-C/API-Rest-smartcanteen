@@ -84,6 +84,9 @@ export class CompleteCartService {
       await completeCartDBClient.query(`INSERT INTO invoiceproducts(invoiceid,name,tax,totalwtax) VALUES ($1,$2,$3,$4)`, [invoiceId, meal['name'], taxa, totalmealwtax])
     })
     await completeCartDBClient.query(`UPDATE cart SET iscompleted=$1 WHERE cartid=$2`, [true, cartId])
+
+    await completeCartDBClient.end()
+    
     return { status: 200, data: { msg: "Ticket generated successfully" } }
   }
 }

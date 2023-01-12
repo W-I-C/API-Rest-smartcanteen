@@ -30,6 +30,7 @@ export class CancelTradingService {
 
     const ticket = getTicketQuery.rows[0]
 
+    console.log(getTicketQuery.rows[0])
     if (!ticket['istrading']) {
       throw new Error('Order not trading!')
     }
@@ -63,12 +64,14 @@ export class CancelTradingService {
         JOIN states on states.stateid = tickets.stateid
         JOIN users on users.uid = tickets.uid
         WHERE campus.campusid=$1
-        AND tickets.uid <> $2
+        AND tickets.uid = $2
         AND tickets.istrading = true 
         AND tickets.isdirecttrade =false
         AND Date(tickets.emissiondate) = CURRENT_DATE`, [campusId, uId])
 
     const data = verifyUser["rows"]
+
+    await cancelTicketTradeDBClient.end()
 
     return { data: data, status: 200 }
   }
