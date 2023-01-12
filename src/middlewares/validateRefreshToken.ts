@@ -17,7 +17,7 @@ export async function validateRefreshToken(request: Request, response: Response,
   // header > Bearer token > split(" ") > ["Bearer", "token"] > "token"
   const uid = response.locals.uid
   const token = await getRefreshToken(uid)
-  if (token == null) {
+  if (token === null || token === undefined) {
     response.status(401).send({ Error: "Unauthorized Request" })
   }
   try {
