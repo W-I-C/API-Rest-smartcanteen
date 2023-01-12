@@ -19,16 +19,15 @@ export class DirectTicketTradeController {
   async handle(request: Request, response: Response) {
     const uId = response.locals.uid;
     const ticketId = request.params.ticketId
-    const receiverid = request.params.receiverId
-    let { isFree } = request.body
+    let { receiverEmail, isFree, paymentMethodId } = request.body
 
     try {
-      if (uId === undefined || ticketId === undefined || receiverid === undefined || isFree === undefined) {
+      if (uId === undefined || ticketId === undefined || receiverEmail === undefined || isFree === undefined || paymentMethodId === undefined) {
         throw new Error("Invalid request");
       }
 
       const directTicketTradeService = new DirectTicketTradeService();
-      const resp = await directTicketTradeService.execute(uId, receiverid, ticketId, isFree);
+      const resp = await directTicketTradeService.execute(uId, receiverEmail, ticketId, isFree, paymentMethodId);
 
       response.status(resp.status).json(resp.data);
     } catch (e) {

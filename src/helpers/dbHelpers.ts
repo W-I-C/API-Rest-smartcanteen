@@ -43,9 +43,38 @@ export async function getUserName(uid: string) {
   return query['rows'][0]['name']
 }
 
+
+
+export async function getUserId(email: string) {
+  const getUserNameDBClient = createClient()
+  const query = await getUserNameDBClient.query(`SELECT uid FROM users WHERE email=$1`, [email])
+
+  await getUserNameDBClient.end()
+
+  return query['rows'][0]['uid']
+}
+
+export async function getTradeTicketId(generalTardeId: string) {
+  const getUserNameDBClient = createClient()
+  const query = await getUserNameDBClient.query(`SELECT ticketid FROM generaltrades WHERE generaltradeid=$1`, [generalTardeId])
+
+  await getUserNameDBClient.end()
+
+  return query['rows'][0]['ticketid']
+}
+
 export async function getUserRole(uid: string) {
   const getUserRoleDBClient = createClient()
   const query = await getUserRoleDBClient.query('SELECT userrole.name FROM users JOIN userrole On userrole.roleid = users.roleid WHERE uid=$1', [uid])
+
+  await getUserRoleDBClient.end()
+
+  return query['rows'][0]['name']
+}
+
+export async function getUserEmailRole(email: string) {
+  const getUserRoleDBClient = createClient()
+  const query = await getUserRoleDBClient.query('SELECT userrole.name FROM users JOIN userrole On userrole.roleid = users.roleid WHERE email=$1', [email])
 
   await getUserRoleDBClient.end()
 

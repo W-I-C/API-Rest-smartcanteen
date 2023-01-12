@@ -10,23 +10,25 @@ export class SeeMyTradesService {
 
         const campusId = await getUserCampus(uId)
 
-        const query=await SeeMyTradesDBClient.query(`SELECT bar.name as barname,tickets.ticketid,users.name as ownername,states.name as statename,tickets.cartid,tickets.emissiondate,tickets.pickuptime,tickets.ticketamount, tickets.total,tickets.nencomenda
-                                                    FROM campus 
-                                                    JOIN bar on bar.campusid=campus.campusid
-                                                    JOIN tickets on tickets.barid=bar.barid
-                                                    LEFT JOIN tickettrade ON tickets.ticketid = tickettrade.ticketid
+        const query=await SeeMyTradesDBClient.query(`SELECT tickets.ticketid, tickets.cartid, tickets.emissiondate, tickets.pickuptime, tickets.isfree, tickets.nencomenda, tickets.ticketamount, tickets.total, tickettrade.receptordecision, paymentmethods.name AS paymentmethod, states.name AS statename, ticketowner.name AS ownername, tradereceiver.name AS receivername, false AS isgeneraltrade, NULL AS generaltradeid
+                                                    FROM tickettrade
+                                                    JOIN tickets ON tickettrade.ticketid = tickets.ticketid
                                                     JOIN states ON tickets.stateid = states.stateid
-                                                    JOIN users on users.uid = tickets.uid
-                                                    WHERE campus.campusid = $1 AND (tickettrade.previousowner = $2 OR tickettrade.previousowner is NULL) AND (tickets.uid <> $2 OR (tickets.uid = $2 AND tickets.istrading = $4))  AND tickets.isdeleted = $3
+                                                    JOIN users ticketowner ON tickets.uid = ticketowner.uid
+                                                    JOIN users tradereceiver ON tickettrade.uid = tradereceiver.uid
+                                                    JOIN paymentmethods ON tickettrade.paymentmethodid = paymentmethods.methodid
+                                                    WHERE previousowner = $1 
+                                                    AND tickettrade.isdeleted = $2
                                                     UNION
-                                                    SELECT bar.name as barname,tickets.ticketid,users.name as ownername,states.name as statename,tickets.cartid,tickets.emissiondate,tickets.pickuptime,tickets.ticketamount, tickets.total,tickets.nencomenda
-                                                    FROM campus 
-                                                    JOIN bar on bar.campusid=campus.campusid
-                                                    JOIN tickets on tickets.barid=bar.barid
-                                                    LEFT JOIN generaltrades ON tickets.ticketid = generaltrades.ticketid
+                                                    SELECT tickets.ticketid, tickets.cartid, tickets.emissiondate, tickets.pickuptime, tickets.isfree, tickets.nencomenda, tickets.ticketamount, tickets.total, NULL AS receptordecision, paymentmethods.name AS paymentmethod,  states.name AS statename, ticketowner.name AS ownername, tradereceiver.name AS receivername, true AS isgeneraltrade, generaltrades.generaltradeid
+                                                    FROM generaltrades 
+                                                    JOIN tickets ON generaltrades.ticketid = tickets.ticketid
                                                     JOIN states ON tickets.stateid = states.stateid
-                                                    JOIN users on users.uid = tickets.uid
-                                                    WHERE campus.campusid = $1 AND (generaltrades.previousowner = $2 OR generaltrades.previousowner is NULL) AND (tickets.uid <> $2 OR (tickets.uid = $2 AND tickets.istrading = $4)) AND tickets.isdeleted = $3`,[campusId, uId, false, true])
+                                                    JOIN users ticketowner ON tickets.uid = ticketowner.uid
+                                                    LEFT JOIN users tradereceiver ON generaltrades.uid = tradereceiver.uid
+                                                    LEFT JOIN paymentmethods ON generaltrades.paymentmethodid = paymentmethods.methodid
+                                                    WHERE previousowner = $1 
+                                                    AND generaltrades.isdeleted = $2`,[uId, false])
         
         await SeeMyTradesDBClient.end()
 
