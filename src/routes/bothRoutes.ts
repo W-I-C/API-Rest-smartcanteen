@@ -29,7 +29,7 @@ bothRouter.get("/profile", validateToken, validateRefreshToken, seeProfileContro
 bothRouter.put("/profile", validateToken, validateRefreshToken, editProfileController.handle);
 bothRouter.post("/login", loginController.handle);
 bothRouter.post("/register", registerController.handle);
-bothRouter.get("/newSessionToken", newSessionToken.handle);
+bothRouter.get("/newSessionToken", validateRefreshToken, newSessionToken.handle);
 bothRouter.get("/logout", validateToken, validateRefreshToken, logoutController.handle);
 
 
