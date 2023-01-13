@@ -50,7 +50,7 @@ export class DirectTicketTradeService {
     }
 
     const getTradesTicketToReceiver = await directTicketTradeDBClient.query(`SELECT * FROM tickettrade 
-    WHERE ticketid = $1 AND uid = $2 AND isdeleted = $3`, [ticketId, receiverid, false]);
+    WHERE ticketid = $1 AND uid = $2 AND isdeleted = $3`, [ticketId, receiverid, true]);
 
     if (getTradesTicketToReceiver['rows'].length != 0) {
       throw new Error('Trade proposal to this user already sent!')
