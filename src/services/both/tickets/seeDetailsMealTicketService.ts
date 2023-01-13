@@ -43,7 +43,6 @@ export class SeeDetailsMealTicketService {
         const mealchanges = changes["rows"];
         meals[i]['mealchanges'] = mealchanges;
       }
-      console.log(meals)
 
       await seeMeals.end()
 
