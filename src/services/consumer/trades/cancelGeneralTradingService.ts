@@ -19,7 +19,7 @@ export class CancelGeneralTradingService {
 
     const ticket = await cancelTicketTradeDBClient.query(`SELECT ticketid FROM generaltrades WHERE generaltradeid = $1`, [generalTradeId])
 
-    const ticketId = query["rows"][0]["ticketid"]
+    const ticketId = ticket["rows"][0]["ticketid"]
 
     await cancelTicketTradeDBClient.query(`UPDATE generaltrades SET isDeleted = $1
                                         WHERE generaltradeid = $2`, [true, generalTradeId])
