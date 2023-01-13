@@ -45,6 +45,6 @@ export class GeneralTicketTradeService {
 
     await renameTicketTradeDBClient.end()
 
-    return { data: { msg: 'Trade exposed successfully' }, status: 200 }
+    return { data: 'Trade exposed successfully', status: 200 }
   }
 }
