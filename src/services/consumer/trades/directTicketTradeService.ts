@@ -68,6 +68,6 @@ export class DirectTicketTradeService {
 
     await directTicketTradeDBClient.end()
 
-    return { data: { msg: 'Trade proposal done successfully' }, status: 200 }
+    return { data: 'Trade proposal done successfully', status: 200 }
   }
 }
