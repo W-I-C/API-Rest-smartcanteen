@@ -17,8 +17,15 @@ export class CancelGeneralTradingService {
         throw new Error("Unauthorized operation")
     }
 
+    const ticket = await cancelTicketTradeDBClient.query(`SELECT ticketid FROM generaltrades WHERE generaltradeid = $1`, [generalTradeId])
+
+    const ticketId = query["rows"][0]["ticketid"]
+
     await cancelTicketTradeDBClient.query(`UPDATE generaltrades SET isDeleted = $1
                                         WHERE generaltradeid = $2`, [true, generalTradeId])
+
+    await cancelTicketTradeDBClient.query(`UPDATE tickets SET istrading = $1
+                                        WHERE ticketid = $2`, [false, ticketId])
 
     const campusId = await getUserCampus(uId)
 
