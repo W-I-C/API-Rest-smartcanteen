@@ -21,6 +21,12 @@ export class DirectTicketTradeController {
     const ticketId = request.params.ticketId
     let { receiverEmail, isFree, paymentMethodId } = request.body
 
+    console.log(uId)
+    console.log(receiverEmail)
+    console.log(ticketId)
+    console.log(isFree)
+    console.log(paymentMethodId)
+
     try {
       if (uId === undefined || ticketId === undefined || receiverEmail === undefined || isFree === undefined || paymentMethodId === undefined) {
         throw new Error("Invalid request");
@@ -31,6 +37,7 @@ export class DirectTicketTradeController {
 
       response.status(resp.status).json(resp.data);
     } catch (e) {
+      console.log(e.message)
       response.status(500).json(e.message);
     }
   }
