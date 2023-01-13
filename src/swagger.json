@@ -1893,7 +1893,7 @@
         }
       }
     },
-    "/employee/tickets/{ticketId}": {
+    "/employee/tickets/{ticketId}/{stateId}": {
       "put": {
         "summary": "Edit ticket state",
         "description": "A employee can edit the state of an ticket that belongs to the same bar",
@@ -1908,26 +1908,17 @@
             "schema": {
               "properties": { "ticketId": { "type": "string" } }
             }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "stateName": { "type": "string" }
-                }
-              },
-              "examples": {
-                "Edit ticket state": {
-                  "value": {
-                    "stateName": "Entregue"
-                  }
-                }
-              }
+          },
+          {
+            "name": "stateId",
+            "in": "path",
+            "description": "Ticket id",
+            "required": true,
+            "schema": {
+              "properties": { "stateId": { "type": "string" } }
             }
           }
-        },
+        ],
         "responses": {
           "500": {
             "description": "ERROR",
@@ -2102,7 +2093,7 @@
             "description": "Ticket Id",
             "required": true,
             "schema": {
-              "properties": { "mealId": { "type": "string" } }
+              "properties": { "ticketId": { "type": "string" } }
             }
           }
         ],
@@ -2770,6 +2761,67 @@
                       "Error": "Success"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/states": {
+      "get": {
+        "summary": "Get All States",
+        "description": "Allows an user to get state",
+        "tags": ["States"],
+        "security": [{ "basicAuth": [] }],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Register without body": {
+                    "value": { "msg": "Missing Arguments!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "Bars": {
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "barid": { "type": "string" },
+                          "name": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Bars": {}
                 }
               }
             }
