@@ -11,6 +11,7 @@ import { SeeMealsDetailController } from "../controllers/both/meals/seeMealsDeta
 import { SeeDetailsMealTicketController } from "../controllers/both/tickets/seeDetailsMealTicketController";
 import { RegisterController } from "../controllers/both/auth/registerController";
 import { GetCAmpusBarsController } from "../controllers/both/campus/getCampusBarsController";
+import { SeePaymentMehodsController } from "../controllers/both/payments/seePaymentMethodsController";
 
 const bothRouter = express.Router();
 
@@ -24,6 +25,7 @@ const seeMealsDetailController = new SeeMealsDetailController();
 const seeDetailsMealTicketController = new SeeDetailsMealTicketController();
 const registerController = new RegisterController();
 const getCampusBarsController = new GetCAmpusBarsController();
+const seePaymentMehodsController = new SeePaymentMehodsController();
 
 bothRouter.get("/profile", validateToken, validateRefreshToken, seeProfileController.handle);
 bothRouter.put("/profile", validateToken, validateRefreshToken, editProfileController.handle);
@@ -40,6 +42,7 @@ bothRouter.get("/campus/bars", validateToken, validateRefreshToken, getCampusBar
 // ver as refeições num bar
 bothRouter.get("/bar/:barId/meals", validateToken, validateRefreshToken, seeMealsController.handle);
 
-bothRouter.get("/detail/ticket/:ticketId", validateToken, validateRefreshToken, seeDetailsMealTicketController.handle);
+bothRouter.get("/ticket/:ticketId/detail", validateToken, validateRefreshToken, seeDetailsMealTicketController.handle);
+bothRouter.get("/paymentmethods", validateToken, validateRefreshToken, seePaymentMehodsController.handle);
 
 export { bothRouter };

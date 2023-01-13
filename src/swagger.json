@@ -1299,12 +1299,23 @@
         }
       }
     },
-    "/detail/ticket/{ticketId}": {
+    "/ticket/{ticketId}/detail": {
       "get": {
         "summary": "Get details meal of an order",
         "description": "Get details od an order",
         "tags": ["Tickets"],
         "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "Ticket id",
+            "required": true,
+            "schema": {
+              "properties": { "ticketId": { "type": "string" } }
+            }
+          }
+        ],
         "responses": {
           "500": { "description": "ERROR" },
           "200": {
@@ -2078,7 +2089,7 @@
         }
       }
     },
-    "/consumer/trades/{ticketId}/direct/{receiverid}": {
+    "/consumer/trades/{ticketId}/direct": {
       "put": {
         "summary": "Make direct trade with user",
         "description": "A consumer can make a direct trade with another user",
@@ -2093,15 +2104,6 @@
             "schema": {
               "properties": { "mealId": { "type": "string" } }
             }
-          },
-          {
-            "name": "receiverid",
-            "in": "path",
-            "description": "Receiver Id",
-            "required": true,
-            "schema": {
-              "properties": { "mealId": { "type": "string" } }
-            }
           }
         ],
         "requestBody": {
@@ -2109,13 +2111,17 @@
             "application/json": {
               "schema": {
                 "properties": {
-                  "isFree": { "type": "boolean" }
+                  "receiverEmail": { "type": "string" },
+                  "isFree": { "type": "boolean" },
+                  "paymentMethodId": { "type": "string" }
                 }
               },
               "examples": {
                 "Edit ticket state": {
                   "value": {
-                    "isFree": false
+                    "receiverEmail":"consumer@consumer.com",
+                    "isFree": false,
+                    "paymentMethodId": "57f7066e-e2a8-45bd-bad3-7f6773b2e26b"
                   }
                 }
               }
@@ -2212,13 +2218,15 @@
             "application/json": {
               "schema": {
                 "properties": {
+                  "paymentMethodId": { "type": "string" },
                   "isFree": { "type": "boolean" }
                 }
               },
               "examples": {
                 "Edit ticket state": {
                   "value": {
-                    "isFree": false
+                    "isFree": false,
+                    "paymentMethodId":"57f7066e-e2a8-45bd-bad3-7f6773b2e26b"
                   }
                 }
               }
@@ -2537,7 +2545,7 @@
         }
       }
     },
-    "/consumer/general/trades/{ticketId}": {
+    "/consumer/general/trades/{generalTradeId}": {
       "get": {
         "summary": "Accept General Trade",
         "description": "Allows an user to accept a general trade",
@@ -2545,12 +2553,74 @@
         "security": [{ "basicAuth": [] }],
         "parameters": [
           {
-            "name": "ticketId",
+            "name": "generalTradeId",
             "in": "path",
             "description": "Ticket Id",
             "required": true,
             "schema": {
-              "properties": { "ticketId": { "type": "string" } }
+              "properties": { "generalTradeId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Register without body": {
+                    "value": { "msg": "Missing Arguments!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Success": {
+                    "value": {
+                      "Error": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Cancel General Trade",
+        "description": "Allows an user to cancel a general trade",
+        "tags": ["Trades"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "generalTradeId",
+            "in": "path",
+            "description": "Ticket Id",
+            "required": true,
+            "schema": {
+              "properties": { "generalTradeId": { "type": "string" } }
             }
           }
         ],
@@ -2604,8 +2674,61 @@
     "/consumer/mytrades": {
       "get": {
         "summary": "See my trades history",
-        "description": "Allows an user to asee his trades history",
+        "description": "Allows an user to see his trades history",
         "tags": ["Trades"],
+        "security": [{ "basicAuth": [] }],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Register without body": {
+                    "value": { "msg": "Missing Arguments!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Success": {
+                    "value": {
+                      "Error": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/paymentmethods": {
+      "get": {
+        "summary": "See all payment methods",
+        "description": "Allows an user to see all payment methods",
+        "tags": ["Payment Methods"],
         "security": [{ "basicAuth": [] }],
         "responses": {
           "500": {
