@@ -18,14 +18,13 @@ export class EditTicketStateController {
      */
     const uId = response.locals.uid
     const ticketId = request.params.ticketId;
-
-    let { stateName } = request.body;
+    const stateId = request.params.stateId;
 
     try {
       if (
         uId === undefined ||
         ticketId === undefined ||
-        stateName === undefined
+        stateId === undefined
       ) {
         throw new Error("Invalid request");
       }
@@ -34,7 +33,7 @@ export class EditTicketStateController {
       const resp = await editTicketStateService.execute(
         uId,
         ticketId,
-        stateName
+        stateId
       );
       response.status(resp.status).json(resp.editedMeal);
     } catch (e) {

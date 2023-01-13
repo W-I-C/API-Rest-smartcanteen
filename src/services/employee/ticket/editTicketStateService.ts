@@ -19,17 +19,11 @@ export class EditTicketStateService {
      * @param ticketId ticket to be edited the state
      * @param stateName qname of the state to associate to the ticket
      */
-    async execute(uId: string, ticketId: string, stateName: string) {
+    async execute(uId: string, ticketId: string, stateId: string) {
         const ticketIdExists = await checkTicketExists(ticketId)
 
         if (!ticketIdExists) {
             throw new Error('Ticket does not exists')
-        }
-
-        const stateNameExists = await checkStateNameExists(stateName)
-
-        if (!stateNameExists) {
-            throw new Error('State does not exists')
         }
 
         // get the bar where the employee works
@@ -40,7 +34,14 @@ export class EditTicketStateService {
             throw new Error('Bars are not the same')
         }
 
-        const stateNameTicket = await getStateId(stateName)
+        const editTicketStateDBClient = createClient();
+
+        const stateExists = await editTicketStateDBClient.query(`SELECT *  FROM states
+                                                                WHERE stateid = $1`, [stateId])
+
+        if(stateExists["rows"].length == 0){
+            throw new Error("Invalid State")
+        }
 
         const ticketStateId = await getTicketState(ticketId)
         const deliveredState = await getDeliveredStatusId()
@@ -48,11 +49,10 @@ export class EditTicketStateService {
         if (ticketStateId == deliveredState) {
             throw new Error('The ticket has already been delivered')
         }
-
-        const editTicketStateDBClient = createClient();
+        
         await editTicketStateDBClient.query(`UPDATE tickets
                                     SET stateid = $1
-                                    WHERE ticketid = $2`, [stateNameTicket, ticketId])
+                                    WHERE ticketid = $2`, [stateId, ticketId])
 
 
         const query = await editTicketStateDBClient.query(`SELECT ticketid, stateid
