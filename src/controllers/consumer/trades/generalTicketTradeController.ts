@@ -22,7 +22,7 @@ export class GeneralTicketTradeController {
     let { isFree, paymentMethodId } = request.body
 
     try {
-      if (uId === undefined || ticketId === undefined || isFree === undefined || paymentMethodId === undefined) {
+      if (uId === undefined || ticketId === undefined || isFree === undefined) {
         throw new Error("Invalid request");
       }
 
