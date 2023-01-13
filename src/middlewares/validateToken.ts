@@ -14,6 +14,7 @@ import { verify, decode } from "jsonwebtoken"
  */
 export async function validateToken(request: Request, response: Response, next: NextFunction) {
   const auth = request.headers.authorization
+
   if (!auth || auth === undefined || auth === null) {
     response.status(401).send({ Error: "Unauthorized Request" })
   }

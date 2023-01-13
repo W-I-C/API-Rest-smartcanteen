@@ -26,7 +26,7 @@ employeeRouter.put("/meal/:mealId", validateToken, validateRefreshToken, isEmplo
 employeeRouter.delete("/meal/:mealId", validateToken, validateRefreshToken, isEmployee, removeMealController.handle);
 employeeRouter.get("/tickets", validateToken, validateRefreshToken, isEmployee, seeUndeliveredTicketsController.handle);
 employeeRouter.put("/meal/:mealId/canBeMade", validateToken, validateRefreshToken, isEmployee, canBeMadeController.handle);
-employeeRouter.put("/tickets/:ticketId", validateToken, validateRefreshToken, isEmployee, editTicketStateController.handle);
+employeeRouter.put("/tickets/:ticketId/:stateId", validateToken, validateRefreshToken, isEmployee, editTicketStateController.handle);
 
 employeeRouter.get("/bar/:barId/statistics", validateToken, validateRefreshToken, isEmployee, getBarStatisticsController.handle);
 
