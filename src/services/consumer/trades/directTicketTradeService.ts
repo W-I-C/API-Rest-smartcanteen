@@ -59,7 +59,7 @@ export class DirectTicketTradeService {
     const description = `${userName} sent you a trade proposal`
 
     
-    await directTicketTradeDBClient.query(`UPDATE tickets SET istrading=$1, isdirecttrade=$2, isfree=$3, paymentmethodid = $4 WHERE ticketid=$5`, [true, true, isFree, paymentMethodId, ticketId])
+    await directTicketTradeDBClient.query(`UPDATE tickets SET istrading=$1, isdirecttrade=$2, isfree=$3 WHERE ticketid=$4`, [true, true, isFree, ticketId])
     const date = new Date()
 
     await directTicketTradeDBClient.query(`INSERT INTO notifications(date,receiverid, senderid,description,istradeproposal) VALUES ($1,$2,$3,$4,$5)`, [date, receiverid, uId, description, true])
