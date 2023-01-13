@@ -1,115 +1,69 @@
-/**
- * @module addMealCartService
- */
-require('dotenv').config();
-import { createClient } from "../../../config/db";
-import { IMealChange } from "../../../models/IMealChange";
-import { checkCartMealsExists, checkMealExists, getMealBar } from "../../../validations/employee/meal/editMealValidation";
+// /**
+//  * @module addMealCartService
+//  */
+// require('dotenv').config();
+// import { createClient } from "../../../config/db";
+// import { IMealChange } from "../../../models/IMealChange";
+// import { checkCartMealsExists, checkMealExists, getMealBar } from "../../../validations/employee/meal/editMealValidation";
 
-/**
- * Class responsible for the service that serves to add meal to consumer cart
- */
-export class AddMealCartService {
- 
-     /**
-     * Method that allows you to get the details of a meal that the authenticated user has added to favorites
-     * @param uId authenticated user id
-     * @param mealId meal to be added to cart
-     * @param amount quantity of meal to be added to cart
-     */
-    async execute( mealId:string,uId:string,amount:number, changes:Array<IMealChange>) {
-    
-        const addMealCartDBClient= createClient();
-        let date= new Date();
-        //TODO : por a rota a funcionar
-        const query = await addMealCartDBClient.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2',[uId,false])
-        const cartUser=query["rows"][0]["cartId"] 
+// /**
+//  * Class responsible for the service that serves to add meal to consumer cart
+//  */
 
-        const mealExists = await checkMealExists(mealId)
-        const mealsCart = await checkCartMealsExists(cartUser)
 
+// export class AddMealCartService {
+//   async execute(uId: string, mealId:string, allowedChanges: {changeid:string,ingname:string,ingdosage:number,isremoveonly:boolean,canbeincremented:boolean,canbedcremented:boolean,incrementlimit:number,decrementlimit:number}[]) {
+//     const addMealToCartDBClient = createClient();
+//     try {
+//         // Verify if the cart belongs to the authenticated user and is not completed
+//         const cartVerification = await addMealToCartDBClient.query(`
+//             SELECT cartid, iscompleted
+//             FROM cart
+//             WHERE uId = $1 AND iscompleted = $2
+//         `, [uId, false]);
+//         let cartId:string;
+//         if(!cartVerification.rows.length) {
+//             // If the cart is completed or does not belong to the user, create a new one
+//             const newCart = await addMealToCartDBClient.query(`
+//                 INSERT INTO cart (uId, date, iscompleted)
+//                 VALUES ($1, $2, $3)
+//                 RETURNING cartid
+//             `, [uId, new Date(), false]);
+//             cartId = newCart.rows[0].cartid;
+//         }else{
+//             cartId = cartVerification.rows[0].cartid;
+//         }
         
-        if(!mealExists) {
-            throw new Error("Meal dont exist")
-        }
-
-        if (query.rowCount <= 0) {
-            
-            
-            const queryCreateCart=await addMealCartDBClient.query('INSERT INTO cart (uId,date,isCompleted) VALUES ($1,$2,$3)',[uId,date,false]) 
-           
-            const cartQuery=await addMealCartDBClient.query('SELECT cartId from cart WHERE uId=$1 AND isCompleted=$2',[uId,false])
-
-            const newcartId=cartQuery["rows"][0]["cartid"]
-
-           
-            const queryPrice=await addMealCartDBClient.query('SELECT price from Meals WHERE mealId=$1',[mealId])
-
-            const queryChange=await addMealCartDBClient.query('SELECT * from allowedChanges WHERE mealid=$1', [mealId])
-            const value=queryChange["rows"]
-
-            if(value.length>=0){
-                const mealPrice= queryPrice["rows"][0]["price"]
-            
-            
-                const query= await addMealCartDBClient.query('INSERT INTO cartmeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,newcartId,amount,mealPrice])
-                const selectinfomeals=await addMealCartDBClient.query('SELECT * FROM cartmeals WHERE  (mealId,cartId,amount,mealPrice)',[])
-                const data=query["rows"]
-                
-                return { data, status: 200 }
-
-            }else{
-
-            const mealPrice= queryPrice["rows"][0]["price"]
-            
-            
-            const query= await addMealCartDBClient.query('INSERT INTO CartMeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,newcartId,amount,mealPrice])
+//         // Add the meal to the cart
+//         const addedMeal = await addMealToCartDBClient.query(`
+//             INSERT INTO cartmeals (cartid, mealid, amount, mealprice)
+//             VALUES ($1, $2, 1, (SELECT price FROM meals WHERE mealid = $2))
+//             RETURNING cartmealid
+//         `, [cartId, mealId]);
+//         let cartMealId = addedMeal.rows[0].cartmealid;
         
-            const data=query["rows"]
-
-            await addMealCartDBClient.end()
-            
-            return { data, status: 200 }
-            }
-            
-        }else{
-
-            const cartId=cartUser["rows"][0]["cartid"]
-            const queryPrice=await addMealCartDBClient.query('SELECT price from Meals WHERE mealId=$1',[mealId])
-            const mealPrice= queryPrice["rows"][0]["price"]
-
-            if(!mealsCart){
-   
-                const query= await addMealCartDBClient.query('INSERT INTO CartMeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,cartId,amount,mealPrice])
-                
-                const queryCart=await addMealCartDBClient.query('SELECT mealid,amount,mealprice from cartmeals WHERE cartid=$1',[cartId])
-                const data=queryCart["rows"]
-                
-            
-                return { data, status: 200 }
-            }else{
-                const queryBar=await addMealCartDBClient.query('SELECT * FROM cartmeals WHERE cartid=$1',[cartUser])
-                const selectMealUser=queryBar["rows"][0]["mealId"]
-
-                const barMeal= getMealBar(selectMealUser)
-                const newBarMeal= getMealBar(mealId)
-
-                if(barMeal != newBarMeal) {
-                    throw new Error("Bars are not the same")
-                } else {
-                    
-                    const query= await addMealCartDBClient.query('INSERT INTO CartMeals (mealId,cartId,amount,mealPrice) VALUES ($1,$2,$3,$4)', [mealId,cartId,amount,mealPrice])
-                    
-                    const queryCart=await addMealCartDBClient.query('SELECT mealid,amount,mealprice from cartmeals WHERE cartid=$1',[cartId])
-                    const data=queryCart["rows"]
-                    
-                    await addMealCartDBClient.end()
-
-                    return { data, status: 200 }
-                }
-
-
-            }
-        }
-    }
-}
+//         // Check if the meal has allowed changes
+//         if(allowedChanges.length > 0) {
+//             // Add the allowed changes to the cartmeal
+//             for(const change of allowedChanges) {
+//                 const allowedChange = await addMealToCartDBClient.query(`
+//                 SELECT changeid, mealid, ingname, ingdosage, isremoveonly, canbeincremented, canbedcremented, incrementlimit, decrementlimit
+//                 FROM allowedchanges
+//                 WHERE changeid = $1 AND mealid = $2
+//                 `, [change.changeid, mealId])
+//                 if(!allowedChange.rows.length) {
+//                     throw new Error(`Change with id ${change.changeid} for meal ${mealId} is not allowed`);
+//                 }
+//                 await addMealToCartDBClient.query(`
+//                     INSERT INTO cartmealschange (cartmealid, changeid, amount)
+//                     VALUES ($1, $2, $3)
+//                 `, [cartMealId, change.changeid, change.ingdosage]);
+//             }
+//         }
+//         return { message: "Meal added to cart successfully", status: 200 };
+//     } catch (error) {
+//         console.log(error)
+//         return { error: error.message, status: 500 };
+//     } 
+//   }
+// }
