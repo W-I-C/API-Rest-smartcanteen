@@ -2110,7 +2110,7 @@
               "examples": {
                 "Edit ticket state": {
                   "value": {
-                    "receiverEmail":"consumer@consumer.com",
+                    "receiverEmail": "consumer@consumer.com",
                     "isFree": false,
                     "paymentMethodId": "57f7066e-e2a8-45bd-bad3-7f6773b2e26b"
                   }
@@ -2217,7 +2217,7 @@
                 "Edit ticket state": {
                   "value": {
                     "isFree": false,
-                    "paymentMethodId":"57f7066e-e2a8-45bd-bad3-7f6773b2e26b"
+                    "paymentMethodId": "57f7066e-e2a8-45bd-bad3-7f6773b2e26b"
                   }
                 }
               }
@@ -2846,6 +2846,59 @@
             }
           }
         ],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Register without body": {
+                    "value": { "msg": "Missing Arguments!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Success": {
+                    "value": {
+                      "Error": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee/bar/menu/": {
+      "get": {
+        "summary": "Get Employee menu",
+        "description": "Allows an employee to get bar menu",
+        "tags": ["Meal"],
+        "security": [{ "basicAuth": [] }],
         "responses": {
           "500": {
             "description": "ERROR",
