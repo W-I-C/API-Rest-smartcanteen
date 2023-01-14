@@ -39,6 +39,15 @@ export class GeneralTicketTradeService {
       throw new Error('Not your Order!')
     }
 
+    const alreadyExistDirectTrade = await renameTicketTradeDBClient.query(`SELECT istrading 
+                                                                          FROM tickets
+                                                                          WHERE uid = $1 AND ticketid = $2`, [uId, ticketId]);
+
+    if (alreadyExistDirectTrade['rows'][0]["istrading"] == true) {
+      throw new Error('You cant make another trade with this ticket')
+    }                                                               
+
+
     await renameTicketTradeDBClient.query(`UPDATE tickets SET isTrading=$1, isfree=$2 WHERE ticketid=$3`, [true, isFree, ticketId])
 
     await renameTicketTradeDBClient.query(`INSERT INTO generaltrades(ticketid, previousowner, paymentmethodid) VALUES ($1,$2,$3)`, [ticketId, previousOwner, paymentMethodId])

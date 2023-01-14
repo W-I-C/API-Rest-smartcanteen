@@ -2828,6 +2828,70 @@
           }
         }
       }
+    },
+    "/consumer/general/trade/{generalTradeId}": {
+      "get": {
+        "summary": "Get Trade Payment Method",
+        "description": "Allows an user to see a trade payment method",
+        "tags": ["Trades"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "generalTradeId",
+            "in": "path",
+            "description": "Ticket Id",
+            "required": true,
+            "schema": {
+              "properties": { "generalTradeId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Register without body": {
+                    "value": { "msg": "Missing Arguments!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Success": {
+                    "value": {
+                      "Error": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
