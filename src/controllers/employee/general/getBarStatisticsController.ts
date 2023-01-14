@@ -16,18 +16,16 @@ export class GetBarStatisticsController {
  * @param response response.
  */
   async handle(request: Request, response: Response) {
-    const barId = request.params.barId;
+
     const uId = response.locals.uid;
 
     try {
-      if (barId === undefined) {
-        throw new Error("Some parameter is incorrect");
-      }
+
 
       const getBarStatisticsController = new GetBarStatisticsService();
 
 
-      const resp = await getBarStatisticsController.execute(uId, barId);
+      const resp = await getBarStatisticsController.execute(uId);
 
       response.status(resp.status).json(resp.data);
     } catch (e) {
