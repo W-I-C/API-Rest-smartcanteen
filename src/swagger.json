@@ -96,9 +96,7 @@
             }
           }
         }
-      }
-    },
-    "/consumer/favoriteMeals/{favMealId}": {
+      },
       "delete": {
         "summary": "Remove a meal from favorites",
         "description": "Remove a specific meal from the favorites of the authenticated user",
@@ -106,9 +104,9 @@
         "security": [{ "basicAuth": [] }],
         "parameters": [
           {
-            "name": "favMealId",
+            "name": "mealId",
             "in": "path",
-            "description": "Favorite Meal id",
+            "description": "Meal id",
             "required": true,
             "schema": {
               "properties": { "mealId": { "type": "string" } }
@@ -155,7 +153,9 @@
             "description": "OK"
           }
         }
-      },
+      }
+    },
+    "/consumer/favoriteMeal/{favMealId}": {
       "get": {
         "summary": "Get one favorite meal",
         "description": "Get a specific meal from the favorites of the authenticated user",
