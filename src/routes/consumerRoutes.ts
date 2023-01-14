@@ -51,9 +51,9 @@ const seeTradePaymentMethodController = new SeeTradePaymentMethodController()
 
 //adicionar aos favoritos refeição
 consumerRouter.post("/favoriteMeals/:mealId", validateToken, validateRefreshToken, isConsumer, addFavController.handle);
-consumerRouter.delete("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, isConsumer, removeFavController.handle);
+consumerRouter.delete("/favoriteMeals/:mealId", validateToken, validateRefreshToken, isConsumer, removeFavController.handle);
 consumerRouter.get("/favoriteMeals", validateToken, validateRefreshToken, isConsumer, seeFavController.handle);
-consumerRouter.get("/favoriteMeals/:favoriteMealId", validateToken, validateRefreshToken, isConsumer, seeOneFavController.handle);
+consumerRouter.get("/favoriteMeal/:favoriteMealId", validateToken, validateRefreshToken, isConsumer, seeOneFavController.handle);
 //consumerRouter.post("/cart/:mealId", validateToken, validateRefreshToken, isConsumer, addMealCartController.handle);
 consumerRouter.get("/cart/meals", validateToken, validateRefreshToken, isConsumer, seeMealsCartController.handle);
 consumerRouter.delete("/meals/:cartMealId", validateToken, validateRefreshToken, isConsumer, removeMealsCartController.handle);
