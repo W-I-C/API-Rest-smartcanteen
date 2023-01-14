@@ -9,7 +9,7 @@ export class SeeTradePaymentMethodService {
 
     const seeTradePaymentMethodDBClient = createClient();
 
-    const query = await seeTradePaymentMethodDBClient.query(`SELECT paymentmethodid, paymentmethods.name 
+    const query = await seeTradePaymentMethodDBClient.query(`SELECT paymentmethodid AS methodid, paymentmethods.name 
                                                         FROM generaltrades
                                                         JOIN paymentmethods ON generaltrades.paymentmethodid = paymentmethods.methodid
                                                         WHERE generaltradeid = $1`, [generalTradeId])
