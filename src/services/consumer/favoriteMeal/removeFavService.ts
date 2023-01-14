@@ -15,23 +15,11 @@ export class RemoveFavService {
      * @param uId authenticated user id
      * @param favMealId id of the meal to be removed from favorites
      */
-    async execute(uId: string, favMealId:string) {
-
-        const mealIdExists = await checkFavMealExists(favMealId)
-
-        if(!mealIdExists){
-            throw new Error('FavMeal does not exists')
-        }
-
-        const userMealId = await getUserFavMeal(favMealId);
-
-        if(userMealId != uId){
-            throw new Error('Favmeal does not belong to you')
-        }
+    async execute(uId: string, mealId:string) {
         
         const removeFavDBClient = createClient();
         const query = await removeFavDBClient.query(`DELETE FROM favoritemeals 
-                                            WHERE uid = $1 AND favoritemealid = $2`, [uId, favMealId])
+                                            WHERE uid = $1 AND mealid = $2`, [uId, mealId])
         
         const data = query["rows"]
 

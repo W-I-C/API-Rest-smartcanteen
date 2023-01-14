@@ -6,19 +6,16 @@ import { createClient } from "../../../config/db";
 import { getEmployeeBar } from "../../../validations/employee/meal/editMealValidation";
 
 /**
- * Class responsible for the service that serves to indicate that a meal cant be made
+ * Class responsible for the service that serves to get bar statistics
  */
 
 export class GetBarStatisticsService {
   /**
-    * Method that allows you to indicate that a meal cant be made
+    * Method that allows you to get bar statistics
     */
-  async execute(uid: string, barId: string) {
+  async execute(uid: string) {
 
-    const employeeBarId = await getEmployeeBar(uid);
-    if (employeeBarId != barId) {
-      throw new Error("Cannot get statistics from another bar")
-    }
+    const barId = await getEmployeeBar(uid);
 
     const getBarStatisticsDBClient = createClient();
     const totalTicketsQuery = await getBarStatisticsDBClient.query('SELECT Count(tickets.ticketid) as totalTicketsToday FROM tickets WHERE emissiondate >= current_date AND barid=$1;', [barId])
