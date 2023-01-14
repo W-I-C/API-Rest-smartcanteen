@@ -20,8 +20,10 @@ export class RemoveFavService {
         const removeFavDBClient = createClient();
         const query = await removeFavDBClient.query(`DELETE FROM favoritemeals 
                                             WHERE uid = $1 AND mealid = $2`, [uId, mealId])
+
+        const queryFav= await removeFavDBClient.query('SELECT * from FavoriteMeals WHERE uid = $1', [uId])
         
-        const data = query["rows"]
+        const data = queryFav["rows"]
 
         await removeFavDBClient.end()
 
