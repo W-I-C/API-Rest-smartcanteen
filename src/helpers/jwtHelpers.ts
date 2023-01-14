@@ -8,7 +8,7 @@ export function createSessionToken(uid: string, role: string) {
   // dados a carregar no token
   const data = { role: role, time: Date() }
 
-  const token = sign(data, jwtSecretKey, { subject: uid, expiresIn: '15m' })
+  const token = sign(data, jwtSecretKey, { subject: uid, expiresIn: '30s' })
 
   return token
 }
