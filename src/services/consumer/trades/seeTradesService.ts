@@ -18,7 +18,7 @@ export class SeeTradesService {
         const campusId = await getUserCampus(uId)
 
 
-        const verifyUser = await selectTicket.query(`SELECT tickets.ticketid, tickets.cartid, tickets.emissiondate, tickets.pickuptime, tickets.isfree, tickets.nencomenda, tickets.ticketamount, tickets.total, NULL AS receptordecision, paymentmethods.name AS paymentmethod,  states.name AS statename, ticketowner.name AS ownername, tradereceiver.name AS receivername, true AS isgeneraltrade, NULL AS generaltradeid
+        const verifyUser = await selectTicket.query(`SELECT tickets.ticketid, tickets.cartid, tickets.emissiondate, tickets.pickuptime, tickets.isfree, tickets.nencomenda, tickets.ticketamount, tickets.total, NULL AS receptordecision, paymentmethods.name AS paymentmethod,  states.name AS statename, ticketowner.name AS ownername, tradereceiver.name AS receivername, true AS isgeneraltrade, generaltrades.generaltradeid
                                                 FROM generaltrades 
                                                 JOIN tickets ON generaltrades.ticketid = tickets.ticketid
                                                 JOIN bar ON bar.barid = tickets.barid
