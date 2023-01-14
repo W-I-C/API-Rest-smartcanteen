@@ -16,7 +16,7 @@ export class SeeMyTradesService {
                                                     JOIN states ON tickets.stateid = states.stateid
                                                     JOIN users ticketowner ON tickets.uid = ticketowner.uid
                                                     JOIN users tradereceiver ON tickettrade.uid = tradereceiver.uid
-                                                    JOIN paymentmethods ON tickettrade.paymentmethodid = paymentmethods.methodid
+                                                    LEFT JOIN paymentmethods ON tickettrade.paymentmethodid = paymentmethods.methodid
                                                     WHERE previousowner = $1 
                                                     AND tickettrade.isdeleted = $2
                                                     UNION

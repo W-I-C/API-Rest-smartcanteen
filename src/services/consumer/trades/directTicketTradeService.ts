@@ -49,6 +49,14 @@ export class DirectTicketTradeService {
       throw new Error('Not your Order!')
     }
 
+    const alreadyExistDirectTrade = await directTicketTradeDBClient.query(`SELECT istrading 
+                                                                          FROM tickets
+                                                                          WHERE uid = $1 AND ticketid = $2`, [uId, ticketId]);
+
+    if (alreadyExistDirectTrade['rows'][0]["istrading"] == true) {
+      throw new Error('You cant make another trade with this ticket')
+    }                                                               
+
     const getTradesTicketToReceiver = await directTicketTradeDBClient.query(`SELECT * FROM tickettrade 
     WHERE ticketid = $1 AND uid = $2 AND isdeleted = $3`, [ticketId, receiverid, false]);
 
