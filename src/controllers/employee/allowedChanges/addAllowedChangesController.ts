@@ -9,12 +9,12 @@ export class AddAllowedChangesController {
         let { ingname, ingdosage, isremoveonly, canbeincremented, canbedecremented, incrementlimit, decrementlimit, defaultValue } = request.body
 
         try {
-            if (uId === undefined || mealId == undefined || ingname === undefined || ingdosage == undefined || isremoveonly === undefined || canbeincremented == undefined || canbedecremented === undefined) {
+            if (uId === undefined || mealId == undefined || ingname === undefined || ingdosage == undefined || isremoveonly === undefined || canbeincremented == undefined || canbedecremented === undefined || defaultValue === undefined) {
                 throw new Error("Invalid request");
             }
 
             const addAllowedChangesService = new AddAllowedChangesService();
-            const resp = await addAllowedChangesService.execute(uId, mealId ,ingname, ingdosage, isremoveonly, canbeincremented, canbedecremented, incrementlimit, decrementlimit,defaultValue);
+            const resp = await addAllowedChangesService.execute(uId, mealId ,ingname, ingdosage, isremoveonly, canbeincremented, canbedecremented, defaultValue, incrementlimit, decrementlimit);
 
             response.status(resp.status).json(resp.data);
         } catch (e) {
