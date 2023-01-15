@@ -3038,19 +3038,21 @@
                   "canbeincremented": { "type": "boolean" },
                   "canbedecremented": { "type": "boolean" },
                   "incrementlimit": { "type": "number" },
-                  "decrementlimit": { "type": "number" }
+                  "decrementlimit": { "type": "number" },
+                  "deafultValue": { "type": "number" }
                 }
               },
               "examples": {
                 "Adicionar refeição ao cart": {
                   "value": {
-                    "ingname": 4,
-                    "ingdosage": 4,
+                    "ingname": "ovo",
+                    "ingdosage": "teste",
                     "isremoveonly": true,
                     "canbeincremented": false,
                     "canbedecremented": false,
                     "incrementlimit": null,
-                    "decrementlimit": null
+                    "decrementlimit": null,
+                    "defaultValue":0
                   }
                 }
               }
