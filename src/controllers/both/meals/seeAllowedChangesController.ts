@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { SeeAllowedChangesService } from "../../../services/consumer/meals/seeAllowedChangesService";
+import { SeeAllowedChangesService } from "../../../services/both/meals/seeAllowedChangesService";
 
 export class SeeAllowedChangesController {
 
