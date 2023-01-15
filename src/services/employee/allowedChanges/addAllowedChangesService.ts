@@ -3,10 +3,10 @@ import { createClient } from "../../../config/db";
 
 export class AddAllowedChangesService {
  
-    async execute(uId: String, mealId: String ,ingname: String, ingdosage: String, isremoveonly: Boolean, canbeincremented: Boolean, canbedecremented: Boolean, incrementlimit: Number, decrementlimit: Number) {
+    async execute(uId: String, mealId: String ,ingname: String, ingdosage: String, isremoveonly: Boolean, canbeincremented: Boolean, canbedecremented: Boolean, incrementlimit?: Number, decrementlimit?: Number, defaultValue?: Number) {
         const AddAllowedChangesDBClient = createClient();
 
-        const remove = await AddAllowedChangesDBClient.query(`INSERT INTO allowedchanges (mealid, ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`, [mealId,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit]) 
+        const remove = await AddAllowedChangesDBClient.query(`INSERT INTO allowedchanges (mealid, ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit,defaultValue) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`, [mealId,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit,defaultValue]) 
         
 
         const query = await AddAllowedChangesDBClient.query(`SELECT *
