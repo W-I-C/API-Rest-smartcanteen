@@ -3009,6 +3009,173 @@
           }
         }
       }
+    },
+    "/employee/meals/{mealId}/allowedchanges": {
+      "post": {
+        "summary": "Add Allowed Changes Into a Meal",
+        "description": "Allows an consumer to add allowed changes into a meal",
+        "tags": ["Meal"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "Meal Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "ingname": { "type": "string" },
+                  "ingdosage": { "type": "string" },
+                  "isremoveonly": { "type": "boolean" },
+                  "canbeincremented": { "type": "boolean" },
+                  "canbedecremented": { "type": "boolean" },
+                  "incrementlimit": { "type": "number" },
+                  "decrementlimit": { "type": "number" }
+                }
+              },
+              "examples": {
+                "Adicionar refeição ao cart": {
+                  "value": {
+                    "ingname": 4,
+                    "ingdosage": 4,
+                    "isremoveonly": true,
+                    "canbeincremented": false,
+                    "canbedecremented": false,
+                    "incrementlimit": null,
+                    "decrementlimit": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Register without body": {
+                    "value": { "msg": "Missing Arguments!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Success": {
+                    "value": {
+                      "Error": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee/meals/{mealId}/allowedchanges/{changeId}": {
+      "delete": {
+        "summary": "Delete Allowed Changes From a Meal",
+        "description": "Allows an consumer to delete a allowed changes from a meal",
+        "tags": ["Meal"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "Meal Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          },
+          {
+            "name": "changeId",
+            "in": "path",
+            "description": "Change Id",
+            "required": true,
+            "schema": {
+              "properties": { "changeId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Register without body": {
+                    "value": { "msg": "Missing Arguments!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Success": {
+                    "value": {
+                      "Error": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
