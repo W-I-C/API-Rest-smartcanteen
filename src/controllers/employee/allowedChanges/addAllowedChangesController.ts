@@ -9,6 +9,8 @@ export class AddAllowedChangesController {
         let { ingname, ingdosage, isremoveonly, canbeincremented, canbedecremented, incrementlimit, decrementlimit, defaultValue } = request.body
 
         try {
+            console.log(mealId)
+            console.log(request.body)
             if (uId === undefined || mealId == undefined || ingname === undefined || ingdosage == undefined || isremoveonly === undefined || canbeincremented == undefined || canbedecremented === undefined || defaultValue === undefined) {
                 throw new Error("Invalid request");
             }
