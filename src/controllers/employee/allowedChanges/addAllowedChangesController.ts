@@ -11,7 +11,7 @@ export class AddAllowedChangesController {
         try {
             console.log(mealId)
             console.log(request.body)
-            if (uId === undefined || mealId == undefined || ingname === undefined || ingdosage == undefined || isremoveonly === undefined || canbeincremented == undefined || canbedecremented === undefined || defaultValue === undefined) {
+            if (uId === undefined || mealId === undefined || ingname === undefined || ingdosage === undefined || isremoveonly === undefined || canbeincremented === undefined || canbedecremented === undefined || defaultValue === undefined) {
                 throw new Error("Invalid request");
             }
 
