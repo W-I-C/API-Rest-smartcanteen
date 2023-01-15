@@ -2946,7 +2946,7 @@
         }
       }
     },
-    "/consumer/meals/{mealId}/allowedChanges": {
+    "/meals/{mealId}/allowedChanges": {
       "get": {
         "summary": "Get AllowedChanges From a Meal",
         "description": "Allows an consumer to see all the allowed changes that he can make in a meal",
