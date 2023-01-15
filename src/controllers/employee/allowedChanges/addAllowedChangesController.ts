@@ -14,7 +14,7 @@ export class AddAllowedChangesController {
             }
 
             const addAllowedChangesService = new AddAllowedChangesService();
-            const resp = await addAllowedChangesService.execute(uId, mealId ,ingname, ingdosage, isremoveonly, canbeincremented, canbedecremented, incrementlimit, decrementlimit);
+            const resp = await addAllowedChangesService.execute(uId, mealId ,ingname, ingdosage, isremoveonly, canbeincremented, canbedecremented, incrementlimit, decrementlimit,defaultValue);
 
             response.status(resp.status).json(resp.data);
         } catch (e) {
