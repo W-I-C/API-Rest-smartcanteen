@@ -43,7 +43,7 @@ export class RemoveMealsCartService {
 
             await removeMealDBClient.end()
 
-            throw new Error('The cart dont belongs to this user');    
+            throw new Error('The cart dont belongs to this user human');    
         }
     }
 }
