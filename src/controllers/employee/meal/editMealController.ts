@@ -26,7 +26,7 @@ export class EditMealController {
       console.log(mealId)
       console.log(name)
       console.log(preparationTime)
-      console.log(canTakeAway)
+      console.log(canTakeaway)
       console.log(price)
       if (
         uId === undefined ||
