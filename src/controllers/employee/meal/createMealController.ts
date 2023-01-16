@@ -16,7 +16,7 @@ export class CreateMealController {
    * @param response response.
    */
     async handle(request: Request, response: Response) {
-        const barId = request.params.barId;
+        
         const uId = response.locals.uid;
         let { name,
             preparationTime,
@@ -27,7 +27,7 @@ export class CreateMealController {
 
         try {
             if (
-                barId === undefined ||
+              
                 name === undefined ||
                 preparationTime === undefined ||
                 description === undefined ||
@@ -46,7 +46,6 @@ export class CreateMealController {
 
             const resp = await createMealService.execute({
                 uId,
-                barId,
                 name,
                 preparationTime,
                 description,

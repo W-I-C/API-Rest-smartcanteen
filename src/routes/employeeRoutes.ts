@@ -21,7 +21,7 @@ const editTicketStateController = new EditTicketStateController();
 const getBarStatisticsController = new GetBarStatisticsController();
 
 
-employeeRouter.post("/meal/:barId", validateToken, validateRefreshToken, isEmployee, createMealController.handle);
+employeeRouter.post("/create/meal/", validateToken, validateRefreshToken, isEmployee, createMealController.handle);
 employeeRouter.put("/meal/:mealId", validateToken, validateRefreshToken, isEmployee, editMealController.handle);
 employeeRouter.delete("/meal/:mealId", validateToken, validateRefreshToken, isEmployee, removeMealController.handle);
 employeeRouter.get("/tickets", validateToken, validateRefreshToken, isEmployee, seeUndeliveredTicketsController.handle);
