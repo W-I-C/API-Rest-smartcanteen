@@ -19,7 +19,7 @@ export class EditMealController {
     const uId = response.locals.uid
     const mealId = request.params.mealId;
 
-    let { name, preparationTime, description, canTakeaway, price, allowedChanges } = request.body;
+    let { name, preparationTime, description, canTakeaway, price } = request.body;
 
     try {
       if (
@@ -30,7 +30,6 @@ export class EditMealController {
         description === undefined ||
         canTakeaway === undefined ||
         price === undefined ||
-        allowedChanges === undefined || 
         typeof preparationTime != "number" || 
         typeof canTakeaway != "boolean" || 
         typeof price != "number"
@@ -39,17 +38,16 @@ export class EditMealController {
       }
 
       const editMealService = new EditMealService();
-      const resp = await editMealService.execute({
+      const resp = await editMealService.execute(
         uId,
         mealId,
         name,
         preparationTime,
         description,
         canTakeaway,
-        price,
-        allowedChanges
-      });
-      response.status(resp.status).json(resp.editedMeal);
+        price
+      );
+      response.status(resp.status).json(resp.msg);
     } catch (e) {
       response.status(500).json(e.message);
     }

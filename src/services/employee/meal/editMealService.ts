@@ -14,16 +14,15 @@ export class EditMealService {
     /**
      * Method that allows you to edit the data of a meal
      */
-    async execute({
-        uId,
-        mealId,
-        name,
-        preparationTime,
-        description,
-        canTakeaway,
-        price,
-        allowedChanges
-    }:IMeal) {
+    async execute(
+        uId: string,
+        mealId: string,
+        name: string,
+        preparationTime: number,
+        description: string,
+        canTakeaway: boolean,
+        price: number) {
+            
         const mealIdExists = await checkMealExists(mealId)
 
         if(!mealIdExists){
@@ -49,28 +48,8 @@ export class EditMealService {
                                     SET name = $1, preparationTime = $2, description = $3, canTakeAway = $4, price = $5
                                     WHERE mealid = $6`, [name, preparationTime, description, canTakeaway, price, mealId])
         
-        await editMealDBClient.query(`DELETE FROM allowedchanges 
-                                    WHERE mealid = $1`, [mealId])
-
-        allowedChanges.forEach( async (currentvalue:IMealAllowedChange,index,array)=>{
-            await editMealDBClient.query(`INSERT INTO allowedchanges (mealid,ingname,ingdosage,isremoveonly,canbeincremented,canbedecremented,incrementlimit,decrementlimit) 
-                                        VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`, [mealId, currentvalue.ingname, currentvalue.ingdosage, currentvalue.isremoveonly, currentvalue.canbedecremented, currentvalue.canbedecremented, currentvalue.incrementlimit, currentvalue.decrementlimit])
-        })
-
-        const query = await editMealDBClient.query(`SELECT meals.name, meals.preparationTime, meals.description, meals.canTakeAway, meals.price
-                                                FROM meals
-                                                WHERE mealid = $1`, [mealId])
-
-        let editedMeal = query["rows"][0]
-
-        const queryAllowedChanges = await editMealDBClient.query(`SELECT ingname, ingdosage, isremoveonly, canbeincremented, canbedecremented, incrementlimit, decrementlimit
-                                                                FROM allowedchanges
-                                                                WHERE mealid = $1`, [mealId])
-
-        editedMeal["allowedChanges"] = queryAllowedChanges["rows"]   
-        
         await editMealDBClient.end()
 
-        return { editedMeal , status: 200 }
+        return { msg: "Updated Meal Successfully" , status: 200 }
     }
 }
