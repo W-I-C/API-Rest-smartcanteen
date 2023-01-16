@@ -19,7 +19,7 @@ export class EditMealController {
     const uId = response.locals.uid
     const mealId = request.params.mealId;
 
-    let { name, preparationTime, description, canTakeaway, price } = request.body;
+    let { name, preparationTime, description, canTakeAway, price } = request.body;
 
     try {
       if (
@@ -28,10 +28,10 @@ export class EditMealController {
         name === undefined ||
         preparationTime === undefined ||
         description === undefined ||
-        canTakeaway === undefined ||
+        canTakeAway === undefined ||
         price === undefined ||
         typeof preparationTime != "number" || 
-        typeof canTakeaway != "boolean" || 
+        typeof canTakeAway != "boolean" || 
         typeof price != "number"
       ) {
         throw new Error("Invalid request");
@@ -44,7 +44,7 @@ export class EditMealController {
         name,
         preparationTime,
         description,
-        canTakeaway,
+        canTakeAway,
         price
       );
       response.status(resp.status).json(resp.msg);

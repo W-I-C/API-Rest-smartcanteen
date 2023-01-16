@@ -20,7 +20,7 @@ export class EditMealService {
         name: string,
         preparationTime: number,
         description: string,
-        canTakeaway: boolean,
+        canTakeAway: boolean,
         price: number) {
             
         const mealIdExists = await checkMealExists(mealId)
@@ -46,7 +46,7 @@ export class EditMealService {
         const editMealDBClient= createClient();
         await editMealDBClient.query(`UPDATE meals
                                     SET name = $1, preparationTime = $2, description = $3, canTakeAway = $4, price = $5
-                                    WHERE mealid = $6`, [name, preparationTime, description, canTakeaway, price, mealId])
+                                    WHERE mealid = $6`, [name, preparationTime, description, canTakeAway, price, mealId])
         
         await editMealDBClient.end()
 
