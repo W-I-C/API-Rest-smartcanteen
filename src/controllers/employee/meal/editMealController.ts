@@ -19,38 +19,43 @@ export class EditMealController {
     const uId = response.locals.uid
     const mealId = request.params.mealId;
 
-    let { name, preparationTime, description, canTakeaway, price, allowedChanges } = request.body;
+    let { name, preparationTime, description, canTakeAway, price } = request.body;
 
     try {
+      console.log(uId)
+      console.log(mealId)
+      console.log(name)
+      console.log(preparationTime)
+      console.log(canTakeaway)
+      console.log(price)
       if (
         uId === undefined ||
         mealId === undefined ||
         name === undefined ||
         preparationTime === undefined ||
         description === undefined ||
-        canTakeaway === undefined ||
+        canTakeAway === undefined ||
         price === undefined ||
-        allowedChanges === undefined || 
         typeof preparationTime != "number" || 
-        typeof canTakeaway != "boolean" || 
+        typeof canTakeAway != "boolean" || 
         typeof price != "number"
       ) {
         throw new Error("Invalid request");
       }
 
       const editMealService = new EditMealService();
-      const resp = await editMealService.execute({
+      const resp = await editMealService.execute(
         uId,
         mealId,
         name,
         preparationTime,
         description,
-        canTakeaway,
-        price,
-        allowedChanges
-      });
-      response.status(resp.status).json(resp.editedMeal);
+        canTakeAway,
+        price
+      );
+      response.status(resp.status).json(resp.msg);
     } catch (e) {
+      console.log(e.message)
       response.status(500).json(e.message);
     }
   }

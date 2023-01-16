@@ -17,15 +17,15 @@ export class RemoveFavController {
    */
     async handle(request: Request, response: Response) {
         const uId = response.locals.uid;
-        const favMealId = request.params.favoriteMealId;
+        const mealId = request.params.mealId;
 
         try {
-            if (uId === undefined || favMealId === undefined) {
+            if (uId === undefined || mealId === undefined) {
                 throw new Error("Invalid request");
             }
 
             const removeFavService = new RemoveFavService();
-            const resp = await removeFavService.execute(uId, favMealId);
+            const resp = await removeFavService.execute(uId, mealId);
 
             response.status(resp.status).json(resp.data);
         } catch (e) {
