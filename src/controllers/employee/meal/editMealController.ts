@@ -22,13 +22,7 @@ export class EditMealController {
     let { name, preparationTime, description, canTakeAway, price } = request.body;
 
     try {
-      console.log(uId)
-      console.log(mealId)
-      console.log(name)
-      console.log(preparationTime)
-      console.log(description)
-      console.log(canTakeAway)
-      console.log(price)
+      
       if (
         uId === undefined ||
         mealId === undefined ||

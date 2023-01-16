@@ -28,10 +28,14 @@ export class RemoveMealsCartService {
         }
         
         if(verifyUser.rowCount>0){
-            const query= await removeMealDBClient.query(`DELETE FROM cartMeals 
-                                                            JOIN cartmealschanges ON cartMeals.cartmealid = cartmealschanges.cartmealid
-                                                            WHERE cartmeals.cartmealid=$1`,[cartMealId])
 
+            const query2= await removeMealDBClient.query(`DELETE FROM cartMealsChanges
+                                                        WHERE cartmealid=$1`,[cartMealId])
+
+            const query= await removeMealDBClient.query(`DELETE FROM cartMeals
+                                                        WHERE cartmealid=$1`,[cartMealId])
+
+           
             const querySelect= await removeMealDBClient.query('SELECT * from cart WHERE uId=$1',[uId])
             
             const data=querySelect["rows"]
