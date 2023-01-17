@@ -36,9 +36,19 @@ export class RemoveMealsCartService {
                                                         WHERE cartmealid=$1`,[cartMealId])
 
            
-            const querySelect= await removeMealDBClient.query('SELECT * from cart WHERE uId=$1',[uId])
+            const queryUser=await removeMealDBClient.query(`SELECT meals.name,cartmeals.cartmealid, meals.price, cartmeals.amount, meals.price*cartmeals.amount as mealtotal, 
+                                                        (SELECT SUM(A.mealtotal) as carttotal FROM (SELECT meals.price*cartmeals.amount as mealtotal
+                                                        FROM cart
+                                                        JOIN cartmeals ON cart.cartid = cartmeals.cartid
+                                                        JOIN meals ON cartmeals.mealid = meals.mealid
+                                                        WHERE cart.uId = $1 AND cart.iscompleted = $2) A)
+                                                        FROM cart
+                                                        JOIN cartmeals ON cart.cartid = cartmeals.cartid
+                                                        JOIN meals ON cartmeals.mealid = meals.mealid
+                                                        WHERE cart.uId = $1 AND cart.iscompleted = $2`,[uId,false])
+
             
-            const data=querySelect["rows"]
+            const data=queryUser["rows"]
 
             await removeMealDBClient.end()
             
