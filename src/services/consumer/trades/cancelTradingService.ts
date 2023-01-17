@@ -4,6 +4,7 @@
 require('dotenv').config();
 import { createClient } from "../../../config/db";
 import { getDeliveredStatusId, getUserName } from "../../../helpers/dbHelpers";
+import { sendNotification } from "../../../helpers/requestsHelpers";
 import { getUserCampus } from "../../../validations/consumer/trades/seeTradesValidation";
 
 /**
@@ -51,7 +52,10 @@ export class CancelTradingService {
       const description = `${userName} canceled the trade proposal`
       users['rows'].forEach(async function (user) {
         await cancelTicketTradeDBClient.query(`INSERT INTO notifications(date,receiverid, senderid,description,istradeproposal) VALUES ($1,$2,$3,$4,$5)`, [date, user['uid'], uId, description, false])
+        await sendNotification(user['uid'], description, `Direct Trade`)
       });
+
+
     }
 
     const campusId = await getUserCampus(uId)

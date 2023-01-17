@@ -13,6 +13,7 @@ import { RegisterController } from "../controllers/both/auth/registerController"
 import { GetCAmpusBarsController } from "../controllers/both/campus/getCampusBarsController";
 import { SeePaymentMehodsController } from "../controllers/both/payments/seePaymentMethodsController";
 import { SeeStatesController } from "../controllers/both/states/seeStatesController";
+import { RegisterDeviceTokenController } from "../controllers/both/auth/registerDeviceTokenController";
 
 const bothRouter = express.Router();
 
@@ -28,6 +29,7 @@ const registerController = new RegisterController();
 const getCampusBarsController = new GetCAmpusBarsController();
 const seePaymentMehodsController = new SeePaymentMehodsController();
 const seeStatesController = new SeeStatesController();
+const registerDeviceTokenController = new RegisterDeviceTokenController();
 
 bothRouter.get("/profile", validateToken, validateRefreshToken, seeProfileController.handle);
 bothRouter.put("/profile", validateToken, validateRefreshToken, editProfileController.handle);
@@ -47,5 +49,7 @@ bothRouter.get("/bar/:barId/meals", validateToken, validateRefreshToken, seeMeal
 bothRouter.get("/ticket/:ticketId/detail", validateToken, validateRefreshToken, seeDetailsMealTicketController.handle);
 bothRouter.get("/paymentmethods", validateToken, validateRefreshToken, seePaymentMehodsController.handle);
 bothRouter.get("/states", validateToken, validateRefreshToken, seeStatesController.handle);
+
+bothRouter.post("/device", validateToken, validateRefreshToken, registerDeviceTokenController.handle);
 
 export { bothRouter };
