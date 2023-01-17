@@ -14,6 +14,7 @@ import { GetCAmpusBarsController } from "../controllers/both/campus/getCampusBar
 import { SeePaymentMehodsController } from "../controllers/both/payments/seePaymentMethodsController";
 import { SeeStatesController } from "../controllers/both/states/seeStatesController";
 import { RegisterDeviceTokenController } from "../controllers/both/auth/registerDeviceTokenController";
+import { SeeAllowedChangesController } from "../controllers/both/meals/seeAllowedChangesController";
 
 const bothRouter = express.Router();
 
@@ -30,6 +31,7 @@ const getCampusBarsController = new GetCAmpusBarsController();
 const seePaymentMehodsController = new SeePaymentMehodsController();
 const seeStatesController = new SeeStatesController();
 const registerDeviceTokenController = new RegisterDeviceTokenController();
+const seeAllowedChangesController = new SeeAllowedChangesController()
 
 bothRouter.get("/profile", validateToken, validateRefreshToken, seeProfileController.handle);
 bothRouter.put("/profile", validateToken, validateRefreshToken, editProfileController.handle);
@@ -51,5 +53,7 @@ bothRouter.get("/paymentmethods", validateToken, validateRefreshToken, seePaymen
 bothRouter.get("/states", validateToken, validateRefreshToken, seeStatesController.handle);
 
 bothRouter.post("/device", validateToken, validateRefreshToken, registerDeviceTokenController.handle);
+
+bothRouter.get("/meals/:mealId/allowedChanges", validateToken, validateRefreshToken, seeAllowedChangesController.handle);
 
 export { bothRouter };

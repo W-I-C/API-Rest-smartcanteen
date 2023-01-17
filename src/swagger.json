@@ -298,10 +298,10 @@
         }
       }
     },
-    "/consumer/cart/{mealId}": {
+    "/consumer/cart/meal/{mealId}": {
       "post": {
         "summary": "Add meal to cart",
-        "description": "Add a meal to cart ",
+        "description": "Allows the authenticated user to add a meal to the cart, including allowed changes",
         "tags": ["Cart"],
         "security": [{ "basicAuth": [] }],
         "parameters": [
@@ -310,29 +310,53 @@
             "in": "path",
             "description": "Meal id",
             "required": true,
-            "schema": { "properties": { "mealId": { "type": "string" } } }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "amount": { "type": "number" }
-                }
-              },
-              "examples": {
-                "Adicionar refeição ao cart": {
-                  "value": {
-                    "amount": 4
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "amount": { "type": "number" },
+                "allowedChanges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "changeid": { "type": "string" },
+                      "ingname": { "type": "string" },
+                      "ingdosage": { "type": "number" },
+                      "isremoveonly": { "type": "boolean" },
+                      "canbeincremented": { "type": "boolean" },
+                      "canbedcremented": { "type": "boolean" },
+                      "incrementlimit": { "type": "number" },
+                      "decrementlimit": { "type": "number" }
+                    }
                   }
                 }
               }
             }
           }
-        },
+        ],
         "responses": {
-          "500": { "description": "ERROR" },
+          "400": {
+            "description": "Invalid Request",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Invalid Request": {
+                    "value": {
+                      "msg": "Invalid request"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized",
             "content": {
@@ -341,41 +365,48 @@
                 "examples": {
                   "Unauthorized Request": {
                     "value": {
-                      "Error": "Unauthorized Request"
+                      "msg": "Unauthorized Request"
                     }
                   }
                 }
               }
             }
           },
-          "200": {
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+            "application/json": {
+            "schema": { "properties": { "msg": { "type": "string" } } },
+            "examples": {
+            "Error adding meal to cart": {
+            "value": {
+            "msg": "Error adding meal to cart"
+            }
+            }
+            }
+            }
+            }
+            },
+            "200": {
             "description": "OK",
             "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "mealid": { "type": "string" },
-                    "amount": { "type": "number" },
-                    "mealprice": { "type": "number" }
-                  }
-                },
-                "examples": {
-                  "Add meal to cart": {
-                    "value": [
-                      {
-                        "mealid": "04720b43-2c3b-4c78-baef-fcada0a40baa",
-                        "amount": 2,
-                        "mealprice": 30
-                      }
-                    ]
-                  }
-                }
-              }
+            "application/json": {
+            "schema": { "properties": { "message": { "type": "string" } } },
+            "examples": {
+            "Meal added to cart successfully": {
+            "value": {
+            "message": "Meal added to cart successfully"
             }
-          }
-        }
-      }
-    },
+            }
+            }
+            }
+            }
+            }
+            }
+            }
+            },
+  
+    
     "/bar/{barId}/meals": {
       "get": {
         "summary": "See meals from a bar",
@@ -648,21 +679,12 @@
         }
       }
     },
-    "/employee/meal/{barId}": {
+    "/employee/create/meal/": {
       "post": {
         "summary": "Create meal",
         "description": "create meal",
         "tags": ["Meal"],
         "security": [{ "basicAuth": [] }],
-        "parameters": [
-          {
-            "name": "barId",
-            "in": "path",
-            "description": "bar id",
-            "required": true,
-            "schema": { "properties": { "barId": { "type": "string" } } }
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2971,6 +2993,239 @@
         "description": "Allows an employee to get bar menu",
         "tags": ["Meal"],
         "security": [{ "basicAuth": [] }],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Register without body": {
+                    "value": { "msg": "Missing Arguments!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Success": {
+                    "value": {
+                      "Error": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/meals/{mealId}/allowedChanges": {
+      "get": {
+        "summary": "Get AllowedChanges From a Meal",
+        "description": "Allows an consumer to see all the allowed changes that he can make in a meal",
+        "tags": ["Meal"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "Meal Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Register without body": {
+                    "value": { "msg": "Missing Arguments!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Success": {
+                    "value": {
+                      "Error": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee/meals/{mealId}/allowedchanges": {
+      "post": {
+        "summary": "Add Allowed Changes Into a Meal",
+        "description": "Allows an consumer to add allowed changes into a meal",
+        "tags": ["Meal"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "Meal Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "ingname": { "type": "string" },
+                  "ingdosage": { "type": "string" },
+                  "isremoveonly": { "type": "boolean" },
+                  "canbeincremented": { "type": "boolean" },
+                  "canbedecremented": { "type": "boolean" },
+                  "incrementlimit": { "type": "number" },
+                  "decrementlimit": { "type": "number" },
+                  "deafultValue": { "type": "number" }
+                }
+              },
+              "examples": {
+                "Adicionar refeição ao cart": {
+                  "value": {
+                    "ingname": "ovo",
+                    "ingdosage": "teste",
+                    "isremoveonly": true,
+                    "canbeincremented": false,
+                    "canbedecremented": false,
+                    "incrementlimit": null,
+                    "decrementlimit": null,
+                    "defaultValue":0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Register without body": {
+                    "value": { "msg": "Missing Arguments!" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Success": {
+                    "value": {
+                      "Error": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee/meals/{mealId}/allowedchanges/{changeId}": {
+      "delete": {
+        "summary": "Delete Allowed Changes From a Meal",
+        "description": "Allows an consumer to delete a allowed changes from a meal",
+        "tags": ["Meal"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "Meal Id",
+            "required": true,
+            "schema": {
+              "properties": { "mealId": { "type": "string" } }
+            }
+          },
+          {
+            "name": "changeId",
+            "in": "path",
+            "description": "Change Id",
+            "required": true,
+            "schema": {
+              "properties": { "changeId": { "type": "string" } }
+            }
+          }
+        ],
         "responses": {
           "500": {
             "description": "ERROR",

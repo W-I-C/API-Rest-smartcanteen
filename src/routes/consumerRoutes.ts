@@ -5,7 +5,7 @@ import { validateRefreshToken } from "../middlewares/validateRefreshToken";
 import { isConsumer } from "../middlewares/isConsumer";
 
 import { AddFavController } from "../controllers/consumer/favoriteMeal/addFavController";
-//import { AddMealCartController } from "../controllers/consumer/cart/addMealCartController";
+import { AddMealCartController } from "../controllers/consumer/cart/addMealCartController";
 import { SeeFavController } from "../controllers/consumer/favoriteMeal/seeFavController";
 import { SeeOneFavController } from "../controllers/consumer/favoriteMeal/seeOneFavController";
 import { RemoveFavController } from "../controllers/consumer/favoriteMeal/removeFavController";
@@ -26,12 +26,13 @@ import { AcceptTradeGeneralController } from "../controllers/consumer/trades/acc
 import { CancelGeneralTradingService } from "../services/consumer/trades/cancelGeneralTradingService";
 import { CancelGeneralTradingController } from "../controllers/consumer/trades/cancelGeneralTradingController";
 import { SeeTradePaymentMethodController } from "../controllers/consumer/trades/seeTradePaymentMethodController";
+import { SeeAllowedChangesController } from "../controllers/both/meals/seeAllowedChangesController";
 
 const addFavController = new AddFavController();
 const removeFavController = new RemoveFavController();
 const seeFavController = new SeeFavController();
 const seeOneFavController = new SeeOneFavController();
-//const addMealCartController = new AddMealCartController();
+const addMealCartController = new AddMealCartController();
 const seeMealsCartController = new SeeMealsCartController();
 const removeMealsCartController = new RemoveMealsCartController();
 const seeTradesHistoryController = new SeeTradesHistoryController();

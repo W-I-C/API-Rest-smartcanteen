@@ -12,6 +12,8 @@ import { CanBeMadeController } from "../controllers/employee/meal/canBeMadeContr
 import { EditTicketStateController } from "../controllers/employee/ticket/editTicketStateController";
 import { GetBarStatisticsController } from "../controllers/employee/general/getBarStatisticsController";
 import { GetBarMenuController } from "../controllers/employee/general/getBarMenuController";
+import { AddAllowedChangesController } from "../controllers/employee/allowedChanges/addAllowedChangesController";
+import { RemoveAllowedChangesController } from "../controllers/employee/allowedChanges/removeAllowedChangesController";
 
 const createMealController = new CreateMealController();
 const editMealController = new EditMealController();
@@ -21,9 +23,11 @@ const canBeMadeController = new CanBeMadeController();
 const editTicketStateController = new EditTicketStateController();
 const getBarStatisticsController = new GetBarStatisticsController();
 const getBarMenuController = new GetBarMenuController();
+const addAllowedChangesController = new AddAllowedChangesController();
+const removeAllowedChangesController = new RemoveAllowedChangesController();
 
 
-employeeRouter.post("/meal/:barId", validateToken, validateRefreshToken, isEmployee, createMealController.handle);
+employeeRouter.post("/create/meal/", validateToken, validateRefreshToken, isEmployee, createMealController.handle);
 employeeRouter.put("/meal/:mealId", validateToken, validateRefreshToken, isEmployee, editMealController.handle);
 employeeRouter.delete("/meal/:mealId", validateToken, validateRefreshToken, isEmployee, removeMealController.handle);
 employeeRouter.get("/tickets", validateToken, validateRefreshToken, isEmployee, seeUndeliveredTicketsController.handle);
@@ -32,6 +36,9 @@ employeeRouter.put("/tickets/:ticketId/:stateId", validateToken, validateRefresh
 
 employeeRouter.get("/bar/statistics", validateToken, validateRefreshToken, isEmployee, getBarStatisticsController.handle);
 employeeRouter.get("/bar/menu", validateToken, validateRefreshToken, isEmployee, getBarMenuController.handle);
+
+employeeRouter.post("/meals/:mealId/allowedchanges", validateToken, validateRefreshToken, isEmployee, addAllowedChangesController.handle);
+employeeRouter.delete("/meals/:mealId/allowedchanges/:changeId", validateToken, validateRefreshToken, isEmployee, removeAllowedChangesController.handle);
 
 
 export { employeeRouter }

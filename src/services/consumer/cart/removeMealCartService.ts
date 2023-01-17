@@ -28,11 +28,27 @@ export class RemoveMealsCartService {
         }
         
         if(verifyUser.rowCount>0){
-            const query= await removeMealDBClient.query('DELETE FROM cartMeals WHERE cartMealId=$1',[cartMealId])
 
-            const querySelect= await removeMealDBClient.query('SELECT * from cart WHERE uId=$1',[uId])
+            const query2= await removeMealDBClient.query(`DELETE FROM cartMealsChanges
+                                                        WHERE cartmealid=$1`,[cartMealId])
+
+            const query= await removeMealDBClient.query(`DELETE FROM cartMeals
+                                                        WHERE cartmealid=$1`,[cartMealId])
+
+           
+            const queryUser=await removeMealDBClient.query(`SELECT meals.name,cartmeals.cartmealid, meals.price, cartmeals.amount, meals.price*cartmeals.amount as mealtotal, 
+                                                        (SELECT SUM(A.mealtotal) as carttotal FROM (SELECT meals.price*cartmeals.amount as mealtotal
+                                                        FROM cart
+                                                        JOIN cartmeals ON cart.cartid = cartmeals.cartid
+                                                        JOIN meals ON cartmeals.mealid = meals.mealid
+                                                        WHERE cart.uId = $1 AND cart.iscompleted = $2) A)
+                                                        FROM cart
+                                                        JOIN cartmeals ON cart.cartid = cartmeals.cartid
+                                                        JOIN meals ON cartmeals.mealid = meals.mealid
+                                                        WHERE cart.uId = $1 AND cart.iscompleted = $2`,[uId,false])
+
             
-            const data=querySelect["rows"]
+            const data=queryUser["rows"]
 
             await removeMealDBClient.end()
             
@@ -41,7 +57,7 @@ export class RemoveMealsCartService {
 
             await removeMealDBClient.end()
 
-            throw new Error('The cart dont belongs to this user');    
+            throw new Error('The cart dont belongs to this user human');    
         }
     }
 }

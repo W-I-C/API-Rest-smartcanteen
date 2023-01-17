@@ -33,7 +33,7 @@ export class CanBeMadeService {
 
     await canBeMadeDBClient.end()
 
-    return { data: { msg: "Meal updated" }, status: 200 }
+    return { data: "Meal updated", status: 200 }
 
   }
 }
