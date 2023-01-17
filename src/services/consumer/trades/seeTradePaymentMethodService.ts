@@ -15,7 +15,7 @@ export class SeeTradePaymentMethodService {
                                                         WHERE generaltradeid = $1`, [generalTradeId])
 
     const data = query["rows"][0]
-    console.log(query["rows"][0])
+
 
     await seeTradePaymentMethodDBClient.end()
 

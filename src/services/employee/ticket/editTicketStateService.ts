@@ -60,7 +60,7 @@ export class EditTicketStateService {
                                                                 FROM tickets
                                                                 WHERE ticketid = $1`, [ticketId])
 
-        console.log(query['rows'])
+
         const statename = await getStateName(stateId)
         await sendNotification(query['rows'][0]['uid'], `Your order changed to ${statename}`, `Order ${query['rows'][0]['nencomenda']}`)
 
