@@ -155,6 +155,60 @@
         }
       }
     },
+    "/get/campus": {
+      "get": {
+        "summary": "get campus",
+        "description": "Get a specific meal from the favorites of the authenticated user",
+        "tags": ["campus"],
+        "security": [{ "basicAuth": [] }],
+          "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "FavMeal does not exists": {
+                    "value": {
+                      "msg": "FavMeal does not exists"
+                    }
+                  }               
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "campusid": { "type": "string" },
+                    "name": { "type": "string" }
+                  }
+                }
+                
+              }
+            }
+          }
+        }
+      }
+    },
     "/consumer/favoriteMeal/{favMealId}": {
       "get": {
         "summary": "Get one favorite meal",
@@ -821,6 +875,7 @@
         }
       }
     },
+    
     "/profile": {
       "get": {
         "summary": "View my profile",
@@ -3273,4 +3328,5 @@
       }
     }
   }
-}
+  }
+

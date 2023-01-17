@@ -29,7 +29,7 @@ export class RemoveFavService {
                                             WHERE favoritemeals.uid = $1`, [uId]) 
         
         const data = queryFav["rows"]
-
+        console.log(queryFav["rows"])
         await removeFavDBClient.end()
 
         return { data, status: 200 }
