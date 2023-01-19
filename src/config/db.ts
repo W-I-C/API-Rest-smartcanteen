@@ -12,11 +12,12 @@ const createClient = () => {
     host: host,
     database: database,
     password: password,
-    port: Number(port)
+    port: Number(port),
+    ssl: true
   });
   client.connect();
 
   return client;
 }
 
-export {createClient};
+export { createClient };
