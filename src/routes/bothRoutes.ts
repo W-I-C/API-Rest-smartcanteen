@@ -15,6 +15,7 @@ import { SeePaymentMehodsController } from "../controllers/both/payments/seePaym
 import { SeeStatesController } from "../controllers/both/states/seeStatesController";
 import { RegisterDeviceTokenController } from "../controllers/both/auth/registerDeviceTokenController";
 import { SeeAllowedChangesController } from "../controllers/both/meals/seeAllowedChangesController";
+import { GetCampusController } from "../controllers/both/campus/getCampusController";
 
 const bothRouter = express.Router();
 
@@ -33,6 +34,9 @@ const seeStatesController = new SeeStatesController();
 const registerDeviceTokenController = new RegisterDeviceTokenController();
 const seeAllowedChangesController = new SeeAllowedChangesController()
 
+const getCampusController= new GetCampusController();
+
+bothRouter.get("/get/campus",validateToken, validateRefreshToken,getCampusController.handle)
 bothRouter.get("/profile", validateToken, validateRefreshToken, seeProfileController.handle);
 bothRouter.put("/profile", validateToken, validateRefreshToken, editProfileController.handle);
 bothRouter.post("/login", loginController.handle);
