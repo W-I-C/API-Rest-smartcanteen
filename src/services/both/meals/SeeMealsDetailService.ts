@@ -21,7 +21,7 @@ export class SeeMealsDetailService {
         
         
  
-        const query=await mealsDetailDBClient.query('SELECT name,preparationTime,description,canTakeAway,price from Meals WHERE mealid=$1',[mealId])
+        const query=await mealsDetailDBClient.query('SELECT name,preparationTime,description,canTakeAway,price,mealimages.url  from Meals LEFT JOIN mealimages ON meals.mealid = mealimages.mealid WHERE meals.mealid=$1',[mealId])
         
         const data=query["rows"]
 
