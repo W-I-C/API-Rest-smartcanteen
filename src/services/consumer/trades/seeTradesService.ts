@@ -16,7 +16,7 @@ export class SeeTradesService {
         const selectTicket = createClient();
 
         const campusId = await getUserCampus(uId)
-
+        let allData = []
 
         const verifyUser = await selectTicket.query(`SELECT tickets.ticketid, tickets.cartid, tickets.emissiondate, tickets.pickuptime, tickets.isfree, tickets.nencomenda, tickets.ticketamount, tickets.total, NULL AS receptordecision, paymentmethods.name AS paymentmethod,  states.name AS statename, ticketowner.name AS ownername, tradereceiver.name AS receivername, true AS isgeneraltrade, generaltrades.generaltradeid
                                                 FROM generaltrades 
@@ -30,9 +30,39 @@ export class SeeTradesService {
                                                 WHERE previousowner <> $1 AND campus.campusid = $2 AND Date(tickets.emissiondate) = CURRENT_DATE
                                                 AND generaltrades.isdeleted = $3 AND generaltrades.uid is NULL AND generaltrades.tradedate is NULL`, [uId, campusId, false])
 
+        allData = verifyUser["rows"]
+
+
+        for (let i = 0; i < allData.length; i++) {
+            const getmeals = await selectTicket.query(`SELECT cartmeals.mealid,cartmeals.amount,mealprice, meals.name, description, canTakeAway, mealimages.url FROM cartmeals
+                                                        LEFT JOIN mealimages ON mealimages.mealid = cartmeals.mealid
+                                                        JOIN meals ON meals.mealid = cartmeals.mealid
+                                                        WHERE cartmeals.cartid = $1`, [allData[i]['cartid']])
+
+            allData[i]['ticketmeals'] = getmeals['rows']
+
+            for (let j = 0; j < allData[i]['ticketmeals'].length; j++) {
+                const mealid = allData[i]['ticketmeals'][j]["mealid"];
+
+                const changes = await selectTicket.query(`SELECT allowedchanges.ingname,cartmealschanges.amount as ingamount,allowedchanges.isremoveonly,
+                                                        allowedchanges.canbeincremented, allowedchanges.canbedecremented from cartmeals 
+                                                      JOIN meals ON meals.mealid = cartmeals.mealid
+                                                      JOIN cartmealschanges ON cartmealschanges.cartmealid = cartmeals.cartmealid
+                                                      JOIN allowedchanges ON allowedchanges.changeid = cartmealschanges.changeid
+                                                      WHERE cartid=$1 AND meals.mealid = $2`, [allData[i]['cartid'], mealid])
+
+                allData[i]['ticketmeals'][j]['mealchanges'] = changes["rows"];
+            }
+        }
+
+
+
+
+
+
         await selectTicket.end()
 
-        const data = verifyUser["rows"]
+        const data = allData
 
         return { data, status: 200 }
     }

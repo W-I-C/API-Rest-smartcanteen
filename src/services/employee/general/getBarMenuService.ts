@@ -18,7 +18,9 @@ export class GetBarMenuService {
     const barId = await getEmployeeBar(uid);
     const getBarMenuDBClient = createClient();
 
-    const query = await getBarMenuDBClient.query('SELECT * from Meals WHERE barId = $1 AND isdeleted = $2', [barId, false])
+    const query = await getBarMenuDBClient.query(`SELECT mealid,barid,name,preparationtime,description,cantakeaway,price,canbemade,url from meals 
+                                                    LEFT JOIN mealimages ON mealimages.mealid = meals.mealid
+                                                    WHERE barId = $1 AND isdeleted = $2`, [barId, false])
 
     await getBarMenuDBClient.end()
 

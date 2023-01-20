@@ -22,7 +22,7 @@ export class SeeMealsService {
      */
     async execute(barId: string, uId: string, role: string) {
         const seeMealsDBClient = createClient();
-        
+
 
         const barExists = await checkBarExists(barId)
         if (!barExists) {
@@ -36,7 +36,9 @@ export class SeeMealsService {
                 throw new Error('Bars are not the same')
             }
         }
-        const query = await seeMealsDBClient.query('SELECT meals.mealid, meals.barid, meals.name, meals.preparationtime, meals.description, meals.cantakeaway, meals.price, meals.isdeleted, meals.canbemade, mealimages.imgid, mealimages.url from Meals LEFT JOIN mealimages ON meals.mealid = mealimages.mealid WHERE barId = $1 AND isdeleted = $2', [barId, false])
+        const query = await seeMealsDBClient.query(`SELECT mealid,barid,name,preparationtime,description,cantakeaway,price,canbemade,url from meals 
+                                                    LEFT JOIN mealimages ON mealimages.mealid = meals.mealid
+                                                    WHERE barId = $1 AND isdeleted = $2`, [barId, false])
 
 
         const data = query["rows"]
