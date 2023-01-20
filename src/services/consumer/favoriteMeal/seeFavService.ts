@@ -19,12 +19,12 @@ export class SeeFavService {
                                             FROM favoritemeals 
                                             JOIN meals ON favoritemeals.mealid = meals.mealid 
                                             LEFT JOIN mealimages ON meals.mealid = mealimages.mealid 
-                                            WHERE favoritemeals.uid = $1`, [uId]) 
-        
+                                            WHERE favoritemeals.uid = $1`, [uId])
+
         const data = query["rows"]
 
         await seeFavDBClient.end()
-                                            
+
         return { data, status: 200 }
     }
 }
