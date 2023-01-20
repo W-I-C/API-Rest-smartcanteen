@@ -18,7 +18,6 @@ export class CreateMealService {
      */
     async execute({
         uId,
-        barId,
         name,
         preparationTime,
         description,
@@ -31,25 +30,20 @@ export class CreateMealService {
         const createMealDBClient= createClient();
 
        
-        
-        const barExists = await checkBarExists(barId)
-        if(!barExists) {
-          throw new Error('Bar dont exist');
-        }
+    
         
         const userBar = await getEmployeeBar(uId)
-        if(userBar != barId) {
-          throw new Error('Bars are not the same');
-        }
 
-        const mealExist=await createMealDBClient.query('SELECT * from Meals WHERE name=$1 AND barId=$2',[name,barId])
+  
+
+        const mealExist=await createMealDBClient.query('SELECT * from Meals WHERE name=$1 AND barId=$2',[name,userBar])
 
         if (mealExist.rowCount > 0) {
           throw new Error('Meal already exists');
         }
 
-        const createMeals= await createMealDBClient.query('INSERT INTO Meals (name, preparationTime,description,canTakeaway,price,barId) VALUES ($1,$2,$3,$4,$5,$6)', [name,preparationTime,description,canTakeaway,price,barId])
-        const selectId= await createMealDBClient.query('SELECT mealId from Meals WHERE name=$1 AND barId=$2', [name,barId])
+        const createMeals= await createMealDBClient.query('INSERT INTO Meals (name, preparationTime,description,canTakeaway,price,barId) VALUES ($1,$2,$3,$4,$5,$6)', [name,preparationTime,description,canTakeaway,price,userBar])
+        const selectId= await createMealDBClient.query('SELECT mealId from Meals WHERE name=$1 AND barId=$2', [name,userBar])
         
         const mealId=selectId["rows"][0]["mealid"]
         allowedChanges.forEach( async (currentvalue:IMealAllowedChange,index,array)=>{

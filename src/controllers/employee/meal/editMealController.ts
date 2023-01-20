@@ -22,6 +22,7 @@ export class EditMealController {
     let { name, preparationTime, description, canTakeAway, price } = request.body;
 
     try {
+      
       if (
         uId === undefined ||
         mealId === undefined ||
@@ -49,6 +50,7 @@ export class EditMealController {
       );
       response.status(resp.status).json(resp.msg);
     } catch (e) {
+      console.log(e.message)
       response.status(500).json(e.message);
     }
   }

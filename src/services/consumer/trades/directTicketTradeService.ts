@@ -4,6 +4,7 @@
 require('dotenv').config();
 import { createClient } from "../../../config/db";
 import { getUserId, getUserName, getUserRole } from "../../../helpers/dbHelpers";
+import { sendNotification } from "../../../helpers/requestsHelpers";
 
 /**
  * Class responsible for the service that serves to make a direct trade
@@ -55,7 +56,7 @@ export class DirectTicketTradeService {
 
     if (alreadyExistDirectTrade['rows'][0]["istrading"] == true) {
       throw new Error('You cant make another trade with this ticket')
-    }                                                               
+    }
 
     const getTradesTicketToReceiver = await directTicketTradeDBClient.query(`SELECT * FROM tickettrade 
     WHERE ticketid = $1 AND uid = $2 AND isdeleted = $3`, [ticketId, receiverid, false]);
@@ -66,11 +67,13 @@ export class DirectTicketTradeService {
 
     const description = `${userName} sent you a trade proposal`
 
-    
+
     await directTicketTradeDBClient.query(`UPDATE tickets SET istrading=$1, isdirecttrade=$2, isfree=$3 WHERE ticketid=$4`, [true, true, isFree, ticketId])
     const date = new Date()
 
     await directTicketTradeDBClient.query(`INSERT INTO notifications(date,receiverid, senderid,description,istradeproposal) VALUES ($1,$2,$3,$4,$5)`, [date, receiverid, uId, description, true])
+    const name = await getUserName(uId)
+    await sendNotification(receiverid, `User ${name} wants to trade with you`, `Direct Trade`)
 
     await directTicketTradeDBClient.query(`INSERT INTO tickettrade (ticketid,uid,proposaldate,previousowner,paymentmethodid) VALUES ($1,$2,$3,$4,$5)`, [ticketId, receiverid, date, uId, paymentMethodId])
 

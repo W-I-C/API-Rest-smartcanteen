@@ -3,10 +3,11 @@
  */
 require('dotenv').config();
 import { createClient } from "../../../config/db";
-import { getDeliveredStatusId } from "../../../helpers/dbHelpers";
+import { getDeliveredStatusId, getUserName } from "../../../helpers/dbHelpers";
+import { sendNotification } from "../../../helpers/requestsHelpers";
 import { checkTicketExists } from "../../../validations/consumer/ticket/removeTicketValidation";
 import { getEmployeeBar } from "../../../validations/employee/meal/editMealValidation";
-import { checkStateNameExists, getStateId, getTicketBar, getTicketState } from "../../../validations/employee/ticket/editTicketStateValidation";
+import { getTicketBar, getTicketState, getStateName } from "../../../validations/employee/ticket/editTicketStateValidation";
 
 /**
  * Class responsible for the service that serves to edit the state of a ticket
@@ -39,7 +40,7 @@ export class EditTicketStateService {
         const stateExists = await editTicketStateDBClient.query(`SELECT *  FROM states
                                                                 WHERE stateid = $1`, [stateId])
 
-        if(stateExists["rows"].length == 0){
+        if (stateExists["rows"].length == 0) {
             throw new Error("Invalid State")
         }
 
@@ -49,15 +50,19 @@ export class EditTicketStateService {
         if (ticketStateId == deliveredState) {
             throw new Error('The ticket has already been delivered')
         }
-        
+
         await editTicketStateDBClient.query(`UPDATE tickets
                                     SET stateid = $1
                                     WHERE ticketid = $2`, [stateId, ticketId])
 
 
-        const query = await editTicketStateDBClient.query(`SELECT ticketid, stateid
+        const query = await editTicketStateDBClient.query(`SELECT ticketid, stateid, uid, nencomenda
                                                                 FROM tickets
                                                                 WHERE ticketid = $1`, [ticketId])
+
+
+        const statename = await getStateName(stateId)
+        await sendNotification(query['rows'][0]['uid'], `Your order changed to ${statename}`, `Order ${query['rows'][0]['nencomenda']}`)
 
         await editTicketStateDBClient.end()
 
