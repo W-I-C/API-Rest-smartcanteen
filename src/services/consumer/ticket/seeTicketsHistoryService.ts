@@ -25,10 +25,35 @@ export class SeeTicketsHistoryService {
                                                                 JOIN states ON tickets.stateid = states.stateid
                                                                 WHERE campus.campusid=$1 AND tickets.uid = $2 AND tickets.isdeleted = $3`, [campusId, uId, false])
 
-        const data = query["rows"]
+        let allData = query["rows"]
+
+
+        for (let i = 0; i < allData.length; i++) {
+            const getmeals = await seeTicketsHistoryDBClient.query(`SELECT cartmeals.mealid,cartmeals.amount,mealprice, meals.name, description, canTakeAway, mealimages.url FROM cartmeals
+                                                                    LEFT JOIN mealimages ON mealimages.mealid = cartmeals.mealid
+                                                                    JOIN meals ON meals.mealid = cartmeals.mealid
+                                                                    WHERE cartmeals.cartid = $1`, [allData[i]['cartid']])
+
+            allData[i]['ticketmeals'] = getmeals['rows']
+
+            for (let j = 0; j < allData[i]['ticketmeals'].length; j++) {
+                const mealid = allData[i]['ticketmeals'][j]["mealid"];
+
+                const changes = await seeTicketsHistoryDBClient.query(`SELECT allowedchanges.ingname,cartmealschanges.amount as ingamount,allowedchanges.isremoveonly,
+                                                                        allowedchanges.canbeincremented, allowedchanges.canbedecremented from cartmeals 
+                                                                        JOIN meals ON meals.mealid = cartmeals.mealid
+                                                                        JOIN cartmealschanges ON cartmealschanges.cartmealid = cartmeals.cartmealid
+                                                                        JOIN allowedchanges ON allowedchanges.changeid = cartmealschanges.changeid
+                                                                        WHERE cartid=$1 AND meals.mealid = $2`, [allData[i]['cartid'], mealid])
+
+                allData[i]['ticketmeals'][j]['mealchanges'] = changes["rows"];
+            }
+        }
+
+
 
         await seeTicketsHistoryDBClient.end()
 
-        return { data, status: 200 }
+        return { data: allData, status: 200 }
     }
 }
