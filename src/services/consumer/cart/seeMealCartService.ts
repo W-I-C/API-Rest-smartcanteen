@@ -9,18 +9,18 @@ import { createClient } from "../../../config/db";
  * Class responsible for the service that serves to see a meal at cart
  */
 export class SeeMealsCartService {
- 
+
     /**
      * Method that allows you to see a meal at cart
      */
-        
-    async execute(uId:string) {
-        
-        const seeMealsCartDBClient=createClient();
 
-        
+    async execute(uId: string) {
 
-        const queryUser=await seeMealsCartDBClient.query(`SELECT meals.name,cartmeals.cartmealid, meals.price, cartmeals.amount, meals.price*cartmeals.amount as mealtotal, 
+        const seeMealsCartDBClient = createClient();
+
+
+
+        const queryUser = await seeMealsCartDBClient.query(`SELECT meals.name,cartmeals.cartmealid, meals.price, cartmeals.amount, meals.price*cartmeals.amount as mealtotal,url, 
                                                             (SELECT SUM(A.mealtotal) as carttotal FROM (SELECT meals.price*cartmeals.amount as mealtotal
                                                             FROM cart
                                                             JOIN cartmeals ON cart.cartid = cartmeals.cartid
@@ -28,17 +28,18 @@ export class SeeMealsCartService {
                                                             WHERE cart.uId = $1 AND cart.iscompleted = $2) A)
                                                             FROM cart
                                                             JOIN cartmeals ON cart.cartid = cartmeals.cartid
+                                                            LEFT JOIN mealimages ON mealimages.mealid = cartmeals.mealid
                                                             JOIN meals ON cartmeals.mealid = meals.mealid
-                                                            WHERE cart.uId = $1 AND cart.iscompleted = $2`,[uId,false])
-        
-        
-   
-                            
+                                                            WHERE cart.uId = $1 AND cart.iscompleted = $2`, [uId, false])
 
-        const data=queryUser["rows"]
+
+
+
+
+        const data = queryUser["rows"]
 
         await seeMealsCartDBClient.end()
-        
+
         return { data, status: 200 }
-    }  
+    }
 }
