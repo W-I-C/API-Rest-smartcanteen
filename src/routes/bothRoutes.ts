@@ -36,7 +36,7 @@ const seeAllowedChangesController = new SeeAllowedChangesController()
 
 const getCampusController= new GetCampusController();
 
-bothRouter.get("/get/campus",validateToken, validateRefreshToken,getCampusController.handle)
+bothRouter.get("/campus",validateToken, validateRefreshToken,getCampusController.handle)
 bothRouter.get("/profile", validateToken, validateRefreshToken, seeProfileController.handle);
 bothRouter.put("/profile", validateToken, validateRefreshToken, editProfileController.handle);
 bothRouter.post("/login", loginController.handle);
