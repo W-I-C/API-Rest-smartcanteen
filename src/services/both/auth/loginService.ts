@@ -39,7 +39,7 @@ export class LoginService {
 
       await loginDBClient.end()
 
-      return { status: 200, data: { token: sessionToken, role: role } }
+      return { status: 200, data: { token: sessionToken, role: role, uid: uid } }
     } else {
 
       await loginDBClient.end()
