@@ -31,7 +31,7 @@ export class NewSessionTokenService {
         const verified = verify(refreshToken, process.env.JWT_REFRESH_TOKEN_KEY)
         if (verified) {
           const newSessionToken = createSessionToken(uid, role)
-          return { status: 200, data: { token: newSessionToken, role: role } }
+          return { status: 200, data: { token: newSessionToken, role: role, uid: uid } }
         }
         else {
           return { status: 401, data: { Error: "Unauthorized Request" } }
