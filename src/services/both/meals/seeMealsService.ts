@@ -36,7 +36,7 @@ export class SeeMealsService {
                 throw new Error('Bars are not the same')
             }
         }
-        const query = await seeMealsDBClient.query(`SELECT meals.mealid, meals.barid, meals.name, meals.preparationtime, meals.description, meals.cantakeaway, meals.price,meals.canbemade, mealimages.url from meals 
+        const query = await seeMealsDBClient.query(`SELECT meals.mealid, meals.barid, meals.name, meals.preparationtime, meals.description, meals.cantakeaway, meals.price,meals.canbemade from meals 
                                                     LEFT JOIN mealimages ON mealimages.mealid = meals.mealid
                                                     WHERE meals.barId = $1 AND meals.isdeleted = $2`, [barId, false])
 

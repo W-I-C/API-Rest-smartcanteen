@@ -34,7 +34,7 @@ export class SeeTradesService {
 
 
         for (let i = 0; i < allData.length; i++) {
-            const getmeals = await selectTicket.query(`SELECT cartmeals.mealid,cartmeals.amount,mealprice, meals.name, description, canTakeAway, mealimages.url FROM cartmeals
+            const getmeals = await selectTicket.query(`SELECT cartmeals.mealid,cartmeals.amount,mealprice, meals.name, description, canTakeAway FROM cartmeals
                                                         LEFT JOIN mealimages ON mealimages.mealid = cartmeals.mealid
                                                         JOIN meals ON meals.mealid = cartmeals.mealid
                                                         WHERE cartmeals.cartid = $1`, [allData[i]['cartid']])

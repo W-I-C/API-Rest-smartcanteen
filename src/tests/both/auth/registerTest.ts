@@ -26,8 +26,7 @@ describe("Test register", function () {
           name: "consumer",
           password: password,
           schoolno: 1222,
-          birthdate: "1999-10-10",
-          imgurl: null
+          birthdate: "1999-10-10"
         })
         .then(res => {
           res.should.have.status(500)
@@ -47,8 +46,7 @@ describe("Test register", function () {
         name: "consumer",
         password: password,
         schoolno: invalidSchoolno,
-        birthdate: "1999-10-10",
-        imgurl: null
+        birthdate: "1999-10-10"
       })
       .then(res => {
         res.should.have.status(500)
@@ -80,8 +78,7 @@ describe('- Correct Register', () => {
         name: "consumer",
         password: password,
         schoolno: 123124,
-        birthdate: "1999-10-10",
-        imgurl: null
+        birthdate: "1999-10-10"
       })
       .then(res => {
         res.should.have.status(200)
