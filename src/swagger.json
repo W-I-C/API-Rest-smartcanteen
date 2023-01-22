@@ -155,7 +155,7 @@
         }
       }
     },
-    "/get/campus": {
+    "/campus": {
       "get": {
         "summary": "get campus",
         "description": "Get a specific meal from the favorites of the authenticated user",

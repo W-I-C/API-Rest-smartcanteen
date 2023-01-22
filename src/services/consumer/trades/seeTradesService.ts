@@ -18,7 +18,7 @@ export class SeeTradesService {
         const campusId = await getUserCampus(uId)
         let allData = []
 
-        const verifyUser = await selectTicket.query(`SELECT tickets.ticketid, ticket.barid, tickets.cartid, tickets.emissiondate, tickets.pickuptime, tickets.isfree, tickets.nencomenda, tickets.ticketamount, tickets.total, NULL AS receptordecision, paymentmethods.name AS paymentmethod,  states.name AS statename, ticketowner.name AS ownername, tradereceiver.name AS receivername, true AS isgeneraltrade, generaltrades.generaltradeid
+        const tickets = await selectTicket.query(`SELECT tickets.ticketid, tickets.cartid, tickets.barid, tickets.emissiondate, tickets.pickuptime, tickets.isfree, tickets.nencomenda, tickets.ticketamount, tickets.total, NULL AS receptordecision, paymentmethods.name AS paymentmethod,  states.name AS statename, ticketowner.name AS ownername, tradereceiver.name AS receivername, true AS isgeneraltrade, generaltrades.generaltradeid
                                                 FROM generaltrades 
                                                 JOIN tickets ON generaltrades.ticketid = tickets.ticketid
                                                 JOIN bar ON bar.barid = tickets.barid
@@ -30,7 +30,7 @@ export class SeeTradesService {
                                                 WHERE previousowner <> $1 AND campus.campusid = $2 AND Date(tickets.emissiondate) = CURRENT_DATE
                                                 AND generaltrades.isdeleted = $3 AND generaltrades.uid is NULL AND generaltrades.tradedate is NULL`, [uId, campusId, false])
 
-        allData = verifyUser["rows"]
+        allData = tickets["rows"]
 
 
         for (let i = 0; i < allData.length; i++) {

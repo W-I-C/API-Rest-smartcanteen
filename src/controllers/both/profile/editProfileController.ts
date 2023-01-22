@@ -20,7 +20,7 @@ export class EditProfileController {
     let { preferredCampus, preferredBar, imgUrl } = request.body
 
     try {
-      if (uId === undefined || preferredCampus === undefined || preferredBar === undefined || imgUrl === undefined) {
+      if (uId === undefined || preferredCampus === undefined || preferredBar === undefined) {
         throw new Error("Invalid request");
       }
 
