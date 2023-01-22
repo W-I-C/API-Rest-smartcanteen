@@ -21,10 +21,9 @@ export class RegisterService {
      * @param password password
      * @param schoolno school number
      * @param birthdate birthdate
-     * @param imgurl profile picture url
      */
   async execute({
-    roleid, preferredcampus, preferredbar, email, name, password, schoolno, birthdate, imgurl
+    roleid, preferredcampus, preferredbar, email, name, password, schoolno, birthdate
   }: IUser) {
 
 
@@ -41,12 +40,12 @@ export class RegisterService {
     //password encryption
     let passwd = await hash(password, 8);
 
-    await registerDBClient.query(`INSERT INTO users(roleid, preferredcampus, preferredbar, email, name, password, schoolno, birthdate, imgurl)
+    await registerDBClient.query(`INSERT INTO users(roleid, preferredcampus, preferredbar, email, name, password, schoolno, birthdate)
                                    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
-      [roleid, preferredcampus, preferredbar, email, name, passwd, schoolno, birthdate, imgurl])
+      [roleid, preferredcampus, preferredbar, email, name, passwd, schoolno, birthdate])
 
     await registerDBClient.end()
-    
+
     return { status: 200, data: { msg: "User Registered Successfully" } }
   }
 }

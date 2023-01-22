@@ -7,5 +7,4 @@ export interface IUser {
   password: string,
   schoolno: number,
   birthdate: Date,
-  imgurl?: string
 }

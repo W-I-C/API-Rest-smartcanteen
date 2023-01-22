@@ -17,7 +17,7 @@ export class EditProfileController {
    */
   async handle(request: Request, response: Response) {
     const uId = response.locals.uid;
-    let { preferredCampus, preferredBar, imgUrl } = request.body
+    let { preferredCampus, preferredBar } = request.body
 
     try {
       if (uId === undefined || preferredCampus === undefined || preferredBar === undefined) {
@@ -25,7 +25,7 @@ export class EditProfileController {
       }
 
       const editProfileService = new EditProfileService();
-      const resp = await editProfileService.execute({ uId, preferredCampus, preferredBar, imgUrl });
+      const resp = await editProfileService.execute({ uId, preferredCampus, preferredBar });
 
       response.status(resp.status).json(resp.data);
     } catch (e) {
