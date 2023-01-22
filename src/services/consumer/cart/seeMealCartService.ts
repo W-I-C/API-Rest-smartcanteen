@@ -20,7 +20,7 @@ export class SeeMealsCartService {
 
 
 
-        const queryUser = await seeMealsCartDBClient.query(`SELECT meals.name,cartmeals.cartmealid, meals.price, cartmeals.amount, meals.price*cartmeals.amount as mealtotal,url, 
+        const queryUser = await seeMealsCartDBClient.query(`SELECT meals.name,cartmeals.cartmealid, meals.price, cartmeals.amount, meals.price*cartmeals.amount as mealtotal, 
                                                             (SELECT SUM(A.mealtotal) as carttotal FROM (SELECT meals.price*cartmeals.amount as mealtotal
                                                             FROM cart
                                                             JOIN cartmeals ON cart.cartid = cartmeals.cartid

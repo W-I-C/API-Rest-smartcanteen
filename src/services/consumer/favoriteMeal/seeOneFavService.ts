@@ -19,26 +19,26 @@ export class SeeOneFavService {
 
         const mealIdExists = await checkFavMealExists(favMealId)
 
-        if(!mealIdExists){
+        if (!mealIdExists) {
             throw new Error('FavMeal does not exists')
         }
-        
+
         const userMealId = await getUserFavMeal(favMealId);
 
-        if(userMealId != uId){
+        if (userMealId != uId) {
             throw new Error('Favmeal does not belong to you')
         }
 
-        const query = await seeOneFavDBClient.query(`SELECT meals.name, meals.preparationtime, meals.price, mealimages.url 
+        const query = await seeOneFavDBClient.query(`SELECT meals.name, meals.preparationtime, meals.price 
                                             FROM favoritemeals 
                                             JOIN meals ON favoritemeals.mealid = meals.mealid 
                                             LEFT JOIN mealimages ON meals.mealid = mealimages.mealid 
-                                            WHERE favoritemeals.favoritemealid = $1 AND favoritemeals.uid = $2`, [favMealId, uId]) 
-        
+                                            WHERE favoritemeals.favoritemealid = $1 AND favoritemeals.uid = $2`, [favMealId, uId])
+
         const data = query["rows"][0]
 
         await seeOneFavDBClient.end()
-                                            
+
         return { data, status: 200 }
     }
 }

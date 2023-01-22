@@ -18,7 +18,7 @@ export class SeeTradesService {
         const campusId = await getUserCampus(uId)
         let allData = []
 
-        const verifyUser = await selectTicket.query(`SELECT tickets.ticketid, tickets.cartid, tickets.barid, tickets.emissiondate, tickets.pickuptime, tickets.isfree, tickets.nencomenda, tickets.ticketamount, tickets.total, NULL AS receptordecision, paymentmethods.name AS paymentmethod,  states.name AS statename, ticketowner.name AS ownername, tradereceiver.name AS receivername, true AS isgeneraltrade, generaltrades.generaltradeid
+        const tickets = await selectTicket.query(`SELECT tickets.ticketid, tickets.cartid, tickets.barid, tickets.emissiondate, tickets.pickuptime, tickets.isfree, tickets.nencomenda, tickets.ticketamount, tickets.total, NULL AS receptordecision, paymentmethods.name AS paymentmethod,  states.name AS statename, ticketowner.name AS ownername, tradereceiver.name AS receivername, true AS isgeneraltrade, generaltrades.generaltradeid
                                                 FROM generaltrades 
                                                 JOIN tickets ON generaltrades.ticketid = tickets.ticketid
                                                 JOIN bar ON bar.barid = tickets.barid
@@ -30,11 +30,11 @@ export class SeeTradesService {
                                                 WHERE previousowner <> $1 AND campus.campusid = $2 AND Date(tickets.emissiondate) = CURRENT_DATE
                                                 AND generaltrades.isdeleted = $3 AND generaltrades.uid is NULL AND generaltrades.tradedate is NULL`, [uId, campusId, false])
 
-        allData = verifyUser["rows"]
+        allData = tickets["rows"]
 
 
         for (let i = 0; i < allData.length; i++) {
-            const getmeals = await selectTicket.query(`SELECT cartmeals.mealid,cartmeals.amount,mealprice, meals.name, description, canTakeAway, mealimages.url FROM cartmeals
+            const getmeals = await selectTicket.query(`SELECT cartmeals.mealid,cartmeals.amount,mealprice, meals.name, description, canTakeAway FROM cartmeals
                                                         LEFT JOIN mealimages ON mealimages.mealid = cartmeals.mealid
                                                         JOIN meals ON meals.mealid = cartmeals.mealid
                                                         WHERE cartmeals.cartid = $1`, [allData[i]['cartid']])

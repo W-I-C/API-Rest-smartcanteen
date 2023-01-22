@@ -34,7 +34,7 @@ export class SeeDetailsMealTicketService {
         const mealid = meals[i]["mealid"];
 
         const changes = await seeMeals.query(`SELECT allowedchanges.ingname,cartmealschanges.amount as ingamount,allowedchanges.isremoveonly,
-                                                allowedchanges.canbeincremented, allowedchanges.canbedecremented, url from cartmeals 
+                                                allowedchanges.canbeincremented, allowedchanges.canbedecremented from cartmeals 
                                               JOIN meals ON meals.mealid = cartmeals.mealid
                                               LEFT JOIN mealimages ON mealimages.mealid = meals.mealid
                                               JOIN cartmealschanges ON cartmealschanges.cartmealid = cartmeals.cartmealid
