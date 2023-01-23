@@ -21,7 +21,7 @@ export class EditProfileService {
 
         const campusBar = await getCampusBar(preferredBar)
 
-        if (resp && campusBar == preferredCampus) {
+        if (resp) {
             const query = await editProfileDBClient.query(`UPDATE users
                                                         SET preferredcampus = $1, preferredBar = $2   
                                                         WHERE users.uid = $4`, [preferredCampus, preferredBar, uId])
