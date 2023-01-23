@@ -15,7 +15,7 @@ export class SeeProfileService {
     async execute(uId: string) {
         const seeProfileDBClient = createClient();
 
-        const query = await seeProfileDBClient.query(`SELECT users.name, campus.name AS campusName, bar.name AS barName
+        const query = await seeProfileDBClient.query(`SELECT users.name, users.email, campus.name AS campusName, bar.name AS barName, bar.barid, campus.campusid
                                                         FROM users 
                                                         JOIN campus ON users.preferredCampus = campus.campusid 
                                                         JOIN bar ON users.preferredBar = bar.barid 
