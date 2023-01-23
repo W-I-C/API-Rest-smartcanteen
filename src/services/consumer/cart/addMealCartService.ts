@@ -50,6 +50,7 @@ export class AddMealCartService {
                     })
                     const cart=await addMealcart.query('SELECT mealid,amount,mealprice from cartmeals WHERE cartid=$1',[cartid])
                     const data=cart["rows"]
+                    await addMealcart.end()
                     return { data, status: 200 }
                 }else{
                     const mealPrice=await addMealcart.query('SELECT price FROM meals WHERE mealid=$1',[mealId])
@@ -67,10 +68,11 @@ export class AddMealCartService {
                     })
                     const cart=await addMealcart.query('SELECT mealid,amount,mealprice from cartmeals WHERE cartid=$1',[cartid])
                     const data=cart["rows"]
+                    await addMealcart.end()
                     return { data, status: 200 }
                 }
         }else{
-            
+            await addMealcart.end()
             throw console.error("Refeição não pode ser feita");
             
         }
