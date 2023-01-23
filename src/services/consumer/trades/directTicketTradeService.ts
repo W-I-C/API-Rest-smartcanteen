@@ -81,8 +81,6 @@ export class DirectTicketTradeService {
     const selectTicketTrade = await directTicketTradeDBClient.query(`SELECT tradeid FROM tickettrade WHERE ticketid = $1 AND uid = $2 AND proposaldate = $3 AND previousowner = $4 AND (paymentmethodid is NULL OR paymentmethodid = $5) AND isdeleted = $6`, [ticketId, receiverid, date, uId, paymentMethodId, false])
 
     const tradeId = selectTicketTrade["rows"][0]["tradeid"]
-    console.log("123")
-    console.log(tradeId)
 
     await directTicketTradeDBClient.query(`INSERT INTO notifications(date,receiverid,senderid,description,istradeproposal,tradeid) VALUES ($1,$2,$3,$4,$5,$6)`, [date, receiverid, uId, description, true, tradeId])
     const name = await getUserName(uId)
