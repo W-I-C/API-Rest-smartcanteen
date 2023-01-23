@@ -16,9 +16,11 @@ import { SeeStatesController } from "../controllers/both/states/seeStatesControl
 import { RegisterDeviceTokenController } from "../controllers/both/auth/registerDeviceTokenController";
 import { SeeAllowedChangesController } from "../controllers/both/meals/seeAllowedChangesController";
 import { GetCampusController } from "../controllers/both/campus/getCampusController";
+import { GetBarCampusController } from "../controllers/both/campus/getBarCampusController";
 
 const bothRouter = express.Router();
 
+const getBarCampusController= new GetBarCampusController();
 const seeProfileController = new SeeProfileController();
 const editProfileController = new EditProfileController();
 const loginController = new LoginController();
@@ -36,6 +38,7 @@ const seeAllowedChangesController = new SeeAllowedChangesController()
 
 const getCampusController= new GetCampusController();
 
+bothRouter.get("/campus/bar/:campusId",validateToken, validateRefreshToken, getBarCampusController.handle)
 bothRouter.get("/campus",validateToken, validateRefreshToken,getCampusController.handle)
 bothRouter.get("/profile", validateToken, validateRefreshToken, seeProfileController.handle);
 bothRouter.put("/profile", validateToken, validateRefreshToken, editProfileController.handle);
