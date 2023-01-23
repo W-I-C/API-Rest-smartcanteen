@@ -29,7 +29,7 @@ export class SeeTicketsHistoryService {
 
 
         for (let i = 0; i < allData.length; i++) {
-            const getmeals = await seeTicketsHistoryDBClient.query(`SELECT cartmeals.mealid,cartmeals.amount,mealprice, meals.name, description, canTakeAway FROM cartmeals
+            const getmeals = await seeTicketsHistoryDBClient.query(`SELECT cartmeals.mealid,cartmeals.amount,mealprice, meals.name, description, canTakeAway, cartmeals.cartmealid FROM cartmeals
                                                                     LEFT JOIN mealimages ON mealimages.mealid = cartmeals.mealid
                                                                     JOIN meals ON meals.mealid = cartmeals.mealid
                                                                     WHERE cartmeals.cartid = $1`, [allData[i]['cartid']])
@@ -40,7 +40,7 @@ export class SeeTicketsHistoryService {
                 const mealid = allData[i]['ticketmeals'][j]["mealid"];
 
                 const changes = await seeTicketsHistoryDBClient.query(`SELECT allowedchanges.ingname,cartmealschanges.amount as ingamount,allowedchanges.isremoveonly,
-                                                                        allowedchanges.canbeincremented, allowedchanges.canbedecremented from cartmeals 
+                                                                        allowedchanges.canbeincremented, allowedchanges.canbedecremented from cartmeals, cartmeals.cartmealid, cartmealchangeid
                                                                         JOIN meals ON meals.mealid = cartmeals.mealid
                                                                         JOIN cartmealschanges ON cartmealschanges.cartmealid = cartmeals.cartmealid
                                                                         JOIN allowedchanges ON allowedchanges.changeid = cartmealschanges.changeid
