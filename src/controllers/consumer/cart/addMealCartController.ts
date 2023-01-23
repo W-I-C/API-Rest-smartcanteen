@@ -18,20 +18,20 @@ export class AddMealCartController {
     async handle(request: Request, response: Response) {
         const uId = response.locals.uid;
         const mealId = request.params.mealId;
-        let { amount, allowedChanges } = request.body;
+        let { amount } = request.body;
 
         try {
             if (uId === undefined ||
                 mealId === undefined ||
-                amount === undefined ||
-                allowedChanges === undefined ) {
+                amount === undefined 
+                 ) {
                 throw new Error("Invalid request");
             }
 
             const addMealCartService = new AddMealCartService();
-            const resp = await addMealCartService.execute(uId, mealId, amount, allowedChanges);
+            const resp = await addMealCartService.execute(uId, mealId, amount);
 
-            response.status(resp.status).json(resp.message);
+            response.status(resp.status).send(resp.data);
         } catch (e) {
             response.status(500).json(e.message)
         }
