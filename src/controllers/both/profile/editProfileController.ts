@@ -29,6 +29,7 @@ export class EditProfileController {
 
       response.status(resp.status).json(resp.data);
     } catch (e) {
+      console.log(e.message);
       response.status(500).json(e.message);
     }
   }
