@@ -1334,6 +1334,43 @@
         }
       }
     },
+    "/campus/bar/{campusId}": {
+      "get": {
+        "summary": "Get all bar from campus",
+        "description": "Get all bar from campus",
+        "tags": ["campus"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "campusId",
+            "in": "path",
+            "description": "campus id",
+            "required": true,
+            "schema": {
+              "properties": { "campusId": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": {
+          "500": { "description": "ERROR" },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Get all orders": {
+                    "value": {
+                      "msg": "Successfully obtained all details meal from an ticket"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ticket/{ticketId}/detail": {
       "get": {
         "summary": "Get details meal of an order",
