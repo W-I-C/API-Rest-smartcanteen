@@ -21,7 +21,8 @@ export class GetNotificiationsService {
                                                       JOIN users ON notifications.senderid = users.uid
                                                       LEFT JOIN tickettrade ON tickettrade.tradeid = notifications.tradeid
                                                       LEFT JOIN tickets ON tickets.ticketid = tickettrade.ticketid
-                                                      WHERE receiverid = $1`, [uId])
+                                                      WHERE receiverid = $1
+                                                      ORDER BY notifications.date DESC`, [uId])
 
     const data = query["rows"]
 
