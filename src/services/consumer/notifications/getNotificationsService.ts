@@ -16,7 +16,10 @@ export class GetNotificiationsService {
   async execute(uId: string) {
 
     const getNotificationsDBClient = createClient();
-    const query = await getNotificationsDBClient.query(`SELECT * FROM Notifications WHERE receiverid=$1`, [uId])
+    const query = await getNotificationsDBClient.query(`SELECT notifications.notiid, notifications.receiverid, notifications.senderid, notifications.description, notifications.isseen, notifications.istradeproposal, notifications.date, users.name
+                                                      FROM notifications 
+                                                      JOIN users ON notifications.senderid = users.uid
+                                                      WHERE receiverid = $1`, [uId])
 
     const data = query["rows"]
 
