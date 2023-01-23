@@ -351,115 +351,7 @@
           }
         }
       }
-    },
-    "/consumer/cart/meal/{mealId}": {
-      "post": {
-        "summary": "Add meal to cart",
-        "description": "Allows the authenticated user to add a meal to the cart, including allowed changes",
-        "tags": ["Cart"],
-        "security": [{ "basicAuth": [] }],
-        "parameters": [
-          {
-            "name": "mealId",
-            "in": "path",
-            "description": "Meal id",
-            "required": true,
-            "schema": {
-              "properties": { "mealId": { "type": "string" } }
-            }
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "properties": {
-                "amount": { "type": "number" },
-                "allowedChanges": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "changeid": { "type": "string" },
-                      "ingname": { "type": "string" },
-                      "ingdosage": { "type": "number" },
-                      "isremoveonly": { "type": "boolean" },
-                      "canbeincremented": { "type": "boolean" },
-                      "canbedcremented": { "type": "boolean" },
-                      "incrementlimit": { "type": "number" },
-                      "decrementlimit": { "type": "number" }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "Invalid Request",
-            "content": {
-              "application/json": {
-                "schema": { "properties": { "msg": { "type": "string" } } },
-                "examples": {
-                  "Invalid Request": {
-                    "value": {
-                      "msg": "Invalid request"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": { "properties": { "msg": { "type": "string" } } },
-                "examples": {
-                  "Unauthorized Request": {
-                    "value": {
-                      "msg": "Unauthorized Request"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-            "application/json": {
-            "schema": { "properties": { "msg": { "type": "string" } } },
-            "examples": {
-            "Error adding meal to cart": {
-            "value": {
-            "msg": "Error adding meal to cart"
-            }
-            }
-            }
-            }
-            }
-            },
-            "200": {
-            "description": "OK",
-            "content": {
-            "application/json": {
-            "schema": { "properties": { "message": { "type": "string" } } },
-            "examples": {
-            "Meal added to cart successfully": {
-            "value": {
-            "message": "Meal added to cart successfully"
-            }
-            }
-            }
-            }
-            }
-            }
-            }
-            }
-            },
-  
+    },  
     
     "/bar/{barId}/meals": {
       "get": {
@@ -869,6 +761,91 @@
                     ]
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+   "/consumer/cart/{mealId}": {
+      "post": {
+        "summary": "Add cart meal",
+        "description": "Add cart meal",
+        "tags": ["Cart"],
+        "security": [{ "basicAuth": [] }],
+        "parameters": [
+          {
+            "name": "mealId",
+            "in": "path",
+            "description": "meal id",
+            "required": true,
+            "schema": { "properties": { "mealId": { "type": "string" } } }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Meal"
+              },
+              "examples": {
+                "Create Meal": {
+                  "value": {
+                    "amount": 1                                     
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "500": {
+            "description": "ERROR",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Bar dont exist": {
+                    "value": {
+                      "msg": "Bar dont exist"
+                    }
+                  },
+                  "Bars are not the same": {
+                    "value": {
+                      "msg": "Bars are not the same"
+                    }
+                  },
+                  "Meal already exists": {
+                    "value": {
+                      "msg": "Meal already exists"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": { "properties": { "msg": { "type": "string" } } },
+                "examples": {
+                  "Unauthorized Request": {
+                    "value": {
+                      "Error": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Meal"
+                }          
               }
             }
           }

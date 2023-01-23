@@ -12,59 +12,36 @@ import { checkCartMealsExists, checkMealExists, getMealBar } from "../../../vali
 
 
 export class AddMealCartService {
-    async execute(uId: string, mealId: string, amount: number, allowedChanges: { changeid: string, ingname: string, ingdosage: number, isremoveonly: boolean, canbeincremented: boolean, canbedcremented: boolean, incrementlimit: number, decrementlimit: number }[]) {
-        const addMealToCartDBClient = createClient();
+    async execute(uId: string, mealId: string, amount: number) {
         try {
-            // Verify if the cart belongs to the authenticated user and is not completed
-            const cartVerification = await addMealToCartDBClient.query(`
-              SELECT cartid, iscompleted
-              FROM cart
-              WHERE uId = $1 AND iscompleted = $2
-          `, [uId, false]);
-            let cartId: string;
-            if (!cartVerification.rows.length) {
-                // If the cart is completed or does not belong to the user, create a new one
-                const newCart = await addMealToCartDBClient.query(`
-                  INSERT INTO cart (uId, date, iscompleted)
-                  VALUES ($1, $2, $3)
-                  RETURNING cartid
-              `, [uId, new Date(), false]);
-                cartId = newCart.rows[0].cartid;
-            } else {
-                cartId = cartVerification.rows[0].cartid;
-            }
+            const addMealcart= createClient();
+            const query= await addMealcart.query('SELECT cartid FROM cart WHERE uid=$1 AND isCompleted=$2', [uId,false])
+            const cartid=query["rows"][0]["cartid"]
+            if(cartid==null){
+                const timeElapsed = Date.now();
+                const today = new Date(timeElapsed);
 
-            // Add the meal to the cart
-            const addedMeal = await addMealToCartDBClient.query(`
-              INSERT INTO cartmeals (cartid, mealid, amount, mealprice)
-              VALUES ($1, $2, $3, (SELECT price FROM meals WHERE mealid = $2))
-              RETURNING cartmealid
-          `, [cartId, mealId, amount]);
-            let cartMealId = addedMeal.rows[0].cartmealid;
+                const createCart=await addMealcart.query('INSERT INTO cart WHERE (uid,date,iscompleted) VALUES($1,$2,$3)',[uId,today,false])
+                const cartid=createCart["rows"][0]["cartid"]
 
-            // Check if the meal has allowed changes
-            if (allowedChanges.length > 0) {
-                // Add the allowed changes to the cartmeal
-                for (const change of allowedChanges) {
-                    const allowedChange = await addMealToCartDBClient.query(`
-                  SELECT changeid, mealid, ingname, ing        dosage, isremoveonly, canbeincremented, canbedcremented, incrementlimit, decrementlimit
-                  FROM allowedchanges
-                  WHERE changeid = $1 AND mealid = $2
-                  `, [change.changeid, mealId])
-                    if (!allowedChange.rows.length) {
-                        throw new Error(`Change with id ${change.changeid} for meal ${mealId} is not allowed`);
-                    }
-                    await addMealToCartDBClient.query(`
-                      INSERT INTO cartmealschange (cartmealid, changeid, amount)
-                      VALUES ($1, $2, $3)
-                  `, [cartMealId, change.changeid, change.ingdosage]);
-                }
+                const mealPrice=await addMealcart.query('SELECT price FROM meals WHERE mealid=$1',[mealId])
+                const price=mealPrice["rows"][0]["price"]
+
+                const insertMeal=await addMealcart.query('INSERT INTO cartMeals (mealid,cartid,amount,mealprice) VALUES($1,$2,$3,$4)',[mealId,cartid,amount,price])
+                const cart=await addMealcart.query('SELECT mealid,amount,mealprice from cartmeals WHERE cartid=$1',[cartid])
+                const data=cart["rows"]
+                return { data, status: 200 }
+            }else{
+                const mealPrice=await addMealcart.query('SELECT price FROM meals WHERE mealid=$1',[mealId])
+                const price=mealPrice["rows"][0]["price"]
+                const insertMeal=await addMealcart.query('INSERT INTO cartMeals (mealid,cartid,amount,mealprice) VALUES($1,$2,$3,$4)',[mealId,cartid,amount,price])
+                const cart=await addMealcart.query('SELECT mealid,amount,mealprice from cartmeals WHERE cartid=$1',[cartid])
+                const data=cart["rows"]
+                return { data, status: 200 }
             }
-            return { message: "Meal added to cart successfully", status: 200 };
         } catch (error) {
             console.log(error)
-            return { error: error.message, status: 500 };
+            return { status: 500, message: "Internal server error" }
         }
     }
 }
-
