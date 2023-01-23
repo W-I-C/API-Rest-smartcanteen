@@ -40,7 +40,7 @@ export class SeeTicketsHistoryService {
                 const mealid = allData[i]['ticketmeals'][j]["mealid"];
 
                 const changes = await seeTicketsHistoryDBClient.query(`SELECT allowedchanges.ingname,cartmealschanges.amount as ingamount,allowedchanges.isremoveonly,
-                                                                        allowedchanges.canbeincremented, allowedchanges.canbedecremented from cartmeals, cartmeals.cartmealid, cartmealchangeid
+                                                                        allowedchanges.canbeincremented, allowedchanges.canbedecremented, cartmeals.cartmealid, cartmealchangeid from cartmeals
                                                                         JOIN meals ON meals.mealid = cartmeals.mealid
                                                                         JOIN cartmealschanges ON cartmealschanges.cartmealid = cartmeals.cartmealid
                                                                         JOIN allowedchanges ON allowedchanges.changeid = cartmealschanges.changeid
