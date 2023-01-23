@@ -22,7 +22,8 @@ export class GetBarCampusService {
 
     const data = query["rows"]
 
-
+    await mealsDetailDBClient.end()
     return { data, status: 200 }
   }
+
 }
