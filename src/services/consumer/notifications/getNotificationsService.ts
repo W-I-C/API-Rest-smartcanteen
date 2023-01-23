@@ -16,9 +16,11 @@ export class GetNotificiationsService {
   async execute(uId: string) {
 
     const getNotificationsDBClient = createClient();
-    const query = await getNotificationsDBClient.query(`SELECT notifications.notiid, notifications.receiverid, notifications.senderid, notifications.description, notifications.isseen, notifications.istradeproposal, notifications.date, users.name
+    const query = await getNotificationsDBClient.query(`SELECT notifications.notiid, notifications.receiverid, notifications.senderid, notifications.description, notifications.isseen, notifications.istradeproposal, notifications.date, notifications.tradeid, users.name, tickets.isfree, tickets.total
                                                       FROM notifications 
                                                       JOIN users ON notifications.senderid = users.uid
+                                                      LEFT JOIN tickettrade ON tickettrade.tradeid = notifications.tradeid
+                                                      LEFT JOIN tickets ON tickets.ticketid = tickettrade.ticketid
                                                       WHERE receiverid = $1`, [uId])
 
     const data = query["rows"]
