@@ -27,6 +27,7 @@ import { CancelGeneralTradingService } from "../services/consumer/trades/cancelG
 import { CancelGeneralTradingController } from "../controllers/consumer/trades/cancelGeneralTradingController";
 import { SeeTradePaymentMethodController } from "../controllers/consumer/trades/seeTradePaymentMethodController";
 import { SeeAllowedChangesController } from "../controllers/both/meals/seeAllowedChangesController";
+import { SeeDirectTradePaymentMethodController } from "../controllers/consumer/trades/seeDirectTradePaymentMethodController";
 
 const addFavController = new AddFavController();
 const removeFavController = new RemoveFavController();
@@ -49,6 +50,7 @@ const seeMyTradesController = new SeeMyTradesController()
 const acceptTradeGeneralController = new AcceptTradeGeneralController()
 const cancelGeneralTradingController = new CancelGeneralTradingController()
 const seeTradePaymentMethodController = new SeeTradePaymentMethodController()
+const seeDirectTradePaymentMethodController = new SeeDirectTradePaymentMethodController()
 
 //adicionar aos favoritos refeição
 consumerRouter.post("/favoriteMeals/:mealId", validateToken, validateRefreshToken, isConsumer, addFavController.handle);
@@ -72,6 +74,7 @@ consumerRouter.get("/mytrades", validateToken, validateRefreshToken, isConsumer,
 consumerRouter.get("/general/trades/:generalTradeId", validateToken, validateRefreshToken, isConsumer, acceptTradeGeneralController.handle);
 consumerRouter.delete("/general/trades/:generalTradeId", validateToken, validateRefreshToken, isConsumer, cancelGeneralTradingController.handle);
 consumerRouter.get("/general/trade/:generalTradeId", validateToken, validateRefreshToken, isConsumer, seeTradePaymentMethodController.handle);
+consumerRouter.get("/direct/trade/:tradeId", validateToken, validateRefreshToken, isConsumer, seeDirectTradePaymentMethodController.handle);
 
 
 export { consumerRouter }
