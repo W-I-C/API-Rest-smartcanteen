@@ -786,12 +786,19 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Meal"
+              
               },
               "examples": {
-                "Create Meal": {
+                "Add meal cart": {
                   "value": {
-                    "amount": 1                                     
+                    "amount": 1,
+                    "changes": [
+                      {
+                        "changeId": "3dba1f00-fced-49f7-921b-786cbb02b270",
+                        "changeAmount":1
+                       
+                      }
+                    ]                                   
                   }
                 }
               }
@@ -803,24 +810,8 @@
             "description": "ERROR",
             "content": {
               "application/json": {
-                "schema": { "properties": { "msg": { "type": "string" } } },
-                "examples": {
-                  "Bar dont exist": {
-                    "value": {
-                      "msg": "Bar dont exist"
-                    }
-                  },
-                  "Bars are not the same": {
-                    "value": {
-                      "msg": "Bars are not the same"
-                    }
-                  },
-                  "Meal already exists": {
-                    "value": {
-                      "msg": "Meal already exists"
-                    }
-                  }
-                }
+                "schema": { "properties": { "msg": { "type": "string" } } }
+            
               }
             }
           },
@@ -836,16 +827,6 @@
                     }
                   }
                 }
-              }
-            }
-          },
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Meal"
-                }          
               }
             }
           }
