@@ -18,7 +18,7 @@ export class AddMealCartController {
     async handle(request: Request, response: Response) {
         const uId = response.locals.uid;
         const mealId = request.params.mealId;
-        let { amount } = request.body;
+        let { amount,changes } = request.body;
 
         try {
             if (uId === undefined ||
@@ -29,7 +29,7 @@ export class AddMealCartController {
             }
 
             const addMealCartService = new AddMealCartService();
-            const resp = await addMealCartService.execute(uId, mealId, amount);
+            const resp = await addMealCartService.execute(uId, mealId, amount,changes);
 
             response.status(resp.status).send(resp.data);
         } catch (e) {
