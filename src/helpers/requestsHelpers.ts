@@ -4,10 +4,8 @@ import { createClient } from "../config/db";
 export async function sendNotification(uid: String, body: String, title: String) {
   const sendNotificationDBClient = createClient();
   const query = await sendNotificationDBClient.query(`SELECT * FROM usersdevices WHERE uid=$1`, [uid])
-  console.log(query['rows'])
-  console.log(uid)
+
   query['rows'].forEach(async function (item) {
-    console.log(item)
     const deviceToken = item['devicetoken']
     await axios.post('https://fcm.googleapis.com/fcm/send',
       {
